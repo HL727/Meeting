@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Automatisk uppringning, {{ cospace.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    <a href="{% url 'cospaces_details' cospace_id=cospace.cospace %}?customer={{ customer.pk }}&cospace={{ cospace.cospace }}">{{ cospace.title }}</a> /
+    <strong>{% trans "Hantera" %}</strong>
+{% endblock %}
+
+{% block content %}
+    {% include "blocks/page_notification.html" %}
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card card-shadow mb-4">
+                <div class="card-header">
+                    <span class="h5">{% trans "Automatisk uppringning" %} (beta)</span>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form_errors hook_form %}
+                        {% bootstrap_form hook_form %}
+                        <button class="btn btn-primary" name="form_action" value="edit_hook">{% trans "Spara" %}</button>
+                    </form>
+                    {% if hook %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <p class="mt-4"><strong>{% trans "Lägg till videosystem" %}</strong></p>
+                        {{ hook_form.enable.as_hidden }}
+                        {{ hook_form.recording_key.as_hidden }}
+                        {% bootstrap_form_errors dialout_form %}
+                        {% bootstrap_form dialout_form %}
+                        <button class="btn btn-primary" name="form_action" value="edit_hook">{% trans "Lägg till" %}</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% if scheduled_dialouts %}
+                <h2 class="mt-4">{% trans "Aktiva schemalagda uppringningar" %}</h2>
+
+                <table class="table">
+                    <thead>
+                        <th>{% trans "Start" %}</th>
+                        <th>{% trans "Stopp" %}</th>
+                        <th>{% trans "Parter" %}</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    {% for dialout in scheduled_dialouts %}
+                        <tr>
+                            <td>
+                                {{ dialout.ts_start }}
+                            </td>
+                            <td>
+                                {% if dialout.ts_stop %}
+                                    {{ dialout.ts_stop }}
+                                {% else %}
+                                    Inget stopp
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% for p in dialout.parts.all %}
+                                    {{ p.dialstring }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <button name="remove_scheduled_dialout" name="remove_scheduled_dialout"
+                                            value="{{ dialout.pk }}" class="btn btn-danger">x
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+        </div>
+        <div class="col-12 col-lg-4">
+
+            <div class="card card-grey flex-fill mb-4">
+                <div class="card-body">
+                    <span class="h5">{% trans "Aktiverade videosystem" %}</span>
+                    <div class="float-right">{{ dialouts|length }} st</div>
+                </div>
+                <div class="card-footer">
+                    {% if dialouts %}
+                        {% for dialout in dialouts %}
+                            <form method="post">
+                                {% csrf_token %}
+
+                                {{ dialout.dialstring }} {% if dialout.persistant %} ({% trans "håll samtal öppet" %}) {% endif %}
+                                <input type="hidden" name="hook" value="{{ dialout.hook_id }}" />
+                                <input type="hidden" name="dialout" value="{{ dialout.pk }}" />
+                                <button class="btn btn-danger btn-sm" name="form_action" value="remove_dialout">x</button>
+                            </form>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-primary mb-0"><i>{% trans "Inga aktiverade utringningar" %}</i></div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card card-grey flex-fill mb-4">
+                <div class="card-body">
+                    <span class="h5">{% trans "Aktiva sessioner" %}</span>
+                    <div class="float-right">{{ sessions|length }} st</div>
+                </div>
+                <div class="card-footer">
+                    {% if sessions %}
+                        {% for session in sessions %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="hook" value="{{ session.hook_id }}" />
+                                <input type="hidden" name="session" value="{{ session.pk }}" />
+
+                                <a href="{% url 'call_handler' session.provider_ref %}?customer={{ customer.id }}">{{ session.ts_start }}</a>
+                                <button class="btn btn-danger btn-sm" name="form_action" value="disconnect_session">x</button>
+                            </form>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-primary mb-0"><i>{% trans "Inga aktiverade sessioner" %}</i></div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,668 @@
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce10.9.1.1.fb66b80147e" apiVersion="4">
+  <Audio>
+    <Devices>
+      <HandsetUSB>
+        <ConnectionStatus>NotConnected</ConnectionStatus>
+        <Cradle>OnHook</Cradle>
+      </HandsetUSB>
+      <HeadsetUSB>
+        <ConnectionStatus>NotConnected</ConnectionStatus>
+        <Description></Description>
+        <Manufacturer></Manufacturer>
+      </HeadsetUSB>
+    </Devices>
+    <Input>
+      <Connectors>
+        <HDMI item="1" maxOccurrence="n">
+          <Mute>On</Mute>
+        </HDMI>
+        <Microphone item="1" maxOccurrence="n">
+          <ConnectionStatus>Connected</ConnectionStatus>
+          <EcReferenceDelay>0</EcReferenceDelay>
+          <Mute>Off</Mute>
+        </Microphone>
+        <Microphone item="2" maxOccurrence="n">
+          <ConnectionStatus>Connected</ConnectionStatus>
+          <EcReferenceDelay>0</EcReferenceDelay>
+          <Mute>Off</Mute>
+        </Microphone>
+        <Microphone item="3" maxOccurrence="n">
+          <ConnectionStatus>NotConnected</ConnectionStatus>
+          <EcReferenceDelay>0</EcReferenceDelay>
+          <Mute>Off</Mute>
+        </Microphone>
+      </Connectors>
+    </Input>
+    <Microphones>
+      <MusicMode>Off</MusicMode>
+      <Mute>Off</Mute>
+    </Microphones>
+    <Output>
+      <Connectors>
+        <HDMI item="1" maxOccurrence="n">
+          <DelayMs>0</DelayMs>
+          <Mode>Off</Mode>
+        </HDMI>
+        <HDMI item="2" maxOccurrence="n">
+          <DelayMs>0</DelayMs>
+          <Mode>Off</Mode>
+        </HDMI>
+        <InternalSpeaker item="1" maxOccurrence="n">
+          <DelayMs>0</DelayMs>
+        </InternalSpeaker>
+        <Line item="1" maxOccurrence="n">
+          <ConnectionStatus>NotConnected</ConnectionStatus>
+          <DelayMs>0</DelayMs>
+        </Line>
+      </Connectors>
+    </Output>
+    <SelectedDevice>Internal</SelectedDevice>
+    <Ultrasound>
+      <Volume>65</Volume>
+    </Ultrasound>
+    <Volume>65</Volume>
+    <VolumeHandsetUsb>50</VolumeHandsetUsb>
+    <VolumeHeadsetUsb>50</VolumeHeadsetUsb>
+    <VolumeInternal>65</VolumeInternal>
+    <VolumeMute>Off</VolumeMute>
+  </Audio>
+  <Bookings>
+    <Availability>
+      <Status>Free</Status>
+      <TimeStamp></TimeStamp>
+    </Availability>
+    <Current>
+      <Id></Id>
+    </Current>
+  </Bookings>
+  <Cameras>
+    <Camera item="1" maxOccurrence="n">
+      <Capabilities>
+        <Options>ptzf</Options>
+      </Capabilities>
+      <Connected>True</Connected>
+      <Framerate>30</Framerate>
+      <LightingConditions>Good</LightingConditions>
+      <Manufacturer>Cisco</Manufacturer>
+      <Model>Integrated Camera</Model>
+      <Position>
+        <Pan>164</Pan>
+        <Tilt>145</Tilt>
+        <Zoom>3345</Zoom>
+      </Position>
+    </Camera>
+    <SpeakerTrack>
+      <Availability>Available</Availability>
+      <Status>Active</Status>
+      <ViewLimits>
+        <Pan>0</Pan>
+        <Status>Inactive</Status>
+        <Tilt>0</Tilt>
+        <Zoom>0</Zoom>
+      </ViewLimits>
+    </SpeakerTrack>
+  </Cameras>
+  <Capabilities>
+    <Conference>
+      <MaxActiveCalls>2</MaxActiveCalls>
+      <MaxAudioCalls>2</MaxAudioCalls>
+      <MaxCalls>7</MaxCalls>
+      <MaxVideoCalls>1</MaxVideoCalls>
+    </Conference>
+  </Capabilities>
+  <Conference>
+    <DoNotDisturb>Inactive</DoNotDisturb>
+    <EndToEndEncryption>
+      <Availability>Available</Availability>
+      <ExternalIdentity>
+        <Identity></Identity>
+        <Status></Status>
+        <Verification></Verification>
+      </ExternalIdentity>
+      <InternalIdentity>
+        <CertificateChain>
+          <Certificate item="1" maxOccurrence="n">
+            <Fingerprint>659faa883046f5d60c183948217df679fab73ca2</Fingerprint>
+            <NotAfter>2021-11-11T23:31:06.000000000+0000</NotAfter>
+            <NotBefore>2021-11-04T23:30:06.000000000+0000</NotBefore>
+            <PrimaryName>mividas.com</PrimaryName>
+            <PublicKeyAlgorithm>ECDSA P256 SHA-256</PublicKeyAlgorithm>
+            <SerialNumber>01BAB4E74B71E42E7B</SerialNumber>
+            <SignatureAlgorithm>ECDSA P256 SHA-256</SignatureAlgorithm>
+            <Subject item="1" maxOccurrence="n">
+              <Name>machine:12343423-1234-442b-aa89-333333333333</Name>
+            </Subject>
+            <Subject item="2" maxOccurrence="n">
+              <Name>mividas.com</Name>
+            </Subject>
+            <Validity>Valid</Validity>
+          </Certificate>
+          <Certificate item="2" maxOccurrence="n">
+            <Fingerprint>72f6fa23bbc280af2e1fd3b2735f8097ad89af43</Fingerprint>
+            <NotAfter>2051-04-08T17:49:58.000000000+0000</NotAfter>
+            <NotBefore>2021-04-08T18:22:59.000000000+0000</NotBefore>
+            <PrimaryName>Cisco</PrimaryName>
+            <PublicKeyAlgorithm>ECDSA P384 SHA-384</PublicKeyAlgorithm>
+            <SerialNumber>0A3D6B0B35B661D7D3</SerialNumber>
+            <SignatureAlgorithm>ECDSA P384 SHA-384</SignatureAlgorithm>
+            <Subject item="1" maxOccurrence="n">
+              <Name>webex-certificate-authority CA [prod-afra] Intermediate a6797</Name>
+            </Subject>
+            <Subject item="2" maxOccurrence="n">
+              <Name>Cisco</Name>
+            </Subject>
+            <Validity>Valid</Validity>
+          </Certificate>
+          <Certificate item="3" maxOccurrence="n">
+            <Fingerprint>fb4e706d41ba6f1b5a1bf0475505cd09d446138e</Fingerprint>
+            <NotAfter>2051-04-08T17:49:59.000000000+0000</NotAfter>
+            <NotBefore>2021-04-08T17:49:59.000000000+0000</NotBefore>
+            <PrimaryName>Cisco</PrimaryName>
+            <PublicKeyAlgorithm>ECDSA P384 SHA-384</PublicKeyAlgorithm>
+            <SerialNumber>12345</SerialNumber>
+            <SignatureAlgorithm>ECDSA P384 SHA-384</SignatureAlgorithm>
+            <Subject item="1" maxOccurrence="n">
+              <Name>Webex Microservices Root CA</Name>
+            </Subject>
+            <Subject item="2" maxOccurrence="n">
+              <Name>Cisco</Name>
+            </Subject>
+            <Validity>Valid</Validity>
+          </Certificate>
+        </CertificateChain>
+        <Identity>mividas.com</Identity>
+        <Status>Valid</Status>
+        <Verification>WebexVerified</Verification>
+      </InternalIdentity>
+    </EndToEndEncryption>
+    <Multipoint>
+      <Mode>Spark</Mode>
+    </Multipoint>
+    <Presentation>
+      <CallId>0</CallId>
+      <Mode>Off</Mode>
+    </Presentation>
+    <SelectedCallProtocol>Spark</SelectedCallProtocol>
+    <SpeakerLock>
+      <CallId>0</CallId>
+      <Mode>Auto</Mode>
+    </SpeakerLock>
+  </Conference>
+  <Diagnostics>
+    <Message item="1" maxOccurrence="n">
+      <Description>System has active macros.</Description>
+      <Level>Info</Level>
+      <References>active_macros=1&amp;crashes=0</References>
+      <Type>MacrosRuntimeStatus</Type>
+    </Message>
+  </Diagnostics>
+  <HttpFeedback item="2" maxOccurrence="n">
+    <Expression item="1" maxOccurrence="n">/Event/Standby/Reset</Expression>
+    <Expression item="2" maxOccurrence="n">/Event/CallSuccessful</Expression>
+    <Expression item="3" maxOccurrence="n">/Event/CallDisconnect</Expression>
+    <Expression item="4" maxOccurrence="n">/Event/OutgoingCallIndication</Expression>
+    <Expression item="5" maxOccurrence="n">/Event/IncomingCallIndication</Expression>
+    <Expression item="6" maxOccurrence="n">/Status/Call/Status</Expression>
+    <Expression item="7" maxOccurrence="n">/Status/Network/IPv4/Address</Expression>
+    <Expression item="8" maxOccurrence="n">/Status/SystemUnit/Software/Version</Expression>
+    <Expression item="9" maxOccurrence="n">/Status/RoomAnalytics/PeopleCount/Current</Expression>
+    <Expression item="10" maxOccurrence="n">/Status/RoomAnalytics/PeoplePresence</Expression>
+    <Expression item="11" maxOccurrence="n">/Conference/Presentation/LocalInstance/SendingMode</Expression>
+    <Expression item="12" maxOccurrence="n">/Status/SIP</Expression>
+    <Expression item="13" maxOccurrence="n">/Event/SoftwareUpgrade</Expression>
+    <Expression item="14" maxOccurrence="n">/Event/BootEvent</Expression>
+    <Format>XML</Format>
+    <Status>OK</Status>
+    <URL>https://example.org/tms/event/</URL>
+  </HttpFeedback>
+  <Network item="1" maxOccurrence="n">
+    <CDP>
+      <Address></Address>
+      <Capabilities></Capabilities>
+      <DeviceId></DeviceId>
+      <Duplex></Duplex>
+      <Platform></Platform>
+      <PortID></PortID>
+      <PrimaryMgmtAddress></PrimaryMgmtAddress>
+      <SysName></SysName>
+      <SysObjectID></SysObjectID>
+      <VTPMgmtDomain></VTPMgmtDomain>
+      <Version></Version>
+      <VoIPApplianceVlanID></VoIPApplianceVlanID>
+    </CDP>
+    <DNS>
+      <Domain>
+        <Name></Name>
+      </Domain>
+      <Server item="1" maxOccurrence="n">
+        <Address>192.168.1.1</Address>
+      </Server>
+      <Server item="2" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="3" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="4" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="5" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+    </DNS>
+    <Ethernet>
+        <MacAddress>11:22:33:44:55:66</MacAddress>
+      <Speed>1000full</Speed>
+    </Ethernet>
+    <IPv4>
+      <Address>192.168.1.123</Address>
+      <Gateway>192.168.1.1</Gateway>
+      <SubnetMask>255.255.255.0</SubnetMask>
+    </IPv4>
+    <IPv6>
+      <Address></Address>
+      <Gateway></Gateway>
+      <LinkLocalAddress>fe80::b226:80ff:fe31:ce7e</LinkLocalAddress>
+    </IPv6>
+    <VLAN>
+      <Voice>
+        <VlanId>Off</VlanId>
+      </Voice>
+    </VLAN>
+    <Wifi>
+      <BSSID></BSSID>
+      <Channel>-1</Channel>
+      <Frequency>0</Frequency>
+      <InterfaceEnabled>Off</InterfaceEnabled>
+      <InterfaceReason>wlan=Down, config=true</InterfaceReason>
+      <MacAddress>00:11:22:33:44:55</MacAddress>
+      <Phase2Method></Phase2Method>
+      <RawSSID></RawSSID>
+      <Reason></Reason>
+      <Region></Region>
+      <SSID></SSID>
+      <Status>Disconnected</Status>
+      <Type></Type>
+    </Wifi>
+  </Network>
+  <NetworkServices>
+    <UPnP>
+      <Status>Stopped</Status>
+    </UPnP>
+  </NetworkServices>
+  <Peripherals>
+    <ConnectedDevice item="1001" maxOccurrence="n">
+      <HardwareInfo>102310-1</HardwareInfo>
+      <ID>50:0f:80:ab:31:f9</ID>
+      <Name>Cisco TelePresence Touch</Name>
+      <NetworkAddress>169.254.1.41</NetworkAddress>
+      <SerialNumber>1234567890</SerialNumber>
+      <SoftwareInfo>ce10.9.1.1.fb66b80147e</SoftwareInfo>
+      <Status>Connected</Status>
+      <Type>TouchPanel</Type>
+      <UpgradeStatus>None</UpgradeStatus>
+    </ConnectedDevice>
+    <PinPairing>
+      <TimeRemaining>0</TimeRemaining>
+    </PinPairing>
+  </Peripherals>
+  <Provisioning>
+    <CUCM>
+      <Customization>
+        <Checksum></Checksum>
+      </Customization>
+    </CUCM>
+    <Software>
+      <Current>
+        <CompletedAt>2021-11-04T23:30:51Z</CompletedAt>
+        <URL>https://binaries.webex.com/collaboration-endpoint-ce-production-stable/20211104145957/sunrise.pkg</URL>
+        <VersionId>ce10.9.1.1 fb66b80147e 2021-10-30</VersionId>
+      </Current>
+      <UpgradeStatus>
+        <LastChange>2021-11-04T23:30:51Z</LastChange>
+        <Message></Message>
+        <Phase>None</Phase>
+        <SessionId>wx2:743f654d04c93abb886bc967ef0af05bd6266688-5a4eab4a-1783-50aa-b8ab-357493cd7135</SessionId>
+        <Status>None</Status>
+        <URL></URL>
+        <Urgency>Medium</Urgency>
+        <VersionId>ce10.9.1.1 fb66b80147e 2021-10-30</VersionId>
+      </UpgradeStatus>
+    </Software>
+    <Status>Provisioned</Status>
+  </Provisioning>
+  <Proximity>
+    <Services>
+      <Availability>Available</Availability>
+    </Services>
+  </Proximity>
+  <RoomAnalytics>
+    <AmbientNoise>
+      <Level>
+        <A>29</A>
+      </Level>
+    </AmbientNoise>
+    <Engagement>
+      <CloseProximity>False</CloseProximity>
+    </Engagement>
+    <PeopleCount>
+      <Capacity>8</Capacity>
+      <Current>-1</Current>
+    </PeopleCount>
+    <PeoplePresence>No</PeoplePresence>
+    <Sound>
+      <Level>
+        <A>29</A>
+      </Level>
+    </Sound>
+  </RoomAnalytics>
+  <RoomPreset item="1" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="2" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="3" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="4" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="5" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="6" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="7" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="8" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="9" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="10" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="11" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="12" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="13" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="14" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="15" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <Standby>
+    <State>Standby</State>
+  </Standby>
+  <SystemUnit>
+    <DeveloperPreview>
+      <Mode>Off</Mode>
+    </DeveloperPreview>
+    <Hardware>
+      <HasWifi>True</HasWifi>
+      <Module>
+        <CompatibilityLevel>0</CompatibilityLevel>
+        <SerialNumber>FOC2204NXZ5</SerialNumber>
+      </Module>
+      <Monitoring>
+        <Temperature>
+          <Status>Normal</Status>
+        </Temperature>
+      </Monitoring>
+    </Hardware>
+    <ProductId>Cisco Webex Room Kit</ProductId>
+    <ProductPlatform>Room Kit</ProductPlatform>
+    <ProductType>Cisco Codec</ProductType>
+    <Software>
+      <DisplayName>RoomOS 10.9.1.1 fb66b80147e</DisplayName>
+      <Name>s53200</Name>
+      <OptionKeys>
+        <Encryption>True</Encryption>
+        <MultiSite>False</MultiSite>
+        <RemoteMonitoring>False</RemoteMonitoring>
+      </OptionKeys>
+      <ReleaseDate>2021-10-30</ReleaseDate>
+      <Version>ce10.9.1.1.fb66b80147e</Version>
+    </Software>
+    <State>
+      <NumberOfActiveCalls>0</NumberOfActiveCalls>
+      <NumberOfInProgressCalls>0</NumberOfInProgressCalls>
+      <NumberOfSuspendedCalls>0</NumberOfSuspendedCalls>
+    </State>
+    <Uptime>396972</Uptime>
+  </SystemUnit>
+  <Time>
+    <SystemTime>2019-03-11T15:33:53+0000</SystemTime>
+  </Time>
+  <UserInterface>
+    <Branding>
+      <CustomId>
+        <Background></Background>
+        <Branding></Branding>
+        <HalfwakeBackground></HalfwakeBackground>
+        <HalfwakeBranding></HalfwakeBranding>
+      </CustomId>
+    </Branding>
+    <ContactInfo>
+      <ContactMethod item="1" maxOccurrence="n">
+        <Number>1234@example.org</Number>
+      </ContactMethod>
+      <Name>System name</Name>
+    </ContactInfo>
+    <Features>
+      <Call>
+        <End>Visible</End>
+        <JoinGoogleMeet>Visible</JoinGoogleMeet>
+        <JoinWebex>Visible</JoinWebex>
+        <Keypad>Visible</Keypad>
+        <MidCallControls>Visible</MidCallControls>
+        <MusicMode>Hidden</MusicMode>
+        <Start>Visible</Start>
+        <VideoMute>Visible</VideoMute>
+      </Call>
+      <Share>
+        <Start>Visible</Start>
+      </Share>
+      <Whiteboard>
+        <Start>Visible</Start>
+      </Whiteboard>
+    </Features>
+    <OSD>
+      <Output>1</Output>
+    </OSD>
+    <SettingsMenu>
+      <Visibility>Visible</Visibility>
+    </SettingsMenu>
+    <Translation>
+      <Override>
+        <Checksum></Checksum>
+      </Override>
+    </Translation>
+    <WebView item="1" maxOccurrence="n">
+      <Status>NotVisible</Status>
+      <Type>None</Type>
+      <URL></URL>
+    </WebView>
+  </UserInterface>
+  <Video>
+    <ActiveSpeaker>
+      <PIPPosition>UpperCenter</PIPPosition>
+    </ActiveSpeaker>
+    <Input>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>True</Connected>
+        <SignalState>OK</SignalState>
+        <SourceId>1</SourceId>
+        <Type>Camera</Type>
+      </Connector>
+      <Connector item="2" maxOccurrence="n">
+        <Connected>False</Connected>
+        <SignalState>NotFound</SignalState>
+        <SourceId>2</SourceId>
+        <Type>HDMI</Type>
+      </Connector>
+      <MainVideoMute>Off</MainVideoMute>
+      <MainVideoSource>1</MainVideoSource>
+      <Source item="1" maxOccurrence="n">
+        <ConnectorId>1</ConnectorId>
+        <FormatStatus>Ok</FormatStatus>
+        <FormatType>Digital</FormatType>
+        <MediaChannelId>116</MediaChannelId>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>30</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+      </Source>
+      <Source item="2" maxOccurrence="n">
+        <ConnectorId>2</ConnectorId>
+        <FormatStatus>NotFound</FormatStatus>
+        <FormatType>Unknown</FormatType>
+        <MediaChannelId>117</MediaChannelId>
+        <Resolution>
+          <Height>0</Height>
+          <RefreshRate>0</RefreshRate>
+          <Width>0</Width>
+        </Resolution>
+      </Source>
+    </Input>
+    <Layout>
+      <CurrentLayouts>
+        <ActiveLayout>Grid</ActiveLayout>
+        <AvailableLayouts item="1" maxOccurrence="n">
+          <LayoutName>Grid</LayoutName>
+        </AvailableLayouts>
+        <AvailableLayouts item="2" maxOccurrence="n">
+          <LayoutName>Stack</LayoutName>
+        </AvailableLayouts>
+        <AvailableLayouts item="3" maxOccurrence="n">
+          <LayoutName>Focus</LayoutName>
+        </AvailableLayouts>
+        <AvailableLayouts item="4" maxOccurrence="n">
+          <LayoutName>Overlay</LayoutName>
+        </AvailableLayouts>
+        <AvailableLayouts item="5" maxOccurrence="n">
+          <LayoutName>Prominent</LayoutName>
+        </AvailableLayouts>
+        <DefaultLayout>Grid</DefaultLayout>
+      </CurrentLayouts>
+      <LayoutFamily>
+        <Local>equal</Local>
+      </LayoutFamily>
+    </Layout>
+    <Monitors>Single</Monitors>
+    <Output>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>True</Connected>
+        <ConnectedDevice>
+          <CEC item="1" maxOccurrence="n">
+            <DeviceType>TV</DeviceType>
+            <LogicalAddress>0</LogicalAddress>
+            <Name></Name>
+            <PowerStatus>Standby</PowerStatus>
+            <VendorId>240</VendorId>
+          </CEC>
+          <Name>SAMSUNG</Name>
+          <PreferredFormat>1920x1080@60Hz</PreferredFormat>
+          <ScreenSize>46</ScreenSize>
+        </ConnectedDevice>
+        <MonitorRole>First</MonitorRole>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>60</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+        <Type>HDMI</Type>
+      </Connector>
+      <Connector item="2" maxOccurrence="n">
+        <Connected>False</Connected>
+        <ConnectedDevice>
+          <Name></Name>
+          <PreferredFormat></PreferredFormat>
+          <ScreenSize>-1</ScreenSize>
+        </ConnectedDevice>
+        <MonitorRole>First</MonitorRole>
+        <Type>HDMI</Type>
+      </Connector>
+    </Output>
+    <Presentation>
+      <PIPPosition>CenterLeft</PIPPosition>
+    </Presentation>
+    <Selfview>
+      <FullscreenMode>Off</FullscreenMode>
+      <Mode>Off</Mode>
+      <OnMonitorRole>First</OnMonitorRole>
+      <PIPPosition>CenterRight</PIPPosition>
+    </Selfview>
+  </Video>
+  <WebEngine>
+    <Features>
+      <Signage>On</Signage>
+      <WebEngine>On</WebEngine>
+      <WebRTC>On</WebRTC>
+    </Features>
+  </WebEngine>
+  <WebRTC>
+    <Provider>
+      <GoogleMeet>
+        <Availability>Unavailable</Availability>
+      </GoogleMeet>
+      <MicrosoftTeams>
+        <Availability>Available</Availability>
+      </MicrosoftTeams>
+    </Provider>
+  </WebRTC>
+  <Webex>
+    <DeveloperId>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc=</DeveloperId>
+    <Meetings>
+      <JoinProtocol>Webex</JoinProtocol>
+    </Meetings>
+    <Services>
+      <Proximity>
+        <GuestToken>444-QGV-MAX</GuestToken>
+      </Proximity>
+    </Services>
+    <Status>Registered</Status>
+  </Webex>
+</Status>

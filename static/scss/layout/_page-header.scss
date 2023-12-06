@@ -1,0 +1,57 @@
+.page-header {
+    background: $gray-900 url(../images/header-background.svg) center center;
+    background-size: 600px 600px;
+
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    @include media-breakpoint-down(md) {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    .container-fluid {
+        position: relative;
+        z-index: 10;
+
+        .customer-select {
+            display:inline-block;
+            width:200px;
+            color: #000;
+            font-size: 16px;
+
+            a {
+                color: #000;
+            }
+        }
+    }
+
+    .breadcrumb {
+        background: none;
+        padding: 0;
+        margin: 0;
+        color: $gray-500;
+
+        .h5 {
+            font-weight: 300;
+            margin-bottom: 0;
+
+            @include media-breakpoint-down(lg) {
+                font-size: 1rem;
+            }
+            @include media-breakpoint-down(md) {
+                font-size: 0.85rem;
+            }
+        }
+
+        .user {
+            @include media-breakpoint-down(md) {
+                display: none;
+            }
+        }
+    }
+
+    &--dashboard {
+        padding-top: 3rem;
+        padding-bottom: 7.5rem;
+    }
+}

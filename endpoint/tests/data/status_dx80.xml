@@ -1,0 +1,446 @@
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce9.15.0.11.aec227943ed" apiVersion="4">
+  <Audio>
+    <Devices>
+      <Bluetooth>
+        <ActiveProfile>None</ActiveProfile>
+      </Bluetooth>
+      <HandsetUSB>
+        <ConnectionStatus>NotConnected</ConnectionStatus>
+        <Cradle>OnHook</Cradle>
+      </HandsetUSB>
+      <HeadsetUSB>
+        <ConnectionStatus>NotConnected</ConnectionStatus>
+        <Description></Description>
+        <Manufacturer></Manufacturer>
+      </HeadsetUSB>
+    </Devices>
+    <Input>
+      <Connectors>
+        <HDMI item="1" maxOccurrence="n">
+          <Mute>On</Mute>
+        </HDMI>
+        <Microphone item="1" maxOccurrence="n">
+          <Mute>Off</Mute>
+        </Microphone>
+      </Connectors>
+    </Input>
+    <Microphones>
+      <MusicMode>Off</MusicMode>
+      <Mute>Off</Mute>
+    </Microphones>
+    <SelectedDevice>Internal</SelectedDevice>
+    <Volume>0</Volume>
+    <VolumeHandsetUsb>50</VolumeHandsetUsb>
+    <VolumeHeadsetBluetooth>50</VolumeHeadsetBluetooth>
+    <VolumeHeadsetUsb>50</VolumeHeadsetUsb>
+    <VolumeInternal>50</VolumeInternal>
+    <VolumeMute>On</VolumeMute>
+  </Audio>
+  <Bookings>
+    <Current>
+      <Id></Id>
+    </Current>
+  </Bookings>
+  <Cameras>
+    <Camera item="1" maxOccurrence="n">
+      <Capabilities>
+        <Options>f</Options>
+      </Capabilities>
+      <Connected>True</Connected>
+      <Manufacturer>Cisco</Manufacturer>
+      <Model>DX80</Model>
+    </Camera>
+  </Cameras>
+  <Capabilities>
+    <Conference>
+      <MaxActiveCalls>1</MaxActiveCalls>
+      <MaxAudioCalls>1</MaxAudioCalls>
+      <MaxCalls>7</MaxCalls>
+      <MaxVideoCalls>1</MaxVideoCalls>
+    </Conference>
+  </Capabilities>
+  <Conference>
+    <ActiveSpeaker>
+      <CallId>0</CallId>
+    </ActiveSpeaker>
+    <DoNotDisturb>Inactive</DoNotDisturb>
+    <Multipoint>
+      <Mode>Off</Mode>
+    </Multipoint>
+    <Presentation>
+      <CallId>0</CallId>
+      <Mode>Off</Mode>
+    </Presentation>
+    <SelectedCallProtocol>SIP</SelectedCallProtocol>
+    <SpeakerLock>
+      <CallId>0</CallId>
+      <Mode>Auto</Mode>
+    </SpeakerLock>
+  </Conference>
+  <Diagnostics>
+    <Message item="1" maxOccurrence="n">
+      <Description>System has active macros.</Description>
+      <Level>Info</Level>
+      <References>active_macros=3&amp;crashes=0</References>
+      <Type>MacrosRuntimeStatus</Type>
+    </Message>
+    <Message item="2" maxOccurrence="n">
+      <Description>HTTP Feedback was unable to post feedback and has stopped</Description>
+      <Level>Warning</Level>
+      <References>FeedbackSlot=4&amp;Error=Failed%20to%20connect%20to%20192.168.1.211%20port%208442%3A%20Connection%20refused&amp;Url=https://192.168.1.211:8442/tms/event/</References>
+      <Type>HTTPFeedbackFailed</Type>
+    </Message>
+  </Diagnostics>
+  <H320>
+    <Gateway>
+      <Address></Address>
+      <Id></Id>
+      <Mode>Unknown</Mode>
+      <Number></Number>
+      <Reason></Reason>
+      <Status>Inactive</Status>
+    </Gateway>
+  </H320>
+  <H323>
+    <Gatekeeper>
+      <Address></Address>
+      <Port>0</Port>
+      <Reason></Reason>
+      <Status>Inactive</Status>
+    </Gatekeeper>
+    <Mode>
+      <Reason></Reason>
+      <Status>Enabled</Status>
+    </Mode>
+  </H323>
+  <HttpFeedback item="2" maxOccurrence="n">
+    <Expression item="1" maxOccurrence="n">/Event/Standby/Reset</Expression>
+    <Expression item="2" maxOccurrence="n">/Event/CallSuccessful</Expression>
+    <Expression item="3" maxOccurrence="n">/Event/CallDisconnect</Expression>
+    <Expression item="4" maxOccurrence="n">/Event/OutgoingCallIndication</Expression>
+    <Expression item="5" maxOccurrence="n">/Event/IncomingCallIndication</Expression>
+    <Expression item="6" maxOccurrence="n">/Status/Call/Status</Expression>
+    <Expression item="7" maxOccurrence="n">/Status/Network/IPv4/Address</Expression>
+    <Expression item="8" maxOccurrence="n">/Status/SystemUnit/Software/Version</Expression>
+    <Expression item="9" maxOccurrence="n">/Status/RoomAnalytics/PeopleCount/Current</Expression>
+    <Expression item="10" maxOccurrence="n">/Status/RoomAnalytics/PeoplePresence</Expression>
+    <Expression item="11" maxOccurrence="n">/Conference/Presentation/LocalInstance/SendingMode</Expression>
+    <Expression item="12" maxOccurrence="n">/Status/SIP</Expression>
+    <Expression item="13" maxOccurrence="n">/Event/SoftwareUpgrade</Expression>
+    <Expression item="14" maxOccurrence="n">/Event/BootEvent</Expression>
+    <Format>XML</Format>
+    <Status>OK</Status>
+    <URL>https://example.org/tms/event/</URL>
+  </HttpFeedback>
+  <Network item="1" maxOccurrence="n">
+    <CDP>
+      <Address></Address>
+      <Capabilities></Capabilities>
+      <DeviceId></DeviceId>
+      <Duplex></Duplex>
+      <Platform></Platform>
+      <PortID></PortID>
+      <PrimaryMgmtAddress></PrimaryMgmtAddress>
+      <SysName></SysName>
+      <SysObjectID></SysObjectID>
+      <VTPMgmtDomain></VTPMgmtDomain>
+      <Version></Version>
+      <VoIPApplianceVlanID></VoIPApplianceVlanID>
+    </CDP>
+    <DNS>
+      <Domain>
+        <Name></Name>
+      </Domain>
+      <Server item="1" maxOccurrence="n">
+        <Address>192.168.1.1</Address>
+      </Server>
+      <Server item="2" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="3" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="4" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="5" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+    </DNS>
+    <Ethernet>
+        <MacAddress>11:22:33:44:55:66</MacAddress>
+      <Speed>100full</Speed>
+    </Ethernet>
+    <IPv4>
+      <Address>192.168.1.8</Address>
+      <Gateway>192.168.1.1</Gateway>
+      <SubnetMask>255.255.255.0</SubnetMask>
+    </IPv4>
+    <IPv6>
+      <Address></Address>
+      <Gateway></Gateway>
+      <LinkLocalAddress>fe80::5e5a:c7ff:fe56:9d4f</LinkLocalAddress>
+    </IPv6>
+    <VLAN>
+      <Voice>
+        <VlanId>Off</VlanId>
+      </Voice>
+    </VLAN>
+    <Wifi>
+      <BSSID></BSSID>
+      <Channel>-1</Channel>
+      <Frequency>0</Frequency>
+      <InterfaceEnabled>Off</InterfaceEnabled>
+      <InterfaceReason>wlan=Down, config=true</InterfaceReason>
+      <MacAddress>CC:C0:79:56:B1:CC</MacAddress>
+      <Phase2Method></Phase2Method>
+      <RawSSID></RawSSID>
+      <Reason></Reason>
+      <Region>00</Region>
+      <SSID></SSID>
+      <Status>Disconnected</Status>
+      <Type></Type>
+    </Wifi>
+  </Network>
+  <NetworkServices>
+    <NTP>
+      <CurrentAddress>194.58.202.148</CurrentAddress>
+      <Server item="1" maxOccurrence="n">
+        <Address>194.58.202.148</Address>
+      </Server>
+      <Server item="2" maxOccurrence="n">
+        <Address>83.168.200.199</Address>
+      </Server>
+      <Server item="3" maxOccurrence="n">
+        <Address>194.58.205.20</Address>
+      </Server>
+      <Status>Synced</Status>
+    </NTP>
+  </NetworkServices>
+  <Provisioning>
+    <CUCM>
+      <Customization>
+        <Checksum></Checksum>
+      </Customization>
+      <ExtensionMobility>
+        <Enabled>False</Enabled>
+        <LastLoggedInUserId></LastLoggedInUserId>
+        <LoggedIn>False</LoggedIn>
+      </ExtensionMobility>
+    </CUCM>
+    <Software>
+      <Current>
+        <CompletedAt></CompletedAt>
+        <URL>https://example.org/site_media/media/firmware/3453562.pkg</URL>
+        <VersionId>ce9.15.0.11 aec227943ed 2021-01-28</VersionId>
+      </Current>
+      <UpgradeStatus>
+        <LastChange>2021-10-01T06:39:50Z</LastChange>
+        <Message>Postponed by error: &lt;DNS Lookup failure&gt;: &apos;Could not resolve: ep.vm3.int (Domain name not found)&apos;. Retrying in 1 minutes and 0 seconds.</Message>
+        <Phase>None</Phase>
+        <SessionId></SessionId>
+        <Status>None</Status>
+        <URL>https://1234</URL>
+        <VersionId>ce9.15.0.11 aec227943ed 2021-01-28</VersionId>
+      </UpgradeStatus>
+    </Software>
+    <Status>Provisioned</Status>
+  </Provisioning>
+  <Proximity>
+    <Services>
+      <Availability>Available</Availability>
+    </Services>
+  </Proximity>
+  <SIP>
+    <Authentication>Digest</Authentication>
+    <CallForward>
+      <DisplayName></DisplayName>
+      <Mode>Off</Mode>
+      <URI></URI>
+    </CallForward>
+    <Mailbox>
+      <MessagesWaiting>0</MessagesWaiting>
+      <URI></URI>
+    </Mailbox>
+    <Proxy item="1" maxOccurrence="n">
+      <Address>135.181.112.5:5061</Address>
+      <Status>Active</Status>
+    </Proxy>
+    <Registration item="1" maxOccurrence="n">
+      <Reason></Reason>
+      <Status>Registered</Status>
+      <URI>1234@example.org</URI>
+    </Registration>
+    <Secure>True</Secure>
+    <Verified>False</Verified>
+  </SIP>
+  <Security>
+    <Persistency>
+      <CallHistory>Persistent</CallHistory>
+      <Configurations>Persistent</Configurations>
+      <DHCP>Persistent</DHCP>
+      <InternalLogging>Persistent</InternalLogging>
+      <LocalPhonebook>Persistent</LocalPhonebook>
+    </Persistency>
+  </Security>
+  <Standby>
+    <State>Standby</State>
+  </Standby>
+  <SystemUnit>
+    <DeveloperPreview>
+      <Mode>Off</Mode>
+    </DeveloperPreview>
+    <Hardware>
+      <Module>
+        <CompatibilityLevel>1</CompatibilityLevel>
+        <SerialNumber>1234567890</SerialNumber>
+      </Module>
+      <Temperature>43.0</Temperature>
+      <TemperatureThreshold>85</TemperatureThreshold>
+    </Hardware>
+    <ProductId>Cisco Webex DX80</ProductId>
+    <ProductPlatform>DX80</ProductPlatform>
+    <ProductType>Cisco Codec</ProductType>
+    <Software>
+      <DisplayName>ce 9.15.0.11 aec227943ed 2021-01-28</DisplayName>
+      <Name>s52040</Name>
+      <OptionKeys>
+        <Encryption>True</Encryption>
+        <MultiSite>NotApplicable</MultiSite>
+        <RemoteMonitoring>False</RemoteMonitoring>
+      </OptionKeys>
+      <ReleaseDate>2021-01-28</ReleaseDate>
+      <Version>ce9.15.0.11.aec227943ed</Version>
+    </Software>
+    <State>
+      <CameraLid>Open</CameraLid>
+      <NumberOfActiveCalls>0</NumberOfActiveCalls>
+      <NumberOfInProgressCalls>0</NumberOfInProgressCalls>
+      <NumberOfSuspendedCalls>0</NumberOfSuspendedCalls>
+    </State>
+    <Uptime>711644</Uptime>
+  </SystemUnit>
+  <Time>
+    <SystemTime>2019-03-11T15:33:53+0000</SystemTime>
+  </Time>
+  <UserInterface>
+    <ContactInfo>
+      <ContactMethod item="1" maxOccurrence="n">
+        <Number>1234@example.org</Number>
+      </ContactMethod>
+      <Name>System name</Name>
+    </ContactInfo>
+    <Features>
+      <Call>
+        <End>Visible</End>
+        <JoinWebex>Visible</JoinWebex>
+        <Keypad>Visible</Keypad>
+        <MidCallControls>Visible</MidCallControls>
+        <Start>Visible</Start>
+      </Call>
+      <Share>
+        <Start>Visible</Start>
+      </Share>
+      <Whiteboard>
+        <Start>Visible</Start>
+      </Whiteboard>
+    </Features>
+    <OSD>
+      <Output>1</Output>
+    </OSD>
+    <SettingsMenu>
+      <Visibility>Visible</Visibility>
+    </SettingsMenu>
+  </UserInterface>
+  <Video>
+    <ActiveSpeaker>
+      <PIPPosition>UpperCenter</PIPPosition>
+    </ActiveSpeaker>
+    <Input>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>True</Connected>
+        <SignalState>OK</SignalState>
+        <SourceId>1</SourceId>
+        <Type>Camera</Type>
+      </Connector>
+      <Connector item="2" maxOccurrence="n">
+        <Connected>False</Connected>
+        <SignalState>Unknown</SignalState>
+        <SourceId>2</SourceId>
+        <Type>HDMI</Type>
+      </Connector>
+      <MainVideoMute>Off</MainVideoMute>
+      <MainVideoSource>1</MainVideoSource>
+      <Source item="1" maxOccurrence="n">
+        <ConnectorId>1</ConnectorId>
+        <FormatStatus>Ok</FormatStatus>
+        <FormatType>Digital</FormatType>
+        <MediaChannelId>107</MediaChannelId>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>30</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+      </Source>
+      <Source item="2" maxOccurrence="n">
+        <ConnectorId>2</ConnectorId>
+        <FormatStatus>NotFound</FormatStatus>
+        <FormatType>Unknown</FormatType>
+        <MediaChannelId>108</MediaChannelId>
+        <Resolution>
+          <Height>0</Height>
+          <RefreshRate>0</RefreshRate>
+          <Width>0</Width>
+        </Resolution>
+      </Source>
+    </Input>
+    <Layout>
+      <LayoutFamily>
+        <Local>equal</Local>
+      </LayoutFamily>
+    </Layout>
+    <Monitors>Single</Monitors>
+    <Output>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>True</Connected>
+        <MonitorRole>First</MonitorRole>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>60</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+        <Type>LCD</Type>
+      </Connector>
+      <Connector item="2" maxOccurrence="n">
+        <Connected>False</Connected>
+        <ConnectedDevice>
+          <Name></Name>
+          <PreferredFormat></PreferredFormat>
+          <ScreenSize>-1</ScreenSize>
+        </ConnectedDevice>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>60</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+        <Type>HDMI</Type>
+      </Connector>
+    </Output>
+    <Presentation>
+      <PIPPosition>CenterLeft</PIPPosition>
+    </Presentation>
+    <Selfview>
+      <FullscreenMode>Off</FullscreenMode>
+      <Mode>Off</Mode>
+      <OnMonitorRole>First</OnMonitorRole>
+      <PIPPosition>CenterRight</PIPPosition>
+    </Selfview>
+  </Video>
+  <Webex>
+    <Meetings>
+      <JoinProtocol>SIP</JoinProtocol>
+    </Meetings>
+    <Status>Disabled</Status>
+  </Webex>
+</Status>

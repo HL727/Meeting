@@ -1,0 +1,33 @@
+{% load tz i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    {% localtime on %}
+    <p>{% trans "Ditt möte" %}
+        {% if is_duplicate %}var redan bokat
+        {% elif rebook %}har bokats om från tidigare {{ rebook_old_info.title }} {{ rebook_old_info.ts_start|date:"D j M, H:i" }}
+        {% else %}har bokats{% endif %}
+
+        mellan {{ ts_start|date:"D j M, H:i" }} och {{ ts_stop|date:"D j M, H:i" }}.</p>
+    {% endlocaltime %}
+
+    {% if dialstring %}
+        <p>{% trans "Mötesrum som kommer ringas upp" %}: {{ dialstring }}</p>
+    {% endif %}
+
+    {% if message %}<p>{{ message }}</p>{% endif %}
+
+    <p>{% trans "För att avboka, gå in" %} <a href="{{ email_meeting.get_unbook_url }}">{% trans "på denna länk" %}</a></p>
+
+    {% if instructions %}
+    <h1>{% trans "Instruktioner" %}:</h1>
+
+    {{ instructions|safe }}
+    {% endif %}
+
+</body>
+</html>

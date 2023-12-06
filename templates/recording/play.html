@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{% firstof recording.title cospace.name "Inspelning" %}{% endblock %}
+
+{% block breadcrumb %}
+{% if cospace %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+        <a href="{% url 'cospaces_details' cospace.id %}?customer={{ customer.pk }}">{{ cospace.name }}</a> /
+        <strong>{% trans "Visa inspelning" %}</strong>
+{% else %}
+
+    <strong>{% firstof recording.title cospace.name "Inspelning" %}</strong>
+
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if customer %}
+        {% include "blocks/page_notification.html" %}
+
+        <div class="row">
+        <div class="col-lg-8">
+            <div class="card card-shadow">
+
+                <div class="card-header">
+                    <h2>{% trans "Visa inspelning" %}</h2>
+                </div>
+                <div class="card-body">
+
+                    <video style="max-width: 100%;" controls src="{{ recording.get_video_url }}">
+                    </video>
+
+                    <p><a href="{{ recording.get_video_url }}">{% trans "Direktlänk" %}</a></p>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 col-lg-4">
+
+            {% if recordings %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">{% trans "Inspelningar" %}</h5>
+                    <table class="table table-text-edge table-no-bottom-padding mb-0">
+                        <tbody>
+                        {% for recording in recordings %}
+                        <tr>
+                            <td><a href="{{ recording.get_absolute_url }}">{{ recording.ts_start|date:"Y-m-d H:i:s" }}</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% endif %}
+
+
+
+{% endblock content %}

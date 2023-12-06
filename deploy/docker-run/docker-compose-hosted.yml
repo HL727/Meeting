@@ -1,0 +1,213 @@
+version: '3.6'
+
+x-restart:
+  &restart
+  restart: always
+  deploy:
+    restart_policy:
+      condition: any
+    update_config:
+      order: start-first
+
+x-web-base:
+  &web-base
+  <<: *restart
+
+  image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-core:${COMPONENT_VERSION:-latest}
+
+  volumes:
+    - ${CONFIG_DIR:-.}/.env:/code/.env
+    - ${CONFIG_DIR:-./core}/local_settings.py:/code/conferencecenter/local_settings.py
+    - ${CONFIG_DIR:-./core}/opt/:/code/opt/
+    - ${DATA_DIR:-./core}/debuglog:/code/cdrdata
+    - ${DATA_DIR:-./core}/logs:/var/log
+    - ${DATA_DIR:-./core}/uploads:/code/site_media/media/
+    - proxy_server_user_keys:/home/epmproxy/.ssh/
+
+  environment:
+    - ENV_HASH  # force reload in case of volume mount of env
+    - REDIS_HOST=redis
+    - DATABASE_POOL_HOST=dbpool
+    - ORCA=http://134.122.52.205:9091/
+
+
+  depends_on:
+    - redis
+    - rabbitmq
+
+  networks:
+    - default
+    - traefik
+
+
+services:
+
+  # Main instance
+
+  web:
+    <<: *web-base
+    command: bash -c "wait-for-it dbpool:5432 ; python /code/manage.py upgrade_installation --noinput && python -m gunicorn.app.wsgiapp conferencecenter.wsgi --workers 4 -t 120 -b :8000"
+
+    expose:
+      - 8000
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=web"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_web.loadbalancer.server.port=8000"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_web.loadbalancer.healthcheck.interval=3s"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_web.loadbalancer.healthcheck.path=/accounts/login/"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`, `${EPM_HOSTNAME:-epm.core.localhost}`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.tls.certResolver=${MAIN_HOSTNAME_CERTRESOLVER}"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_ip_cdr.rule=PathPrefix(`/cdr_receiver`, `/cdr/cms/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_ip_cdr.tls=true"
+
+    restart: always
+
+  # EPM API host
+
+  epm_host:
+    <<: *web-base
+    command: bash -c "wait-for-it dbpool:5432 ; python -m gunicorn.app.wsgiapp conferencecenter.wsgi --workers 3 -t 300 -b :8002"
+
+    expose:
+      - 8002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=epm_host"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_epm.loadbalancer.server.port=8002"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_epm.loadbalancer.healthcheck.path=/accounts/login/"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_epm.loadbalancer.healthcheck.interval=5s"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm.rule=Host(`${EPM_HOSTNAME:-epm.core.localhost}`, `${MAIN_HOSTNAME:-core.localhost}`) && PathPrefix(`/epm/`, `/tms/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm.tls.certResolver=${EPM_HOSTNAME_CERTRESOLVER}"
+
+  # Postgresql db
+
+  dbpool:
+    image: edoburu/pgbouncer:1.12.0
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-psql://mividas_core:mividas_core@db/mividas_core}
+      - POOL_MODE=transaction
+      - DEFAULT_POOL_SIZE=30
+      - MIN_POOL_SIZE=3
+      - RESERVE_POOL_SIZE=3
+      - SERVER_TLS_SSLMODE=prefer
+
+  # RabbitMQ queue
+
+  rabbitmq:
+    # <<: *restart  # must not be enabled. two cant be running in the same time
+    restart: always
+    image: rabbitmq:3.8
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-mividas_core}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-mividas_core}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST:-mividas_core}
+      - RABBITMQ_NODENAME=rabbit@rabbitmq
+
+    volumes:
+        - rabbitmq_log:/var/log/rabbitmq
+        - rabbitmq_data:/var/lib/rabbitmq
+    expose:
+      - 5672
+
+  # Celery background worker
+
+  celery:
+    <<: *web-base
+    command: bash -c "wait-for-it dbpool:5432 ; python -m celery -A provider.tasks worker -l info --pidfile='/tmp/celery.pid'"
+
+    restart: always
+    healthcheck:
+      test: ["NONE"]
+
+  # Celery beat
+
+  celery-beat:
+    <<: *web-base
+    command: bash -c "wait-for-it dbpool:5432 ; python -m celery -A provider.tasks beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l info --pidfile='/tmp/celerybeat.pid'"
+
+    healthcheck:
+      test: ["NONE"]
+
+
+  # Static files
+
+  static:
+    <<: *restart
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-core-static:${COMPONENT_VERSION:-latest}
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=static"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_static.loadbalancer.server.port=8002"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_static.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`, `${EPM_HOSTNAME:-epm.localhost}`) && PathPrefix(`/site_media/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_static.tls=true"
+
+    networks:
+      - default
+      - traefik
+
+    environment:
+      - ENV_HASH  # force reload in case of volume mount of env
+
+    volumes:
+      - ${DATA_DIR:-./core}/uploads:/usr/share/nginx/html/site_media/media/
+    expose:
+      - 80
+
+  # EPM Proxy
+
+  proxyserver:
+    <<: *restart
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-proxy-server:${COMPONENT_VERSION:-latest}
+
+    ports:
+      - target: 22
+        published: ${MIVIDAS_PROXY_PORT:-2222}
+        protocol: tcp
+        mode: host
+
+    expose:
+      - "10000-11500"
+
+    volumes:
+      - proxy_server_host_keys:/etc/ssh/persistant/
+      - proxy_server_user_keys:/home/epmproxy/.ssh/
+
+  # Book smtp handler
+
+  smtp_server:
+    <<: *restart
+
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-smtp-forward:${COMPONENT_VERSION:-latest}
+
+    ports:
+      - target: 25
+        published: ${INCOMING_SMTP_PORT:-25}
+        protocol: tcp
+        mode: host
+
+  # Redis cache/pubsub
+
+  redis:
+    # <<: *restart  # must not be enabled. two cant be running in the same time
+    image: "redis:5.0-alpine"
+    restart: always
+
+volumes:
+  django_settings:
+  proxy_server_host_keys:
+  proxy_server_user_keys:
+  postgres_data:
+  rabbitmq_log:
+  rabbitmq_data:
+
+networks:
+  traefik:
+    external: true

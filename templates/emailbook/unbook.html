@@ -1,0 +1,22 @@
+{% extends "base_standalone.html" %}
+
+{% load i18n %}
+
+{% block title %}Avboka möte{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Avboka möte" %}</h1>
+
+{% if done %}
+<p>{% trans "Mötet har avbokats" %}</p>
+{% else %}
+<p>{% trans "Vill du avboka mötet" %}? Ev. inspelningar kommer raderas.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" name="unbook" value="1">{% trans "Avboka" %}</button>
+</form>
+{% endif %}
+
+{% endblock content %}

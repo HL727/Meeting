@@ -1,0 +1,5 @@
+Ett fel uppstod vid bokning av mötet:
+
+{{ error }}
+
+Vänligen försök igen.

@@ -1,0 +1,58 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+default_stages: ['commit']
+exclude: ^(node_modules|static/|site_media|js-ui/assets|docs.js)
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v3.2.0
+      hooks:
+          - id: trailing-whitespace
+          - id: check-yaml
+          - id: check-added-large-files
+
+    - repo: https://github.com/pycqa/flake8
+      rev: 3.9.2
+      hooks:
+          - id: flake8
+            types: [python]
+            stages: [commit, push]
+            additional_dependencies:
+                - flake8-bandit==2.1.2
+                - flake8-bugbear==20.11.1
+                - flake8-comprehensions==3.3.1
+
+    - repo: https://github.com/akaihola/darker # TODO change to black after repository is up to date
+      rev: 1.5.0
+      hooks:
+          - id: darker
+            entry: darker -S -l 100 -r ':PRE-COMMIT:'
+            additional_dependencies:
+                - isort==5.10.1
+
+    - repo: local
+      hooks:
+          - id: vue-cli lint
+            name: vue-cli lint
+            language: system
+            entry: node ./node_modules/@vue/cli-service/bin/vue-cli-service.js lint
+            types: []
+            types_or: [vue, javascript, ts]
+
+    - repo: https://github.com/pre-commit/mirrors-prettier
+      rev: v2.3.1
+      hooks:
+          - id: prettier
+            types_or: [json]
+
+    - repo: local
+      hooks:
+          - id: missing_migrations
+            name: missing_migrations
+            language: system
+            entry: bash -c "! git status -s -u 'migrations/.*.py' | grep -q ."
+            pass_filenames: false
+            stages: [push]
+            types: []
+            always_run: true
+

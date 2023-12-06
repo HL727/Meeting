@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 static %}
+
+{% block navbar %}{% endblock navbar %}
+{% block outer_breadcrumb %}{% endblock outer_breadcrumb %}
+{% block vue_script %}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block html_attrs %}class="static-dom"{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/roboto.css" %}" />
+{% endblock %}
+
+{% block page_body %}
+<div class="full-page">
+    {% block outer_content %}
+    {% block content %}{% endblock %}
+    {% endblock %}
+</div>
+{% endblock %}

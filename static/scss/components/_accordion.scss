@@ -1,0 +1,44 @@
+.accordion-item {
+    @extend .mb-4;
+}
+
+.accordion-link {
+    position: relative;
+    display: block;
+    color: $dark;
+    border-bottom: 1px solid $gray-300;
+
+    @extend .pb-3;
+
+    .chevron {
+        transform: rotate(180deg);
+        font-size: 1rem;
+        vertical-align: baseline;
+        position: absolute;
+        top: 1rem;
+        right: 0;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: $dark;
+    }
+
+    &.collapsed {
+        .chevron {
+            transform: rotate(0deg);
+        }
+    }
+}
+
+.accordion-body {
+    background: $gray-200;
+    border-top: none;
+    border-radius: 0 0 $border-radius $border-radius;
+
+    @extend .p-3;
+
+    > div {
+        vertical-align: top;
+    }
+}

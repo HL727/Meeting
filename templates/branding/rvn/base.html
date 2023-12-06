@@ -1,0 +1,74 @@
+{% extends "base_real.html" %}
+
+{% load static i18n %}
+
+{% block fulltitle %}{% block title %}{{ title|default:"Start" }}{% endblock %} :: RVN{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<style type="text/css">
+    a {
+        color: #009fe3;
+    }
+    .card-login {
+        background: #fff;
+        color: #009fe3;
+    }
+    body .btn.btn-primary {
+        color: #fff;
+        background: #009fe3;
+        border-color: #009fe3;
+    }
+    .navbar.bg-dark {
+        background: #ffffff !important;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+    .navbar-dark .navbar-nav .nav-link {
+        color: #333;
+    }
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #aaa;
+    }
+    .navbar-dark .navbar-text {
+        color: #333;
+    }
+    .navbar-nav .nav-item.active {
+        background: #4cbbeb;
+    }
+    .navbar-nav .nav-item.active .nav-link:active {
+        color: #fff;
+    }
+    .page-header {
+        background-color: #4cbbeb;
+        background-image: url({% static "images/rvn-header-background.svg" %});
+        color: #fff;
+    }
+    .page-header .breadcrumb {
+        color: #fff;
+    }
+    .page-header .breadcrumb a {
+        color: #fff;
+        text-decoration: underline;
+    }
+    .page-header .breadcrumb a:hover {
+        text-decoration: none;
+        opacity: 0.8;
+    }
+    .navbar-dark .navbar-toggler-icon {
+        background-color: #4cbbeb;
+        border-radius: 5px;
+        background-size: 20px 20px;
+    }
+</style>
+{% endblock %}
+
+{% block logo %}
+    <img src="{% static "images/rvn_logo.svg" %}" alt="">
+    <img src="{% static "images/rvn_logo.svg" %}" alt="" class="compact">
+{% endblock %}
+
+{% block footer %}
+<div class="container-fluid">
+    <strong>{% trans "RVN" %}</strong> - Video backend
+</div>
+{% endblock footer %}

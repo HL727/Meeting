@@ -1,0 +1,231 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{% trans "Samtalsrapport" %} - {{ cospace.name }}{% endblock %}
+
+{% block page_icon %}mdi-bug{% endblock %}
+{% block page_title %}{% trans "Samtalsrapport" %} - {{ call.cospace }}{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    {% if call.cospace_id %}<a href="{% url 'cospaces_details' call.cospace_id %}">{{ call.cospace }}</a> / {% endif %}
+    <strong>{% trans "Samtalsrapport" %}</strong>
+{% endblock %}
+
+{% block page_content %}
+    {% include "blocks/page_notification.html" %}
+
+{% if call %}
+<div class="row mt-5">
+    <div class="col-md-6 d-flex">
+        <div class="mb-5 v-card v-sheet theme--light w-100">
+            <div class="v-card__text">
+                <h2 class="overline">{% trans "Samtal" %}</h2>
+                <table class="table table-text-edge mb-0">
+                    <tbody>
+                        <tr>
+                            <th>{% trans "Mötesrum" %}</th>
+                            <td>{% if call.cospace_id %}
+                                <a href="{% url 'cospaces_details' call.cospace_id %}">{{ call.cospace }}</a>
+                            {% else %}
+                                {{ call.cospace }}
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <th>{% trans "Start" %}</th>
+                            <td>{{ call.ts_start|date:"Y-m-d H:i:s" }}</td>
+
+                        </tr>
+                        <tr>
+                            <th>{% trans "Stop" %}</th>
+                            <td>{{ call.ts_stop|date:"Y-m-d H:i:s" }}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex">
+        <div class="mb-5 v-card v-sheet theme--light w-100">
+            <div class="v-card__text">
+
+                <h2 class="overline">{% trans "Återuppringningar" %}</h2>
+                <table class="table table-text-edge mb-0">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Antal återuppringningar" %}</th>
+                            <th colspan="2">{% trans "Antal deltagare" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for count, participants in reconnects %}
+                        <tr>
+                            <td>{{ count }}</td>
+                            <td>{{ participants }}</td>
+                            <td>{% widthratio participants grouped_legs|length 100 %}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>{{ grouped_legs|length }} st</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endif %}
+<div class="mb-5 v-card v-sheet theme--light">
+    <div class="v-card__text">
+
+        <h4 class="overline">{% trans "Deltagare" %}</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-striped table-borderless">
+                <thead>
+                    <tr>
+                        <th colspan="6">{% trans "Information" %}</th>
+                        <th colspan="3">{% trans "Alarm" %}</th>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Deltagare" %}</th>
+                        <th>{% trans "Anslutning" %}</th>
+                        <th>{% trans "Start" %}</th>
+                        <th>{% trans "Stop" %}p</th>
+                        <th>{% trans "Längd" %}</th>
+                        <th>{% trans "Presentation" %}</th>
+
+                        <th>{% trans "Packetloss" %}</th>
+                        <th>{% trans "Jitter" %}</th>
+                        <th>{% trans "Roundtrip" %}</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for grouped_leg in grouped_legs %}
+                    {% for leg in grouped_leg  %}
+                    <tr>
+                        <td>
+                            {% if not forloop.first %}
+                                <span style="color: #ccc;">&mdash; {{ leg.target }} nr {{ forloop.counter }}</span>
+                            {% else %}
+                                {% if leg.user_id %}
+                                    <a href="{% url 'user_details' leg.user_id %}?user={{ leg.user_id }}">{% firstof leg.name leg.target %}</a>
+                                {% else %}
+                                    {% firstof leg.name leg.target %}
+                                {% endif %}
+                                <br />
+                                {{ leg.target }}
+                            {% endif %}
+                        </td>
+                        <td>{{ leg.protocol_str }}</td>
+                        <td>{{ leg.ts_start|date:"H:i:s" }}</td>
+                        <td>{{ leg.ts_stop|date:"H:i:s" }}</td>
+                        <td>{{ leg.duration }}</td>
+                        <td>{% if leg.presentation_contribution_percent %}{% widthratio leg.presentation_contribution_percent 1000 100 %}%{% endif %}</td>
+
+                        <td>{% if leg.packetloss_percent %}{% widthratio leg.packetloss_percent 1000 100 %}%{% endif %}</td>
+                        <td>{% if leg.jitter_percent %}{% widthratio leg.jitter_percent 1000 100 %}%{% endif %}</td>
+                        <td>{% if leg.high_roundtrip_percent %}{% widthratio leg.high_roundtrip_percent 1000 100 %}%{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% if user.is_superuser %}
+
+<div style='max-width: 1200px;'>
+<h4 class="mt-10">{% trans "Debug-data" %}</h4>
+<hr>
+
+<ul class="nav nav-tabs my-4" role="tablist">
+    <li role="presentation" class="nav-item">
+        <a href="#stats-debug" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">{% trans "Samtal" %}</a>
+    </li>
+
+    <li role="presentation" class="nav-item">
+        <a href="#stats-legs" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Deltagare" %}</a>
+    </li>
+
+    <li role="presentation" class="nav-item">
+        <a href="#stats-log" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Logg-filer" %}</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="stats-debug">
+
+        {% if server.is_pexip and call.guid and perms.provider.api_client %}
+            <a class="btn btn-primary" href="{% url 'rest_client' %}?url=history/v1/conference/{{ call.guid }}&amp;provider={{ server.cluster_id }}" class="btn btn-outline-primary">{% trans "API-klient" %}</a>
+        {% endif %}
+
+        <table class="table table-text-edge table-sm mt-2">
+            <tbody>
+                {% for k, v in call.items|dictsort:0 %}
+                <tr>
+                    <th>{{ k|title }}</th>
+                    <td>{% if v == 'None' or v == None  %}<span style='color: #999;'>-</span>{% else %}{{ v }}{% endif %}</td>
+                </tr>
+		        {% endfor %}
+            </body>
+        </table>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="stats-legs">
+        {% for l in legs %}
+            <h4>
+                {% trans "Deltagare" %} {{ forloop.counter }}
+                {% if server.is_pexip and l.guid and perms.provider.api_client %}
+                    <a class="btn btn-primary" href="{% url 'rest_client' %}?url=history/v1/participant&amp;f_call_uuid={{ leg.guid }}&amp;provider={{ server.cluster_id }}" class="btn btn-outline-primary">{% trans "API-klient" %}</a>
+                {% endif %}
+            </h4>
+            <table class="table table-text-edge table-sm mt-2 mb-8">
+                <tbody>
+                    {% for k, v in l.items|dictsort:0 %}
+                    <tr>
+                        <th>{{ k|title }}</th>
+                        <td>{% if v == 'None' or v == None  %}<span style='color: #999;'>-</span>{% else %}{{ v }}{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </body>
+            </table>
+        {% empty %}
+            {% trans "Kunde inte hitta några deltagare" %}
+        {% endfor %}
+
+        {% if leg and not legs %}
+            <hr>
+            <h2>{% trans "Leg" %}</h2>
+            <pre>{{ leg|pprint }}</pre>
+        {% endif %}
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="stats-log">
+        {% for line in lines %}
+            <pre>{{ line }}</pre>
+        {% empty %}
+            {% trans "Kunde inte hitta data i loggfiler" %}
+        {% endfor %}
+    </div>
+</div>
+
+    </div>
+{% endif %}
+
+{% endblock page_content %}

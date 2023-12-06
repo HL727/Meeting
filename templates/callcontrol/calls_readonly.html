@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Visa aktiva möten{% endblock %}
+
+{% block content %}
+<h1>{% trans "Visa aktiva möten" %}</h1>
+
+{% if customer %}
+
+<h2>{% trans "Aktiva möten" %}</h2>
+<p>{% blocktrans with count=count %}Totalt {{count}}st möten,{% endblocktrans %} {{ leg_count }} deltagare</p>
+
+<form>
+<input name="filter" value="{{ filter }}" /><button class="btn btn-outline-secondary">{% trans "Filtrera" %}</button>
+<input type="hidden" name="customer" value="{{ customer.pk }}" />
+</form>
+
+<table class="table table-striped">
+<thead>
+    <tr>
+    <th>{% trans "Möte" %}</th>
+    <th style="width: 50%;">{% trans "Deltagare" %}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for call in calls %}
+    <tr>
+    <td>{{ call.name|default:"Ospecificerat" }}</td>
+    <td>
+    {% if call.legs %}
+    <a href="#" onclick="$(this).closest('td').find('ul').toggle(); return false;">{% trans "visa" %} {{ call.legs|length }} st</a>
+    <ul style="display: none;">
+    {% for leg in call.legs %}
+        <li>{{ leg.name }} ({{ leg.remote }})</li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <i>{% trans "Inga" %}</i>
+    {% endif %}
+    </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% if filter_legs %}
+<h2>{% trans "Matchande deltagare" %}</h2>
+<table class="table table-striped">
+<thead>
+    <tr>
+    <th>{% trans "Deltagare" %}</th>
+    <th>{% trans "Adress" %}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for leg in filter_legs %}
+    <tr>
+    <td><a href="{% url 'call_handler' leg.call %}?customer={{ customer.id }}">{{ leg.name }}</a></td>
+    <td>{{ leg.remote }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endif %}
+
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,9 @@
+.v-textarea--code {
+    textarea {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    .v-text-field__slot {
+        margin-right: 0!important;
+    }
+}

@@ -1,0 +1,463 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Möte: {{ meeting.title }}{% endblock %}
+
+{% block page_icon %}mdi-calendar{% endblock %}
+{% block page_title %}{{ meeting.title|default:"Möte" }}{% endblock %}
+
+{% block page_actions %}
+
+    {% if meeting.provider.is_external or meeting.provider.is_offline %}
+        <div class="btn btn-sm btn-outline-info disabled">
+            <i class="v-icon notranslate mdi mdi-calendar-remove-outline mr-1"></i>
+            {% if meeting.ts_unbooked %}
+                {% trans "Avbokat" %} {{ meeting.ts_unbooked|date:"Y-m-d H:i" }}
+            {% elif not meeting.backend_active %}
+                {% trans "Avbokat" %}
+            {% endif %}
+        </div>
+    {% else %}
+        {% if cospace %}
+            <div class="v-list-item__icon ma-0 align-self-center">
+                <a class="btn btn-primary btn-sm" href="{% url 'cospaces_details' cospace.id %}?customer={{ meeting.customer.pk }}">
+                    <i class="v-icon notranslate mdi mdi-door-closed mr-1"></i>
+                    {% blocktrans count 1 as counter %}Mötesrum{% plural %}Mötesrum{% endblocktrans %}
+                </a>
+            </div>
+            <div class="v-list-item__icon ma-0 align-self-center">
+                <a class="btn btn-primary btn-sm ml-4" href="{{ meeting.get_invite_url }}?customer={{ meeting.customer_id }}">
+                    <i class="v-icon notranslate mdi mdi-email-outline mr-1"></i>
+                    {% trans "Inbjudan" %}
+                </a>
+            </div>
+        {% elif meeting.ts_unbooked %}
+            <div class="btn btn-sm btn-outline-info disabled">
+                <i class="v-icon notranslate mdi mdi-calendar-remove-outline mr-1"></i>
+                {% trans "Avbokat" %} {{ meeting.ts_unbooked|date:"Y-m-d H:i" }}
+            </div>
+        {% elif not meeting.backend_active %}
+            <div class="btn btn-sm btn-outline-info disabled">
+                <i class="v-icon notranslate mdi mdi-calendar-remove-outline mr-1"></i>
+                {% trans "Autoraderat" %}
+            </div>
+        {% endif %}
+
+        {% if perms.provider.api_client %}
+            <div class="v-list-item__icon ma-0 align-self-center">
+                <a
+                    href="{{ meeting.get_api_client_url }}"
+                    class="btn btn-sm btn-outline-secondary ml-4"
+                >
+                    <i class="v-icon notranslate mdi mdi-package-variant-closed mr-1"></i>
+                    {% trans "API" %}
+                </a>
+            </div>
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+{% block page_content %}
+
+{% include "blocks/page_notification.html" %}
+
+<div class="row mt-4">
+    <div class="col-12 col-lg-8">
+
+
+        <div class="table-responsive mb-4">
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>{% trans "Typ av möte" %}</th>
+                        <td>{{ meeting.type_str }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Aktiverades första gången" %}</th>
+                        <td>{{ meeting.ts_activated|date:"Y-m-d H:i"|default:_('Aldrig') }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Bokad av" %}</th>
+                        <td>{{ meeting.creator }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Kund" %}</th>
+                        <td>{{ meeting.customer }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Start" %}</th>
+                        <td>{{ meeting.ts_start }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Stopp" %}</th>
+                        <td>{{ meeting.ts_stop }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "URI" %}</th>
+                        <td>{{ meeting.sip_uri }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Call ID" %}</th>
+                        <td>{{ meeting.provider_ref }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Space-ID" %}</th>
+                        <td>{{ meeting.provider_ref2 }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Bokades" %}</th>
+                        <td>{{ meeting.ts_created }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Inspelning" %}</th>
+                        <td>{{ meeting.get_settings.recording.record|yesno:_("Ja,Nej") }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Livestream" %}</th>
+                        <td>{{ meeting.get_settings.recording.is_live|yesno:_("Ja,Nej") }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Uppringning" %}</th>
+                        <td>
+                            {% if meeting.get_settings.dialout %}
+                                {% for dialout in meeting.get_settings.dialout %}
+                                    {{ dialout.dialstring }}
+                                {% endfor %}
+                            {% else %}
+                                Nej
+                            {% endif %}
+                    </tr>
+                    {% if endpoints %}
+                    <tr>
+                        <th>{% trans "Endpoints" %}</th>
+                        <td>{% for endpoint in endpoints %}<a href="{{ endpoint.get_absolute_url }}">{{ endpoint }}</a> {% endfor %}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if meeting.source %}
+                    <tr>
+                        <th>{% trans "Källa" %}</th>
+                        <td>{{ meeting.source }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if meeting.ical_uid %}
+                        <tr>
+                            <th>{% trans "iCal UID" %}</th>
+                            <td>{{ meeting.ical_uid }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if meeting.recurrence_id %}
+                        <tr>
+                            <th>{% trans "Recurrence ID" %}</th>
+                            <td>{{ meeting.recurrence_id }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% for m in meeting.prev_bookings.all %}
+                    <tr>
+                        <th>{% trans "Ersatt av" %}</th>
+                        <td><a href="{{ m.get_debug_details_url }}">{{ m }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% if meeting.parent %}
+                    <tr>
+                        <th>{% trans "Ersätter tidigare bokning" %}:</th>
+                        <td><a href="{{ meeting.parent.get_debug_details_url }}">{{ meeting.parent }}</a></td>
+                    </tr>
+                    {% endif %}
+                    {% if meeting.recurring_master_id %}
+                    <tr>
+                        <th>{% trans "Återkommande möte" %}:</th>
+                        <td>
+                            <div>{% trans 'Regel' %}: {{ meeting.recurring_master.recurring_rule }}</div>
+                            <div>{% trans 'Undantag' %}: {{ meeting.recurring_master.recurring_exceptions|default:_('Nej') }}</div>
+                            <div>{% trans 'Schemaläggs separat' %}: {{ meeting.recurring_master.external_occasion_handling|yesno:_('Ja,Nej') }}</div>
+                            <div>
+                                {% trans 'Alla möten' %}:<br />
+                                {% for m in meeting.recurring_master.active_meetings %}
+                                    {% if m == meeting %}[X]{% endif %}
+                                    <a href="{{ m.get_absolute_url }}">{{ m }}</a><br />
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        {% if recordings or calls or dialouts %}
+        <ul class="nav nav-tabs my-4" role="tablist">
+
+            {% if recordings or acano_recordings %}
+            <li role="presentation" class="nav-item">
+                <a href="#meeting-recordings" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">{% trans "Inspelningar" %}</a>
+            </li>
+            {% endif %}
+
+            {% if dialouts %}
+            <li role="presentation" class="nav-item">
+                <a href="#meeting-dialouts" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Automatisk uppringning" %}</a>
+            </li>
+            {% endif %}
+
+            {% if calls %}
+            <li role="presentation" class="nav-item">
+                <a href="#meeting-calls" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Samtal" %}</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        <div class="tab-content">
+        {% if recordings or acano_recordings %}
+            <div role="tabpanel" class="tab-pane active" id="meeting-recordings">
+
+                {% if acano_recordings %}
+                <div class="table-responsive mb-4">
+
+                <h3>{% trans "Visa inspelningar" %}</h3>
+
+                    <table class="table table-text-edge table-no-bottom-padding mb-0">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Start" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for recording in acano_recordings %}
+                        <tr>
+                            <td><a href="{{ recording.get_absolute_url }}">{{ recording.ts_start|date:"Y-m-d H:i:s" }}</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+
+                {% for recording in recordings %}
+                <h3>{% trans "Bokad inspelning" %} {{ forloop.counter }}</h3>
+                <div class="table-responsive mb-4">
+
+                    <table class="table table-bordered">
+                        <tbody>
+                            {% if recording.provider.is_videocenter %}
+                            <tr>
+                                <th>{% trans "Inspelning" %}s-id</th>
+                                <td><a href="http://{{ video_provider.display_web_host }}/videos/video/{{ recording.recording_id }}">{{ recording.recording_id }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Inspelning" %}slogg</th>
+                                <td><a href="https://{{ video_provider.display_web_host }}/server-admin/operation/system-logs-download/videocenter/videocenter/Recording%20logs/recording-{{ recording.recording_id }}.log/all/view-unframed/">{% trans "Visa" %}</a></td>
+                            </tr>
+                            {% endif %}
+                            {% if recording.get_playback_url %}
+                            <tr>
+                                <th>{% trans "Uppspelningsadress" %}</th>
+                                <td>{{ recording.get_playback_url|urlize }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th>{% trans "Publik" %}</th>
+                                <td>{{ recording.is_public|yesno:_("Ja,Nej") }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Live" %}</th>
+                                <td>{{ recording.is_live|yesno:_("Ja,Nej") }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Start" %}ades</th>
+                                <td>{{ recording.ts_activated }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Avslutades, ca" %}</th>
+                                <td>{{ recording.ts_deactivated }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Ev. fel" %}</th>
+                                <td>{{ recording.error }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if dialouts %}
+        <div role="tabpanel" class="tab-pane" id="meeting-dialouts">
+
+
+            {% for dialout in dialouts %}
+            <h3>{% trans "Bokat uppringning" %} {{ forloop.counter }}</h3>
+            <div class="table-responsive mb-4">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>{% trans "Leg ID" %}</th>
+                            <td>{{ dialout.provider_ref }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "URI" %}</th>
+                            <td>{{ dialout.uri }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Start" %}ades</th>
+                            <td>{{ dialout.ts_activated }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Nedkopplad, ca" %}</th>
+                            <td>{{ dialout.ts_deactivated }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+        {% if calls %}
+        <div role="tabpanel" class="tab-pane" id="meeting-calls">
+
+
+            {% for call in calls %}
+            <h3>{% trans "Samtal" %} {{ forloop.counter }}</h3>
+            <div class="table-responsive mb-4">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>{% trans "Name" %}</th>
+                            <td>{{ call.cospace }}</td>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ call.guid }}
+                            <a href="/stats/debug/{{ call.guid }}">{% trans "Visa detaljer" %}</a>
+			    </td>
+                        </tr>
+                        <tr>
+                            <th>OU</th>
+                            <td>{{ call.ou }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Deltagare" %}</th>
+                            <td>{{ call.leg_count }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Längd" %}</th>
+                            <td>{{ call.duration }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Start" %}</th>
+                            <td>{{ call.ts_start }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Längd" %}</th>
+                            <td>{{ call.ts_stop }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% for leg in call.legs.all %}
+            <h4>{% trans "Deltagare" %} {{ forloop.counter }}</h4>
+            <div class="table-responsive mb-4">
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>{% trans "Namn" %}</th>
+                            <td>{{ leg.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ leg.guid }}
+				    <a href="/stats/debug/leg/{{ leg.guid }}">{% trans "Visa detaljer" %}</a>
+			    </td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "URI" %}</th>
+                            <td>{{ leg.target }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Gäst" %}</th>
+                            <td>{{ leg.is_guest|yesno:_("Ja,Nej") }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Start" %}</th>
+                            <td>{{ leg.ts_start }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Stopp" %}</th>
+                            <td>{{ leg.ts_stop }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="card card-shadow mb-4 card-top">
+
+            <div class="card-body">
+                <h5 class="mb-3">{% trans "Möten" %}</h5>
+
+                <a class="btn btn-outline-secondary" href="{% url 'meeting_debug_list' %}?{{ request.META.QUERY_STRING }}">{% trans "Tillbaka till möteslista" %}</a>
+
+            </div>
+        </div>
+
+
+        {% if latest_calls %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="mb-3">{% trans "Visa samtalsrapport" %}</h5>
+                <table class="table table-text-edge table-no-bottom-padding mb-0">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Start" %}</th>
+                            <th>{% trans "Deltagare" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for call in latest_calls %}
+                    <tr>
+                        <td><a href="/stats/debug/{{ call.guid }}">{{ call.ts_start|date:"Y-m-d H:i:s" }}</a></td>
+                        <td>{{ call.leg_count }} st</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock page_content %}

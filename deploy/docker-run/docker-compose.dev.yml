@@ -1,0 +1,103 @@
+version: '3.5'
+# Build dependencies by running:
+# sh deploy/docker_devserver.sh
+
+x-web-base:
+  &web-base
+  image: mividas-core-base-test:latest
+  environment:
+    - DATABASE_URL=psql://mividas_core:mividas_core@db:5432/mividas_core
+    - REDIS_HOST=redis
+    - CELERY_BROKER_URL=${CELERY_BROKER_URL:-amqp://mividas_core:mividas_core@rabbitmq/mividas_core}
+    - DEBUG=1
+    - MAIN_HOSTNAME=${MAIN_HOSTNAME:-localhost}
+    - BASE_URL=http://${MAIN_HOSTNAME:-localhost}:8007/
+    - EPM_BASE_URL=http://${MAIN_HOSTNAME:-localhost}:8007/
+    - DOCKER_DEVSERVER=1
+  env_file: .env
+  volumes:
+    - ./:/code/
+
+
+services:
+  web:
+    <<: *web-base
+    command: python manage.py celery_devserver 0.0.0.0:8002
+    ports:
+      - 8002:8002
+    restart: always
+
+  tests:
+    <<: *web-base
+    command: python manage.py test --settings=conferencecenter.settings_test --parallel 10
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+
+  ui:
+    image: mividas-core-js-base:latest
+    command: npm run serve
+    expose:
+      - 8083
+    ports:
+      - 8083:8083
+    environment:
+      - NODE_PATH=/node_modules
+      - VUE_APP_SERVER_IP=${VUE_APP_SERVER_IP:-${MAIN_HOSTNAME:-localhost}}
+    volumes:
+      - ./:/code/
+    restart: always
+
+  db:
+    image: postgres:11
+    command: >
+      postgres
+      -c fsync=off
+      -c max_connections=200
+      -c effective_cache_size=${POSTGRES_EFFECTIVE_CACHE:-504MB}
+      -c shared_buffers=${POSTGRES_SHARED_BUFFERS:-160MB}
+      -c maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-52MB}
+      -c work_mem=${POSTGRES_WORK_MEM:-1966kB}
+      -c checkpoint_completion_target=0.7
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+      -c min_wal_size=1GB
+      -c max_wal_size=4GB
+      -c synchronous_commit=off
+      -c fsync=off
+    ports:
+      - "${POSTGRES_PORT:-5532}:5432"
+    expose:
+      - 5432
+
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-mividas_core}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-mividas_core}
+      - POSTGRES_DB=${POSTGRES_DB:-mividas_core}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:5
+    expose:
+      - 6379
+
+  rabbitmq:
+    image: rabbitmq:3.8
+    environment:
+      - RABBITMQ_DEFAULT_USER=mividas_core
+      - RABBITMQ_DEFAULT_PASS=mividas_core
+      - RABBITMQ_DEFAULT_VHOST=mividas_core
+      - RABBITMQ_NODENAME=rabbit@rabbitmq
+
+    expose:
+      - 6379
+
+    restart: always
+
+volumes:
+  pgdata:

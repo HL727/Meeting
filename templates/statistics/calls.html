@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block extra_head %}
+   {{ block.super }}
+   <link rel="stylesheet" href="{% static "css/datatables.min.css" %}" />
+{% endblock extra_head %}
+
+{% block title %}Statistik{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Statistik" %}</strong>{% endblock %}
+
+{% block content %}
+    <script src="{% static "js/datatables.min.js" %}"></script>
+    <script src="{% static "js/plotly.min.js" %}"></script>
+    <div class="row">
+        <div class="col-12 col-lg-4 order-lg-1">
+            <div class="mb-4">
+                <div class="card card-toggle card-shadow">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <span class="h5"><span class="fa fa-fw fa-filter"></span> {% trans "Filtera statistik" %}</span>
+                            <div class="float-right d-lg-none">
+                                <a href="#" class="btn btn-primary-outline btn-sm toggle-form">{% trans "Stäng" %} <span class="fa fa-fw fa-times"></span></a>
+                            </div>
+                        </div>
+
+                        <form onsubmit="jQuery(this).addClass('loading')">
+                            {% for field in form.visible_fields %}
+                                {% if field.name == 'organization' %}
+                                    <div class="form-group">
+                                        {{ field.label_tag }}
+                                        <div data-vue="OrganizationPicker" {% if field.value %}data-value="{{ field.value }}"{% endif %}
+                                             data-input-name="organization"></div>
+                                    </div>
+                                {% else %}
+                                    {% bootstrap_field field %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+
+                            <button class="btn btn-primary w-100">{% trans "Filtrera" %} <span class="fa fa-circle-notch fa-spin fa-fw only-loading" /></button>
+                        </form>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline-primary toggle-form" id="toggleForm">
+                    <span class="fa fa-fw fa-filter"></span>
+                    {% trans "Filtera" %}
+                </a>
+                <script>
+                    jQuery(function($) {
+
+                        var $filterButton = $('#toggleForm');
+
+                        $('.toggle-form').on('click', function(e) {
+                            e.preventDefault();
+                            $filterButton.toggle().parent().find('.card').toggle();
+                        });
+                    });
+                </script>
+                {% if loaded %}
+                <div class="card card-toggle card-shadow">
+                    <div class="card-body">
+                        <p><a class="btn btn-secondary w-100" href="{{ pdf_report_url }}">{% trans "Ladda ner PDF-rapport" %}</a></p>
+                        <p><a class="btn btn-secondary w-100" href="{{ excel_report_url }}">{% trans "Ladda ner Excel-rapport" %}</a></p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <h1>{% trans "Statistik" %}</h1>
+
+            {% if graph %}
+                <h2>{% trans "Antal timmar per dag" %}</h2>
+                <div>
+                {{ graph|safe }}
+                </div>
+            {% endif %}
+
+            {% if sametime_graph %}
+                <h2>{% trans "Samtidiga användare" %}</h2>
+                <div>
+                {{ sametime_graph|safe }}
+                </div>
+            {% endif %}
+
+            {% if defer_load %}
+            <p>{% trans "Välj filtrering till höger för att räkna ut statistik" %}</p>
+            {% elif loaded %}
+
+        </div>
+    </div>
+
+
+
+        <div class="container" style="margin-left: 0;">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs my-4" role="tablist">
+                {% if summary.cospace %}
+                    <li role="presentation" class="nav-item">
+                        <a href="#stats-cospace" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">{% trans "Per cospace" %}</a>
+                    </li>
+                {% endif %}
+
+                {% if summary.ou %}
+                    <li role="presentation" class="nav-item">
+                        <a href="#stats-ou" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Per grupp" %}</a>
+                    </li>
+                {% endif %}
+
+                {% if summary.user %}
+                    <li role="presentation" class="nav-item">
+                        <a href="#stats-user" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Per deltagare" %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="stats-cospace">
+                    {% if summary.cospace %}
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th>{% trans "cospace" %}</th>
+                                <th>{% trans "timmar" %}</th>
+                                <th>{% trans "gästtimmar" %}</th>
+                                <th>{% trans "deltagare" %}</th>
+                                <th>{% trans "samtal" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for cospace, data in summary.cospace.items %}
+                                <tr>
+                                    <td>{{ cospace }}
+                                        {% if data.4 %}<a href="{% url 'cospaces_details' data.4 %}"><span class="fa fa-external-link-alt"></span></a>{% endif %}
+                                    </td>
+                                    <td>{{ data.0|floatformat:2 }}</td>
+                                    <td>{{ data.1|floatformat:2 }} </td>
+                                    <td>{{ data.2 }} </td>
+                                    <td>{{ data.3 }} </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>{{ summary.cospace|length }}</th>
+                                <th>{{ summary.cospace_total.0|floatformat:2 }}</th>
+                                <th>{{ summary.cospace_total.1|floatformat:2 }} </th>
+                                <th>{{ summary.cospace_total.2 }} </th>
+                                <th>{{ summary.cospace_total.3 }} </th>
+                            </tfoot>
+                        </table>
+                    {% endif %}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="stats-ou">
+                    {% if summary.ou %}
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th>ou</th>
+                                <th>{% trans "timmar" %}</th>
+                                <th>{% trans "gästtimmar" %}</th>
+                                <th>{% trans "deltagare" %}</th>
+                                <th>{% trans "samtal" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ou, data in summary.ou.items %}
+                                <tr>
+                                    <td>{{ ou }} </td>
+                                    <td>{{ data.0|floatformat:2 }}</td>
+                                    <td>{{ data.1|floatformat:2 }} </td>
+                                    <td>{{ data.2 }} </td>
+                                    <td>{{ data.3 }} </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>{{ summary.ou|length }}</th>
+                                <th>{{ summary.ou_total.0|floatformat:2 }}</th>
+                                <th>{{ summary.ou_total.1|floatformat:2 }} </th>
+                                <th>{{ summary.ou_total.2 }} </th>
+                                <th>{{ summary.ou_total.3 }} </th>
+                            </tfoot>
+                        </table>
+                    {% endif %}
+                </div>
+                <div role="tabpanel" class="tab-pane" id="stats-user">
+                    {% if summary.user %}
+                        <table class="table datatable">
+                            <thead>
+                            <tr>
+                                <th>{% trans "deltagare" %}</th>
+                                <th>{% trans "timmar" %}</th>
+                                <th>{% trans "samtal" %}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user, data in summary.user.items %}
+                                <tr>
+                                    <td>{{ user|truncatechars:55 }}</td>
+                                    <td>{{ data.0|floatformat:2 }}</td>
+                                    <td>{{ data.3 }} </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>{{ summary.user|length }}</th>
+                                <th>{{ summary.user_total.0|floatformat:2 }}</th>
+                                <th>{{ summary.user_total.2 }} </th>
+                            </tfoot>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>{% trans "Hittade inga matchande samtal" %}</p>
+        {% endif %}
+
+        {% if debug_calls %}
+            <h2>{% trans "Debug" %}</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans "cospace" %}</th>
+                    <th>{% trans "target" %}</th>
+                    <th>ou</th>
+                    <th>{% trans "start" %}</th>
+                    <th>{% trans "deltagare" %}</th>
+                    <th>{% trans "längd" %}</th>
+                    <th>{% trans "ack. längd" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for call in calls %}
+                    <tr>
+                        <td><a href="/stats/debug/{{ call.guid }}">{{ call.cospace|default:"unkown" }}</a></td>
+                        <td></td>
+                        <td>{{ call.ou }}</td>
+                        <td>{{ call.ts_start|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ call.leg_count }}</td>
+                        <td>{{ call.duration }}</td>
+                        <td>{{ call.total_duration }}</td>
+                    </tr>
+                    {% for leg in call.legs.all %}
+                        <tr>
+                            <td></td>
+                            <td><a href="/stats/debug/leg/{{ leg.guid }}">{{ leg.target }}</a><br/>
+                                <small>{{ leg.local }}</small>
+                                <br/>
+                                <small>{{ leg.remote }}</small>
+                            </td>
+                            <td>{{ leg.ou }}</td>
+                            <td>{{ leg.ts_start|date:"Y-m-d H:i:s" }}</td>
+                            <td>{{ leg.ts_stop|date:"Y-m-d H:i:s" }}</td>
+                            <td>{% if leg.is_guest %}<span class="fa fa-check"></span>{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <script>
+        var initTables = function () {
+                var $ = jQuery;
+                $('table.datatable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy',
+                        'csv',
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: ':visible',
+                                format: {
+                                    body: function (data, row, column, node) {
+                                        data = $('<p>' + data + '</p>').text();
+                                        return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    paging: false
+                });
+            };
+        $(initTables)
+        </script>
+</div>
+{% endblock content %}

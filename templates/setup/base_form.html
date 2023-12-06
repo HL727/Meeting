@@ -1,0 +1,27 @@
+{% extends request.user.is_authenticated|yesno:"base.html,base_standalone.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block content %}
+<div class="card card-settings">
+    <form action="{{ request.path }}?next={{ next }}" method="post" role="form" class="form mb-0">
+    <div class="card-header">
+        <h3 class="mb-0">{% block form_title %}{{ title }}{% endblock %}</h3>
+    </div>
+    <div class="card-body pb-0">
+        {% block form_content %}
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% endblock %}
+    </div>
+    <div class="card-footer">
+        <div class="d-flex align-items-center">
+            <button type="submit" class="btn btn-primary">
+                {{ button_text|default:_('Gå vidare') }}
+            </button>
+            <a href="?skip=1" class="ml-auto">{% trans "Hoppa över" %}</a>
+        </div>
+    </div>
+    </form>
+</div>
+{% endblock content %}

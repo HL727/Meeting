@@ -1,0 +1,190 @@
+
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera behörigheter{% endblock %}
+
+{% block content %}
+<h1>{% trans "Hantera behörigheter" %}</h1>
+
+{% if organization.admin_url %}
+<h2>{% trans "Backend" %}</h2>
+<p><i>{% trans "Hantera samtal och mötesrum, samt visa statistik" %}</i></p>
+<p><a href="{{ organization.admin_url }}">{{ organization.admin_url }}</a></p>
+
+<h3>{% trans "Användare" %}:</h3>
+{% if organization.admin_users.all %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "Användarnamn" %}</th>
+            <th>{% trans "E-post" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in organization.admin_users.all %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.delete_requested %}Raderas...
+                {% elif not user.confirmed %}Behandlas...
+                {% endif %}
+            </td>
+            <td>
+                {% if not user.delete_requested %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button onclick="return confirm('Säker?');" class="btn btn-danger" name="delete_backend" value="{{ user.pk }}">x</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p><i>{% trans "Inga" %}</i></p>
+{% endif %}
+
+<a onclick="jQuery(this).next('form').toggle();" class="btn btn-outline-secondary">{% trans "Lägg till" %}</a>
+<form method="post" style="display: none;">    {% csrf_token %}
+    <div>
+        <h4>{% trans "Ny användare" %}</h4>
+        <label>{% trans "Användarnamn" %}: <input required name="username" /></label><br />
+        <label>{% trans "E-post" %}: <input required name="email" /></label><br />
+        <label>{% trans "Lösenord" %}: <input name="password" /></label><br />
+        <button class="btn btn-primary" name="create_backend" value="1">{% trans "Lägg till" %}</button>
+    </div>
+</form>
+<hr />
+
+{% endif %}
+
+
+{% if organization.portal_url %}
+<h2>{% trans "Portal" %}</h2>
+<p><i>{% trans "Hantera användare och mötesrum" %}</i></p>
+<p><a href="{{ organization.portal_url }}">{{ organization.portal_url }}</a></p>
+
+<h3>{% trans "Användare" %}:</h3>
+{% if organization.portal_users.all %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "Användarnamn" %}</th>
+            <th>{% trans "E-post" %}</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in organization.portal_users.all %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.delete_requested %}Raderas...
+                {% elif not user.confirmed %}Behandlas...
+                {% endif %}
+            </td>
+            <td>
+                {% if not user.delete_requested %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button onclick="return confirm('Säker?');" class="btn btn-danger" name="delete_portal" value="{{ user.pk }}">x</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p><i>{% trans "Inga" %}</i></p>
+{% endif %}
+
+<a onclick="jQuery(this).next('form').toggle();" class="btn btn-outline-secondary">{% trans "Lägg till" %}</a>
+<form method="post" style="display: none;">
+    {% csrf_token %}
+    <div>
+        <h4>{% trans "Ny användare" %}</h4>
+        <label>{% trans "Användarnamn" %}: <input required name="username" /></label><br />
+        <label>{% trans "E-post" %}: <input required name="email" /></label><br />
+        <label>{% trans "Lösenord" %}: <input name="password" /></label><br />
+        <button class="btn btn-primary" name="create_portal" value="1">{% trans "Lägg till" %}</button>
+    </div>
+</form>
+<hr />
+
+{% endif %}
+
+{% if organization.videocenter_url %}
+<h2>{% trans "Videocenter" %}</h2>
+<p><i>{% trans "Hantera inspelningar" %}</i></p>
+<p><a href="{{ organization.videocenter_url }}">{{ organization.videocenter_url }}</a></p>
+
+<h3>{% trans "Användare" %}:</h3>
+{% if organization.videocenter_users.all %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{% trans "Användarnamn" %}</th>
+            <th>{% trans "E-post" %}</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in organization.videocenter_users.all %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {% if user.delete_requested %}Raderas...
+                {% elif not user.confirmed %}Behandlas...
+                {% endif %}
+            </td>
+            <td>
+                {% if not user.delete_requested %}
+                <form method="post">
+                    {% csrf_token %}
+                    <button onclick="return confirm('Säker?');" class="btn btn-danger" name="delete_videocenter" value="{{ user.pk }}">x</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p><i>{% trans "Inga" %}</i></p>
+{% endif %}
+
+
+<a onclick="jQuery(this).next('form').toggle();" class="btn btn-outline-secondary">{% trans "Lägg till" %}</a>
+<form method="post" style="display: none;">    {% csrf_token %}
+    <div>
+        <h4>{% trans "Ny användare" %}</h4>
+        <label>{% trans "Användarnamn" %}: <input required name="username" /></label><br />
+        <label>{% trans "E-post" %}: <input required name="email" /></label><br />
+        <label>{% trans "Lösenord" %}: <input name="password" /></label><br />
+        <button class="btn btn-primary" name="create_videocenter" value="1">{% trans "Lägg till" %}</button>
+    </div>
+</form>
+<hr />
+
+{% endif %}
+
+
+
+
+<hr />
+<p><a class="btn btn-outline-secondary" href="/">{% trans "Startsidan" %}</a></p>
+
+{% endblock content %}

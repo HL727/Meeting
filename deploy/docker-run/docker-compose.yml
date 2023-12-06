@@ -1,0 +1,522 @@
+version: '3.6'
+
+x-deploy-restart:
+  &deploy-restart
+  restart_policy:
+    condition: any
+  update_config:
+    order: start-first
+    failure_action: continue
+
+x-restart:
+  # restart with rolling update
+  &restart
+  restart: always
+  deploy:
+    <<: *deploy-restart
+
+x-deploy-restart-no-rolling:
+  &deploy-restart-no-rolling
+  restart_policy:
+    condition: any
+
+x-restart-no-rolling:
+  # port[mode]: host is not compatible with rolling updates, neither is data storage
+  &restart-no-rolling
+  restart: always
+  deploy:
+    <<: *deploy-restart-no-rolling
+
+x-web-base:
+  &web-base
+  <<: *restart
+
+  image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-core:${COMPONENT_VERSION:-latest}
+
+  deploy:
+    <<: *deploy-restart
+    resources:
+      limits:
+        cpus: '3'
+        memory: '${MAX_MEMORY:-4096}M'
+
+  volumes:
+    - ${CONFIG_DIR:-.}/.env:/code/.env
+    - ${DATA_DIR:-./core}/debuglog:/code/cdrdata
+    - ${DATA_DIR:-./core}/uploads:/code/site_media/media/
+    - proxy_server_user_keys:/home/epmproxy/.ssh/
+    - type: tmpfs
+      target: /tmp
+    #- tmp:/tmp/  # firmware files can be very large
+
+  read_only: true
+
+  environment:
+    - ENV_HASH  # force reload in case of volume mount of env
+    - EMAIL_REQUIRE_EXTENDED_KEY=true
+    - REDIS_HOST=redis
+    - DATABASE_POOL_HOST=dbpool
+
+  networks:
+    - default
+    - traefik
+
+
+services:
+
+  # Main instance
+  web:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py migrate || (wait-for-it db:5432 ; wait-for-it dbpool:5432 ; wait-for-it rabbitmq:5672 ) ; rm -rf /tmp/*; python /code/manage.py upgrade_installation --noinput && exec python -m gunicorn.app.wsgiapp conferencecenter.wsgi --worker-tmp-dir /dev/shm --max-requests 5000 --max-requests-jitter 120 --workers ${WORKERS_GENERAL:-2} --threads 3 -t 120 -b :8000"
+
+    healthcheck:
+        test: python3 /code/shared/http_status_check.py "http://localhost:8000/status/up/" 20
+        interval: 30s
+        timeout: 29s
+        retries: 3
+        start_period: 300s  # migrations can take a while
+
+    expose:
+      - 8000
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=web"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_web.loadbalancer.server.port=8000"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.tls.certResolver=${MAIN_HOSTNAME_CERTRESOLVER}"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_web.middlewares=${SERVICE_PREFIX:-core}_web-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_web-compress.compress=true"
+
+    restart: always
+
+  # Public API host
+  api_host:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ); exec python -m gunicorn.app.wsgiapp conferencecenter.wsgi_book --worker-tmp-dir /dev/shm --max-requests 5000 --max-requests-jitter 120 --workers ${WORKERS_API:-2} --threads 3 -t 15 -b :8001"
+
+    healthcheck:
+        test: python3 /code/shared/http_status_check.py "http://localhost:8001/status/up/" 20
+        interval: 30s
+        timeout: 29s
+        retries: 3
+        start_period: 300s  # migrations can take a while
+
+    expose:
+      - 8001
+    labels:
+      - "mividas.disable=${MAIN_HOSTNAME}==${API_HOSTNAME:-$MAIN_HOSTNAME}"
+
+      - "traefik.enable=true"
+      - "traefik.backend=api_host"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_api.loadbalancer.server.port=8001"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_api.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`, `${API_HOSTNAME:-api.core.localhost}`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_api.tls.certResolver=${API_HOSTNAME_CERTRESOLVER}"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_api.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_api.middlewares=${SERVICE_PREFIX:-core}_api-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_api-compress.compress=true"
+
+  # EPM API host
+  epm_host:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ); exec python -m gunicorn.app.wsgiapp conferencecenter.wsgi --worker-tmp-dir /dev/shm --max-requests 10000 --max-requests-jitter 120 --workers ${WORKERS_EPM:-2} --threads 2 -t 8 -b :8002"
+
+    healthcheck:
+        test: python3 /code/shared/http_status_check.py "http://localhost:8002/status/up/" 20
+        interval: 30s
+        timeout: 29s
+        retries: 3
+        start_period: 300s  # migrations can take a while
+
+    expose:
+      - 8002
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=epm_host"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_epm.loadbalancer.server.port=8002"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm.rule=Host(`${EPM_HOSTNAME:-epm.core.localhost}`, `${MAIN_HOSTNAME:-core.localhost}`) && (PathPrefix(`/tms/`) || Path(`/`))"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm.tls.certResolver=${EPM_HOSTNAME_CERTRESOLVER}"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm.middlewares=${SERVICE_PREFIX:-core}_epm-compress,${SERVICE_PREFIX:-core}_epm-inflightreq"
+
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_epm-compress.compress=true"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_epm-inflightreq.inflightreq.amount=30"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm_insecure.rule=Host(`${EPM_HOSTNAME:-epm.core.localhost}`, `${MAIN_HOSTNAME:-core.localhost}`) && PathPrefix(`/tms/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_epm_insecure.middlewares=${SERVICE_PREFIX:-core}_epm_insecure-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_epm_insecure-compress.compress=true"
+
+  # CDR
+  cdr:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ); exec python -m gunicorn.app.wsgiapp conferencecenter.wsgi --worker-tmp-dir /dev/shm --max-requests 50000 --max-requests-jitter 1000 --workers ${WORKERS_CDR:-2} --threads 2 -t 8 -b :8003"
+
+    healthcheck:
+        test: python3 /code/shared/http_status_check.py "http://localhost:8003/status/up/" 20
+        interval: 30s
+        timeout: 29s
+        retries: 3
+        start_period: 300s  # migrations can take a while
+
+    expose:
+      - 8003
+
+    labels:
+      - "mividas.disable=${WORKERS_CDR:-2}==0"
+
+      - "traefik.enable=true"
+      - "traefik.backend=cdr"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_cdr.loadbalancer.server.port=8003"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`) && PathPrefix(`/cdr/`, `/cdr_receiver/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr.tls.certResolver=${MAIN_HOSTNAME_CERTRESOLVER}"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr.middlewares=${SERVICE_PREFIX:-core}_cdr-compress,${SERVICE_PREFIX:-core}_cdr-inflightreq"
+
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_cdr-compress.compress=true"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_cdr-inflightreq.inflightreq.amount=120"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr_ip.rule=PathPrefix(`/cdr_receiver`, `/cdr/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_cdr_ip.tls=true"
+
+    restart: always
+
+  # Policy
+  policy:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ); exec python -m gunicorn.app.wsgiapp conferencecenter.wsgi --worker-tmp-dir /dev/shm --max-requests 10000 --max-requests-jitter 1000 --workers ${WORKERS_POLICY:-1} --threads 3 -t 8 -b :8003"
+
+    healthcheck:
+        test: python3 /code/shared/http_status_check.py "http://localhost:8003/status/up/" 20
+        interval: 30s
+        timeout: 29s
+        retries: 3
+        start_period: 300s  # migrations can take a while
+
+    expose:
+      - 8003
+
+    labels:
+      - "mividas.disable=${WORKERS_POLICY:-1}==0"
+
+      - "traefik.enable=true"
+      - "traefik.backend=policy"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-core}_policy.loadbalancer.server.port=8003"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_policy.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`) && PathPrefix(`/cdr/policy/`, `/cdr_receiver/policy_something_to_create_longer_rule`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_policy.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_policy.tls.certResolver=${MAIN_HOSTNAME_CERTRESOLVER}"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_policy.middlewares=${SERVICE_PREFIX:-core}_policy-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_policy-compress.compress=true"
+
+
+  # Postgresql db
+
+  db:
+    <<: *restart-no-rolling
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/vendor-postgres:${POSTGRES_VERSION:-11}
+    command: >
+        postgres
+        -c shared_buffers=${POSTGRES_SHARED_BUFFERS:-768MB}
+        -c effective_cache_size=${POSTGRES_EFFECTIVE_CACHE:-2304MB}
+        -c maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-192MB}
+        -c work_mem=${POSTGRES_WORK_MEM:-10660kB}
+        -c max_connections=50
+        -c checkpoint_completion_target=0.7
+        -c wal_buffers=16MB
+        -c default_statistics_target=100
+        -c random_page_cost=${POSTGRES_RANDOM_PAGE_COSTS:-4}
+        -c effective_io_concurrency=${POSTGRES_EFFECTIVE_IO_CONCURRENCY:-2}
+        -c min_wal_size=1GB
+        -c max_wal_size=4GB
+        -c synchronous_commit=${POSTGRES_SYNCHRONOUS_COMMIT:-off}
+
+    # NOTE: this may be run in both pg11 and pg13
+    healthcheck:
+      test: psql -c "SELECT 1" --quiet --no-align --tuples-only -U "${POSTGRES_USER:-mividas_core}" "${POSTGRES_DB:-mividas_core}"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-mividas_core}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-mividas_core}
+      - POSTGRES_DB=${POSTGRES_DB:-mividas_core}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - ${DATA_DIR:-.}/db/:/var/dump/
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: ${POSTGRES_SHM_BYTES:-4147483648}
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: 10M
+      - type: tmpfs
+        target: /run/postgresql/
+        tmpfs:
+          size: 1M
+      - type: tmpfs
+        target: /etc/postgres
+        tmpfs:
+          size: 1M
+    read_only: true
+
+    shm_size: ${POSTGRES_SHM_BYTES:-4147483648}b
+    stop_grace_period: 60s
+
+  dbpool:
+    <<: *restart
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/vendor-edoburu-pgbouncer:1.15.0
+
+    deploy:
+      <<: *deploy-restart
+      resources:
+        limits:
+          cpus: '1'
+          memory: '300M'
+
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-psql://mividas_core:mividas_core@db/mividas_core}
+      - POOL_MODE=transaction
+      - DEFAULT_POOL_SIZE=20
+      - MIN_POOL_SIZE=3
+      - RESERVE_POOL_SIZE=5
+      - MAX_CLIENT_CONN=150
+      - SERVER_TLS_SSLMODE=${POSTGRES_TLS_MODE:-allow}
+
+    read_only: false  # TODO, /etc/pgbouncer/userlist.txt can't be written
+
+  # RabbitMQ queue
+
+  rabbitmq:
+    <<: *restart-no-rolling
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/vendor-rabbitmq:3.8
+
+    deploy:
+      <<: *deploy-restart-no-rolling
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2048M'
+
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER:-mividas_core}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-mividas_core}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST:-mividas_core}
+      - RABBITMQ_NODENAME=rabbit@rabbitmq
+
+    volumes:
+        - rabbitmq_log:/var/log/rabbitmq
+        - rabbitmq_data:/var/lib/rabbitmq
+        - type: tmpfs
+          target: /etc/rabbitmq
+          tmpfs:
+            size: 10M
+        - type: tmpfs
+          target: /run
+          tmpfs:
+            size: 10M
+    read_only: true
+
+    expose:
+      - 5672
+
+  # Celery background worker. Run regular tasks
+
+  celery:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ; wait-for-it rabbitmq:5672 ) ; exec python -m celery -A provider.tasks worker -Q celery,cdr -c ${WORKERS_CELERY:-3} -l info --pidfile='/tmp/celery%n.pid' -n 'celery@%h' "
+
+    restart: unless-stopped
+    stop_grace_period: 60s
+
+
+  # Celery sync background worker
+
+  celery_sync:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ; wait-for-it rabbitmq:5672 ) ; exec python -m celery -A provider.tasks worker -Q sync,slow -c ${WORKERS_CELERY_SYNC:-2} -l info --pidfile='/tmp/celery%n.pid' -n 'celery_sync@%h' "
+
+    restart: unless-stopped
+    stop_grace_period: 60s
+
+  # Celery slow task background worker. Use threads
+
+  celery_slow:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ; wait-for-it rabbitmq:5672 ) ; exec python -m celery -A provider.tasks worker --pool thread -Q slow -c ${WORKERS_CELERY_SLOW:-2} -l info --pidfile='/tmp/celery%n.pid' -n 'celery_slow@%h' "
+
+    restart: unless-stopped
+    stop_grace_period: 60s
+
+  # Celery beat
+
+  celery-beat:
+    <<: *web-base
+    command: bash -c "python shared/wait_for_services.py || (wait-for-it db:5432 ; wait-for-it rabbitmq:5672 ) ; exec python -m celery -A provider.tasks beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l info --pidfile='/tmp/celerybeat%n.pid'"
+
+  # Static files
+
+  static:
+    <<: *restart
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-core-static:${COMPONENT_VERSION:-latest}
+
+    deploy:
+      <<: *deploy-restart
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2048M'
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=static"
+      - "traefik.docker.network=traefik"
+      - "traefik.port=80"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_static.rule=Host(`${MAIN_HOSTNAME:-core.localhost}`, `${EPM_HOSTNAME:-epm.localhost}`) && PathPrefix(`/site_media/media/`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_static.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-core}_static.middlewares=${SERVICE_PREFIX:-core}_static-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-core}_static-compress.compress=true"
+
+    networks:
+      - default
+      - traefik
+
+    environment:
+      - ENV_HASH  # force reload in case of volume mount of env
+
+    volumes:
+      - ${DATA_DIR:-./core}/uploads:/usr/share/nginx/html/site_media/media/
+      - type: tmpfs
+        target: /run
+        tmpfs:
+          size: 1M
+      - type: tmpfs
+        target: /var/cache/nginx
+        tmpfs:
+          size: 10M
+    read_only: true
+
+    expose:
+      - 80
+
+  # EPM Proxy
+
+  proxyserver:
+    <<: *restart-no-rolling
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-proxy-server:${COMPONENT_VERSION:-latest}
+
+    deploy:
+      <<: *deploy-restart-no-rolling
+      resources:
+        limits:
+          cpus: '1'
+          memory: '256M'
+
+    ports:
+      - target: 22
+        published: ${MIVIDAS_PROXY_PORT:-2222}
+        protocol: tcp
+        mode: host
+
+    expose:
+      - "10000-11500"
+
+    volumes:
+      - proxy_server_host_keys:/etc/ssh/persistant/
+      - proxy_server_user_keys:/home/epmproxy/.ssh/
+    read_only: true
+
+    labels:
+      - "mividas.disable=${DISABLE_PROXY:-false}==true"
+
+  # Book smtp handler
+
+  smtp_server:
+    <<: *restart-no-rolling
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/mividas-smtp-forward:${COMPONENT_VERSION:-latest}
+
+    deploy:
+      <<: *deploy-restart-no-rolling
+      resources:
+        limits:
+          cpus: '1'
+          memory: '256M'
+
+    environment:
+      - EXTENDED_API_KEY
+
+    ports:
+      - target: 1025
+        published: ${INCOMING_SMTP_PORT:-25}
+        protocol: tcp
+        mode: host
+
+    volumes:
+      - type: tmpfs
+        target: /var/spool
+        tmpfs:
+          size: 10M
+      - type: tmpfs
+        target: /run
+        tmpfs:
+          size: 1M
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: 1M
+    read_only: true
+
+    labels:
+      - "mividas.disable=${DISABLE_SMTP:-false}==true"
+
+  # Redis cache/pubsub
+  redis:
+    <<: *restart-no-rolling
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-core}/vendor-redis:5.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+
+    healthcheck:
+      test: su-exec redis redis-cli ping
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    deploy:
+      <<: *deploy-restart-no-rolling
+      resources:
+        limits:
+          cpus: '1'
+          memory: '1024M'
+
+    volumes:
+      - redis_data:/data
+    read_only: true
+
+
+volumes:
+  django_settings:
+  proxy_server_host_keys:
+  proxy_server_user_keys:
+  postgres_data:
+  redis_data:
+  rabbitmq_log:
+  rabbitmq_data:
+  tmp:
+
+networks:
+  traefik:
+    external: true

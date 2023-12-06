@@ -1,0 +1,312 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n static %}
+
+{% block title %}Samtal, {{ cospace.name }}{% endblock %}
+
+{% block page_icon %}mdi-google-classroom{% endblock %}
+{% block page_title %}
+    {% if cospace.id %}
+        {{ cospace.name }}
+    {% else %}
+        {% trans "Direktsamtal" %}
+    {% endif %}
+{% endblock %}
+{% block page_actions %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-primary btn-sm" href="{{ web_url }}">
+            <i class="v-icon notranslate mdi mdi-monitor mr-1"></i>
+            {% trans "Delta via webbläsare" %}
+        </a>
+    </div>
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <form method="post" onsubmit="return confirm('{% trans "Är du säker?" %}')">
+            {% csrf_token %}
+            <input type="hidden" name="delete_call" value="1" />
+            <button class="btn btn-sm btn-danger ml-4">
+                <i class="v-icon notranslate mdi mdi-google-classroom mr-1"></i>
+                {% trans "Avsluta samtal" %}
+            </button>
+        </form>
+    </div>
+    {% if perms.provider.api_client %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a href="{% url 'rest_client' %}?url=calls/{{ call.id }}&amp;customer={{ customer.pk }}" class="btn btn-sm btn-outline-secondary ml-4">
+            <i class="v-icon notranslate mdi mdi-package-variant-closed mr-1"></i>
+            {% trans "API" %}
+        </a>
+    </div>
+    {% endif %}
+{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'calls' %}?customer={{ customer.pk }}">{% trans "Möten" %}</a> /
+    <strong>
+        {% if cospace.id %}{{ cospace.name }}{% else %}Direktsamtal{% endif %}
+    </strong>
+{% endblock %}
+
+{% block page_content %}
+    {% include "blocks/page_notification.html" %}
+
+    <div class="row mt-4">
+        <div class="col-12 col-lg-8">
+
+
+
+            <div
+                data-react="CallLegs"
+                data-call-legs-endpoint="{% url 'json_api_call_legs' call.id %}"
+                data-mute-all-video-endpoint="{% url 'json_api_call_mute_all_video' %}"
+                data-mute-all-audio-endpoint="{% url 'json_api_call_mute_all_audio' %}"
+                data-call-id="{{ call.id }}"
+                data-mute-video-endpoint="{% url 'json_api_call_leg_mute_video' %}"
+                data-mute-audio-endpoint="{% url 'json_api_call_leg_mute_audio' %}"
+                data-call-leg-endpoint="{% url 'json_api_call_leg_details' %}"
+                data-set-layout-endpoint="{% url 'json_api_call_leg_set_layout' %}"
+                data-csrf-token="{{ csrf_token }}"
+                data-customer-id="{{ customer.id }}"
+                data-layout-choices='{{layout_choices_json}}'
+                data-hangup-call-leg-endpoint="{% url 'json_api_call_leg_hangup' %}"
+            ></div>
+
+            {% if scheduled_dialouts %}
+                <hr>
+                <h2>{% trans "Aktiva schemalagda uppringningar" %}</h2>
+
+                <table class="table">
+                    <thead>
+                        <th>{% trans "Start" %}</th>
+                        <th>{% trans "Stopp" %}</th>
+                        <th>{% trans "Parter" %}</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    {% for dialout in scheduled_dialouts %}
+                        <tr>
+                            <td>
+                                {{ dialout.ts_start }}
+                            </td>
+                            <td>
+                                {% if dialout.ts_stop %}{{ dialout.ts_stop }}{% endif %}
+                            </td>
+                            <td>{% for p in dialout.parts.all %}
+                                {{ p.dialstring }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <button name="remove_scheduled_dialout" name="remove_scheduled_dialout"
+                                            value="{{ dialout.pk }}" class="btn btn-danger">x
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+
+
+            <h5 class="mb-3 mt-4">
+                {% trans "Ring upp deltagare" %}
+                <a href="#" data-toggle="modal" data-target="#createDialoutModal" class="btn btn-outline-primary">
+                    <span class="fa fa-plus-circle"></span> {% trans "Ring upp" %}
+                </a>
+            </h5>
+
+            <div
+                data-react="DialoutHistory"
+                data-endpoint="{{ request.get_full_path }}"
+                data-history="{{ history_json }}"
+                data-csrf-token="{{ csrf_token }}"
+            ></div>
+
+            <div class="d-none">
+
+            </div>
+
+        </div>
+        <div class="col-12 col-lg-4">
+            <span class="badge badge-dark d-block p-2 mb-4">{{ duration }}</span>
+
+            {% if cospace.id %}
+                <div class="card card-grey card-bottom mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-4">
+                            {% trans "Anslutning" %}
+                            <a href="{% url 'cospaces_invite' cospace.id %}?customer={{ customer.pk }}" class="btn btn-sm btn-primary float-right">{% trans "Visa inbjudan" %}</a>
+                        </h5>
+                        <table class="table table-no-top-border table-no-bottom-padding table-text-edge mb-0">
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="{% trans "SIP" %}" value="{{ sip_uri }}">
+                                        <div class="input-group-append">
+                                            <a href="sip:{{ sip_uri }}" class="btn btn-outline-primary">{% trans "Anslut via SIP" %}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{% trans "Mötesrum" %}</td>
+                                <td>
+                                    <a href="{% url 'cospaces_details' cospace.id %}?customer={{ customer.pk }}&amp;cospace={{ cospace.id }}">{{ cospace.name }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{% trans "Rumsnummer" %}</td>
+                                <td>{{ cospace.callId }}</td>
+                            </tr>
+                            {% if cospace.password %}
+                            <tr>
+                                <td>{% trans "PIN-kod" %}</td>
+                                <td>{{ cospace.password }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if latest_calls %}
+                                <tr>
+                                    <td>{% trans "Samtalsrapport" %}</td>
+                                    <td>
+                                        {% for call in latest_calls %}
+                                            <a href="/stats/debug/{{ call.guid }}">{{ call.ts_start|date:"Y-m-d H:i:s" }}</a><br />
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if recording_provider %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">{% trans "Spela in" %}</h5>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if recording_provider.is_videocenter %}
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="recording_key" placeholder="{% trans "Ange inspelningsnyckel" %}..." />
+                                </div>
+                                <div class="form-group">
+                                    <select class="custom-select" name="layout">
+                                        <option value="">{% trans "Välj ev. layout" %}</option>
+                                        {% for k, v in layout_choices %}
+                                            <option value="{{ k }}">{{ v }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="silent" class="custom-control-input" type="checkbox" value="1" id="hideFeedRecording" />
+                                        <label class="custom-control-label" for="hideFeedRecording">
+                                            {% trans "Dölj feed i inspelning" %}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary w-100">{% trans "Spela in" %}</button>
+                                </div>
+
+                                {% if recording_host %}
+                                <p class="mb-0 text-center"><i>{% trans "Spelas in på" %} <a href="https://{{ recording_host }}">{% trans "https" %}://{{ recording_host }}</a></i></p>
+                                {% endif %}
+
+                            {% else %}
+                                {% if is_recording %}
+                                    <input type="hidden" name="stop_recording" value="1" />
+                                    <button class="btn btn-danger">{% trans "Stoppa inspelning" %}</button>
+                                {% else %}
+                                    <input type="hidden" name="recording_key" value="1234" />
+                                    <button class="btn btn-primary">{% trans "Starta inspelning" %}</button>
+                                {% endif %}
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if customer.streaming_provider_id %}
+                 <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">{% trans "Streama" %}</h5>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if customer.streaming_provider.is_videocenter %}
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="recording_key" placeholder="{% trans "Ange inspelningsnyckel med streaming aktiverat" %}..." />
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="custom-select" name="layout">
+                                            <option value="">{% trans "Välj ev. layout" %}</option>
+                                            {% for k, v in layout_choices %}
+                                                <option value="{{ k }}">{{ v }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="silent" class="custom-control-input" type="checkbox" value="1" id="hideFeedRecording" />
+                                            <label class="custom-control-label" for="hideFeedRecording">
+                                                {% trans "Dölj feed i inspelning" %}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary w-100">{% trans "Starta stream" %}</button>
+                                    </div>
+
+                                    <p class="mb-0 text-center"><i>{% trans "Streamas via" %} <a href="https://{{ customer.streaming_provider.hostname }}">{% trans "https" %}://{{ customer.streaming_provider.hostname }}</a></i></p>
+                                    <input type="hidden" name="start_stream" value="1" />
+
+                                {% else %}
+
+                                {% if call.streaming %}
+                                    <input type="hidden" name="stop_stream" value="1" />
+                                    <button class="btn btn-danger">{% trans "Stoppa stream" %}</button>
+                                {% elif not cospace.streamUrl %}
+                                    {% trans 'Mötesrummet har ingen streamUrl satt. Streaming är inaktiverad.' %}
+                                {% else %}
+                                    <input type="hidden" name="start_stream" value="1" />
+                                    <button class="btn btn-primary">{% trans "Starta stream" %}</button>
+                                {% endif %}
+                        {% endif %}
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+<div class="modal fade" id="createDialoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Lägg till extern deltagare" %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{% trans "Close" %}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div
+                    data-react="CreateDialout"
+                    data-endpoint="{{ request.get_full_path }}"
+                    data-layout-choices="{{ layout_choices_json }}"
+                    data-csrf-token="{{ csrf_token }}"
+                ></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock page_content %}

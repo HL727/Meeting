@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "no-console": "error",
+        "vue/no-constant-condition": "error"
+    }
+}

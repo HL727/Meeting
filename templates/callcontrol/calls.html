@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #}
+{# FIXME this template is deprecated and will soon be deleted #}
+{# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #}
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera möten{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Möten" %}</strong>{% endblock %}
+
+{% block content %}
+    {% include "blocks/page_notification.html" %}
+
+    <div class="">
+        <div class="view__header">
+            <h1 class="view__title">
+                <a href="{% url 'calls' %}">{% trans "Aktiva möten" %} <span class="badge badge-secondary">{{ call_count }}</span></a>
+            </h1>
+            <div class="filters">
+                <form class="d-inline-block card">
+                        <input type="hidden" name="customer" value="{{ customer.pk }}"/>
+                        <div class="input-group">
+                            <input name="filter" type="text" class="form-control" placeholder="{% trans "Möte eller deltagare..." %}" value="{{ filter }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary">
+                                    <span class="fa fa-fw fa-search"></span>
+                                    {% trans "Sök" %}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="v-card v-sheet theme--light">
+
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+
+            {% if calls %}
+
+                {% if clustered %}
+                <p>{% trans "Visar möten från videobryggor" %}: {{ provider }},
+                    {% for p in clustered %} {{ p }}{% if not forloop.last %},{% endif %} {% endfor %}
+                    <hr class="d-none d-md-block">
+                {% elif provider.clustered.all %}
+                    Visar möten från {{ provider }}. <a href="?provider={{ provider.pk }}&amp;cluster=1">{% trans "Visa hela klustret" %}</a>
+                    <hr class="d-none d-md-block">
+                {% endif %}
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Möte" %}</th>
+                                {% if has_tenants %}<th>{% trans "Tenant" %}</th>{% endif %}
+                                <th>
+
+                                    {% trans "Deltagare" %}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for call in calls %}
+                            <tr>
+                                <td>
+                                    {% if call.url %}
+                                    <a href="{{ call.url }}">{{ call.name|default:"Ospecificerat" }}</a>
+                                    {% else %}
+                                    {{ call.name|default:"Ospecificerat" }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ call.tenant_name|default:'' }}</td>
+                                <td>
+                                    <div data-react="FoldedCallLegs" data-customer-id="{{ customer.id }}"
+                                         data-endpoint-url="{{ call.json_url }}"></div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% elif not filter_legs %}
+                <div class="alert alert-primary text-center my-4">{% trans "Inga aktiva möten just nu" %}</div>
+            {% endif %}
+
+            {% if call_count > 0 %}
+                <nav class="mb-4">
+                    <ul class="pagination justify-content-center justify-content-md-start">
+                        {% if prev_url %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ prev_url }}" tabindex="-1">{% trans "Föregående sida" %}</a>
+                            </li>
+                        {% endif %}
+                        {% if next_url %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{{ next_url }}">{% trans "Nästa sida" %}</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+            {% if filter_legs %}
+                <hr>
+                <h2>{% trans "Matchande deltagare" %}</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                        <tr>
+                            <th>{% trans "Deltagare" %}</th>
+                            <th>{% trans "Adress" %}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for leg in filter_legs %}
+                            <tr>
+                                <td>
+                                    {% if leg.call %}
+                                    <a href="{% url 'call_handler' leg.call %}?customer={{ customer.id }}">{{ leg.name }}</a>
+                                    {% else %}
+                                    {{ leg.name }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ leg.remote }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="col-12 col-lg-4">
+
+            {% if can_view_providers and providers|length > 1 %}
+            <div class="card card-shadow mb-4">
+                <div class="card-header">
+                    <h5>{% trans "Visa alla möten på brygga" %}</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                        {% for cluster in clusters %}
+
+                        {% for p in cluster %}
+                        {% if forloop.first and cluster|length > 1 %}
+                        <tr>
+                            <td>
+                                <strong>
+                                <a href="{% url 'calls' %}?provider={{ p.pk }}&amp;customer=&amp;cluster=1">{% trans "Kluster" %} {{ p.cluster }}</a>
+                               </strong>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr><td>
+                            <a href="{% url 'calls' %}?provider={{ p.pk }}&amp;customer=">{{ p }}</a>
+                        </td></tr>
+                        {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+
+            <div class="card card-shadow mb-4">
+                <div class="card-header">
+                    <h5><span class="fa user-circle"></span> {% trans "Starta nytt möte" %}</h5>
+                </div>
+                <div class="card-body">
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div data-vue="CoSpacePicker" data-auto-submit="true" data-input-name="new_call_cospace" data-item-value="id"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

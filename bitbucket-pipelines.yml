@@ -1,0 +1,52 @@
+image: python:3.8-slim
+
+pipelines:
+  default:
+    - step:
+        services:
+          - docker
+        caches:
+          - docker
+        script:
+          - sh deploy/build_docker.sh
+          - sh deploy/push_docker.sh "$REPOSITORY_BASE" "$REPOSITORY_PASSWORD" "${BITBUCKET_BRANCH:-$BITBUCKET_TAG}"
+          - sh deploy/push_docker.sh "$REPOSITORY_BASE" "$REPOSITORY_PASSWORD" "${BITBUCKET_BRANCH:-$BITBUCKET_TAG}-${BITBUCKET_COMMIT}"
+
+  tags:
+    '__DISABLED__v*.*':
+      - step:
+          services:
+            - docker
+          caches:
+            - docker
+          deployment: production
+          script:
+            - sh deploy/build_docker.sh
+            - sh deploy/docker_tests.sh
+            - sh deploy/push_docker.sh "$REPOSITORY_BASE" "$REPOSITORY_PASSWORD" "${BITBUCKET_TAG#v}"
+
+
+  custom:
+    deploy-prod:
+      - variables:
+        - name: DEPLOY_VERSION
+      - step:
+          name: Push to production registry
+          deployment: production
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - echo Make sure to add versions to license.mividas.com/admin/
+            - sh deploy/build_docker.sh
+            - sh deploy/push_docker.sh "$REPOSITORY_BASE" "$REPOSITORY_PASSWORD" "$DEPLOY_VERSION"
+
+options:
+  size: 2x  # TODO reduce webpack memory usage
+
+definitions:
+  services:
+    docker:
+      memory: 7010
+

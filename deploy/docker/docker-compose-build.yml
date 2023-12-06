@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+
+  base:
+    image: mividas-core-base
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile-base
+  web:
+    image: mividas-core
+    build:
+      context: .
+    depends_on:
+      - base
+  static_base:
+    image: mividas-core-build-js
+    build:
+      context: .
+      dockerfile: deploy/docker/Dockerfile-base
+  static:
+    image: mividas-core-static
+    build:
+      context: .
+      target: mividas-core-static
+      dockerfile: deploy/docker/Dockerfile
+    depends_on:
+      - static_base
+  proxy_server:
+    image: mividas-proxy-server
+    build:
+      context: endpointproxy/server
+  smtp_server:
+    image: mividas-smtp-forward
+    build:
+      context: deploy/smtp_script
+

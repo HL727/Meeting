@@ -1,0 +1,17 @@
+AllowStreamLocalForwarding no
+AllowTcpForwarding remote
+AllowUsers epmproxy
+AuthorizedKeysFile	.ssh/authorized_keys
+ClientAliveCountMax 3
+ClientAliveInterval 3
+ForceCommand echo shell is disabled
+GatewayPorts yes
+HostKey /etc/ssh/persistant/ssh_host_rsa_key
+HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-rsa,ssh-dss
+KexAlgorithms ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha256
+MACs hmac-sha2-256,hmac-sha2-512
+PasswordAuthentication no
+PermitTTY no
+StrictModes no
+#UsePrivilegeSeparation no # only use if sshd is executed as non-root user
+X11Forwarding no

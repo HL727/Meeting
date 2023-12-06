@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }} | {% trans 'Mividas Core/Rooms - backendadmin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="/admin/">
+        <img src="{% static "images/mividas-core-logo.svg" %}" alt="">
+        {% trans 'Mividas Core/Rooms - backend admin' %}
+    </a>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/admin-extra.css" %}" />
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

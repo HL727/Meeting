@@ -1,0 +1,17 @@
+<Extensions>
+  <Version>1.5</Version>
+  <Panel>
+    <PanelId>testpanelsingle</PanelId>
+    <Type>Statusbar</Type>
+    <Icon>Lightbulb</Icon>
+    <Order>1</Order>
+    <Name>Panel</Name>
+    <Page>
+      <Name>Page</Name>
+      <Row>
+        <Name>Rowrwa</Name>
+      </Row>
+      <Options/>
+    </Page>
+  </Panel>
+</Extensions>

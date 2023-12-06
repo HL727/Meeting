@@ -1,0 +1,152 @@
+{
+    "private": true,
+    "name": "mividascore",
+    "version": "1.0.0",
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint js-ui"
+    },
+    "devDependencies": {
+        "@mdi/font": "^3.9.97",
+        "@vue/cli-plugin-babel": "^4.5.10",
+        "@vue/cli-plugin-eslint": "^4.5.10",
+        "@vue/cli-plugin-router": "^4.5.10",
+        "@vue/cli-plugin-vuex": "^4.5.10",
+        "@vue/cli-service": "^4.5.10",
+        "@vue/eslint-config-prettier": "^5.0.0",
+        "babel-eslint": "^10.1.0",
+        "easygettext": "^2.16.1",
+        "eslint": "^5.16.0",
+        "eslint-plugin-promise": "^6.0.0",
+        "eslint-plugin-sonarjs": "^0.6.0",
+        "eslint-plugin-vue": "^7.5.0",
+        "prettier": "^1.18.2",
+        "regenerator-runtime": "^0.13.3",
+        "sass": "^1.22.9",
+        "sass-loader": "^7.2.0",
+        "vue-cli-plugin-vuetify": "^2.0.3",
+        "vue-style-loader": "^4.1.2",
+        "vue-template-compiler": "^2.6.10",
+        "vuetify-loader": "^1.6.0"
+    },
+    "optionalDependencies": {
+        "easygettext": "^2.16.1",
+        "vue-gettext-cli": "^1.0.5"
+    },
+    "dependencies": {
+        "@mdi/js": "^3.6.95",
+        "@sentry/browser": "^5.26.0",
+        "@sentry/integrations": "^5.26.0",
+        "axios": "^0.21.4",
+        "core-js": "^3.4.4",
+        "date-fns": "^2.16.1",
+        "eslint-fix": "^1.0.3",
+        "jquery": "^3.6.0",
+        "jquery-migrate": "^3.3.2",
+        "moment": "^2.26.0",
+        "query-string": "^6.8.3",
+        "typeface-roboto": "^0.0.75",
+        "vue": "^2.6.12",
+        "vue-clipboard2": "^0.3.1",
+        "vue-gettext": "^2.1.12",
+        "vue-plotly": "^1.1.0",
+        "vue-router": "^3.0.4",
+        "vuetify": "^2.3.14",
+        "vuex": "^3.1.0"
+    },
+    "babel": {
+        "presets": [
+            "@vue/cli-plugin-babel/preset"
+        ]
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 version",
+        "ie 11"
+    ],
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "eslint:recommended",
+            "plugin:sonarjs/recommended",
+            "plugin:promise/recommended",
+            "plugin:vue/recommended",
+            "prettier"
+        ],
+        "rules": {
+            "comma-dangle": [
+                "error",
+                "only-multiline"
+            ],
+            "semi": [
+                "error",
+                "never"
+            ],
+            "indent": [
+                "warn",
+                4
+            ],
+            "vue/v-slot-style": [
+                "off",
+                {
+                    "atComponent": "v-slot",
+                    "default": "v-slot",
+                    "named": "longform"
+                }
+            ],
+            "no-console": "warn",
+            "no-var": "error",
+            "max-nested-callbacks": [
+                "error",
+                4
+            ],
+            "max-depth": [
+                "error",
+                4
+            ],
+            "max-lines-per-function": [
+                "error",
+                {
+                    "max": 35,
+                    "skipBlankLines": true,
+                    "skipComments": true
+                }
+            ],
+            "promise/always-return": "off",
+            "sonarjs/no-collapsible-if": "off",
+            "sonarjs/no-duplicate-string": "off",
+            "vue/no-template-shadow": "off",
+            "vue/no-constant-condition": "warn",
+            "vue/this-in-template": "error",
+            "quotes": [
+                "warn",
+                "single"
+            ],
+            "vue/html-indent": [
+                "warn",
+                4
+            ],
+            "vue/valid-v-slot": [
+                "error",
+                {
+                    "allowModifiers": true
+                }
+            ]
+        },
+        "parser": "vue-eslint-parser",
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "prettier": {
+        "trailingComma": "all",
+        "tabWidth": 4,
+        "semi": false,
+        "printWidth": 110,
+        "singleQuote": true
+    }
+}

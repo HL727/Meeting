@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera användare{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Redigera användare" %}</h1>
+
+<hr />
+
+{% if customer %}
+<form>
+<label>{% trans "Hitta cospace" %} <input name="q" placeholder="{% trans "Sökord" %}" /></label><br />
+<input type="hidden" name="customer" value="{{ customer.pk }}">
+<button>{% trans "Sök" %}</button>
+</form>
+{% endif %}
+
+{% if cospace_members %}
+
+<form method="post">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "Namn" %}</th>
+            <th>{% trans "URI-namn" %}</th>
+            <th>{% trans "Call id" %}</th>
+            <th>{% trans "Auto" %}</th>
+            <th>{% trans "Medlemmar" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cospace, members in cospace_members %}
+        <tr>
+            <td><input type="checkbox" {% if not cospace.auto_generated %}checked{% endif %} name="cospaces" value="{{ cospace.id }}" /></td>
+            <td>{{ cospace.name }}</td>
+            <td>{{ cospace.uri }}</td>
+            <td>{{ cospace.call_id }}</td>
+            <td>{% if cospace.auto_generated %}<span class="fa fa-check"></span>{% endif %}</td>
+            <td>{% for m in members %}{{ m.user_jid }}<br />{% endfor %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>{% trans "Redigera" %}</h2>
+
+<label>{% trans "Användare" %} (kommaseparerade): <textarea rows="4" cols="80" name="users"></textarea></label><br />
+
+<p> </p>
+<table width="100%" style="vertical-align: top;">
+<tr>
+<td>
+    <p><strong>{% trans "Lägg till ovanstående användare" %}:</strong></p>
+
+<label>{% trans "Kan lägga till användare" %} <input name="can_add_members" checked type="checkbox" /></label><br />
+<label>{% trans "Kan ta bort sig själv" %} <input name="can_remove_self" checked type="checkbox" /></label><br />
+<label>{% trans "Kan radera cospace" %} <input name="can_destroy" checked type="checkbox" /></label><br />
+
+<button name="post_action" value="add">{% trans "Lägg till i valda cospaces" %}</button>
+</td>
+<td style="vertical-align: top;">
+
+    <p><strong>{% trans "Ta bort ovanstående användare" %}</strong></p>
+<button name="post_action" value="remove">{% trans "Ta bort från valda cospaces" %}</button>
+</td>
+</tr>
+</table>
+
+{% csrf_token %}
+</form>
+
+{% endif %}
+
+
+{% endblock content %}

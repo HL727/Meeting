@@ -1,0 +1,79 @@
+{% extends "setup/base_form.html" %}
+{% load i18n bootstrap3 %}
+{% block form_title %}{% trans "Lägg till EWS-koppling" %}{% endblock %}
+
+{% block content %}
+    <div class="card card-settings" style="max-width: 800px;">
+        <form action="{{ request.path }}?next={{ next }}" method="post" role="form" class="form mb-0">
+            <div class="card-header">
+                <h3 class="mb-0">{% trans "EWS-server" %}</h3>
+            </div>
+
+            <div class="card-body pb-0">
+
+                <h2>{% trans "Välj inloggningstyp" %}</h2>
+
+                <h3>{% trans "Application permission" %}</h3>
+
+                {% if error %}
+                <div class="error alert alert-error">
+                    <h4>{{ error }}</h4>
+                </div>
+                {% endif %}
+
+                {% trans "Lägg till följande i din applikations Manifest efter" %}<strong>"requiredResourceAccess": [ </strong>
+
+
+                <pre><code>
+{
+"resourceAppId": "00000002-0000-0ff1-ce00-000000000000",
+"resourceAccess": [
+    {
+    "id": "dc890d15-9560-4a4c-9b7f-a736ec74ec40",
+    "type": "Role"
+    }
+]
+},
+            </code></pre>
+
+                {% blocktrans %}Gå sedan till <strong>API Permissions</strong> och tryck på "Grant admin consent{% endblocktrans %}
+
+                <p><a class="btn btn-primary" href="?app=1">{% trans "Bekräfta" %}</a></p>
+
+                <h3>Authorization / delegation</h3>
+
+                {% trans "Lägg till följande i din applikations Manifest bredvid" %} <strong>"requiredResourceAccess": [</strong>
+
+                <pre><code>
+{
+"resourceAppId": "00000002-0000-0ff1-ce00-000000000000",
+"resourceAccess": [
+    {
+    "id": "3b5f3d61-589b-4a3c-a359-5dd4b5ee5bd5",
+    "type": "Scope"
+    }
+]
+},
+            </code></pre>
+
+                {% blocktrans %}Gå sedan till <strong>API Permissions</strong> och tryck på "Grant admin consent{% endblocktrans %}
+
+                <p><a class="btn btn-primary" href="?redirect=1">{% trans "Verifiera inloggning" %}</a></p>
+
+
+                <h2>{% trans "Redigera" %}</h2>
+
+                {% csrf_token %}
+                {% bootstrap_form form %}
+            </div>
+            <div class="card-footer">
+                <div class="d-flex align-items-center">
+                    <button type="submit" class="btn btn-primary">
+                        {% trans "Gå vidare" %}
+                    </button>
+                    <a href="/" class="ml-auto">{% trans "Avbryt" %}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

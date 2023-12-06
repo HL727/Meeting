@@ -1,0 +1,89 @@
+{% load i18n %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans "Statistik" %}</title>
+    <style type="text/css">
+    {% trans "body" %} {
+        background: #0f0;
+    }
+    .h1 {
+        margin-bottom: 1em;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .h2 {
+        margin-bottom: 0em;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    img {
+        display: inline-block;
+        margin-top: 0em;
+        margin-bottom: 0em;
+    }
+    table {
+    }
+    td, th {
+        text-align: left;
+    }
+    .next {
+        -pdf-keep-with-next: true;
+    }
+
+    .break {
+       page-break-before: always
+   }
+   </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>{% trans "Samtalsstatistik" %} {{ form.cleaned_data.ts_start|date:"Y-m-d" }} - {{ form.cleaned_data.ts_stop|date:"Y-m-d" }}</h1>
+
+        {% if graph %}
+        <h2 class="next">{% trans "Antal timmar per dag" %}</h2>
+        <img height="400" src="{{ graph }}" />
+        {% endif %}
+
+        {% if sametime_graph %}
+        <h2 class="next">{% trans "Samtidiga användare" %}</h2>
+        <img height="400" src="{{ sametime_graph }}" />
+        {% endif %}
+
+        {% if summary.cospace %}
+        <h2 style="margin-top: 20px;">{% trans "Totalt" %}</h2>
+        <table class="summary" width="200">
+            <tbody>
+            <tr>
+                <td width="40">
+                    <strong>{{ summary.cospace_total.duration|floatformat:0 }}</strong>
+                </td>
+                <td>{% trans "Timmar" %}</td>
+            </tr>
+            {% if summary.cospace_total.guest_duration and summary.cospace_total.duration != summary.cospace_total.guest_duration %}
+            <tr>
+                <td>
+                    <strong>{{ summary.cospace_total.guest_duration|floatformat:0 }}</strong>
+                </td>
+                <td>{% trans "Gästtimmar" %}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>
+                    <strong>{{ summary.cospace_total.participant_count|floatformat:0 }}</strong>
+                </td>
+                <td>{% trans "Deltagare" %}</td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>{{ summary.cospace_total.call_count }}</strong>
+                </td>
+                <td>{% trans "Unika samtal" %}</td>
+            </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>

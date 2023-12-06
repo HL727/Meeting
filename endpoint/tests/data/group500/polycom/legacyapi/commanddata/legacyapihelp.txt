@@ -1,0 +1,528 @@
+#
+# All commands are composed of one or more tokens and are terminated by a
+# newline character. Tokens are either a string of characters or a quoted string
+# (e.g. camera, button, cc, "This is a quoted string token"). With the
+# exception of quoted string parameters, all tokens can be abbreviated to
+# the minimum number of characters required to make a unique abbreviation.
+#
+# All commands are case sensitive.
+#
+# The following notation is used in describing commands.
+#
+#   "x"     - A user supplied value. This value only needs to be enclosed in
+#             quotes if it contains whitespace (tabs, or spaces)
+#
+#   {a..b}  - A set of values ranging from a to b
+#
+#   <tok1|tok2 "arg"|tok3>
+#           - An enumeration of the only valid tokens. In this example the
+#             choice tok2 takes a user supplied argument.
+#
+#   [arg]   - An optional argument
+#
+#   [arg1|arg2 "value"|arg3]
+#     - A set of optional arguments. In this example, choice (arg2)
+#             required a user supplied value.
+#
+#   ["valid_button" ...]
+#           - One or more valid button tokens (see enumerated values below)
+#
+# In some cases [below] a command is listed more than once when its
+# function is more clearly described in the context of the supplied
+# arguments.
+#
+! <"str">::Repeat the last command in the history list which begins with "str".
+! <{1..64}>::Repeat the Nth command history list, where N is 1 through 64.
+abk all::Display all the local address book entries.
+abk batch <{0..59}>::Display local address book entries in batches of 10, or the whole address book at once.
+abk batch search "pattern" "count"::Display a batch starting at 1st matched pattern for "count" entries
+abk batch define "start_no" "stop_no"::Dump batch of addresses from "start_no" to "stop_no"
+abk letter {a..z}::Display local address book entries beginning with the letter specified.
+abk range "start_no" "stop_no"::Display local address book entries numbered "start_no" through "stop_no".
+addrbook all::Display all the local address book entries.
+addrbook batch <{0..59}>::Display local address book entries in batches of 10, or the whole address book at once.
+addrbook batch define "start_no" "stop_no"::Dump batch of addresses from "start_no" to "stop_no"
+addrbook batch search "pattern" "count"::Display a batch starting at 1st matched pattern for "count" entries
+addrbook letter {a..z}::Display local address book entries beginning with the letter specified.
+addrbook range "start_no" "stop_no"::Display local address book entries numbered "start_no" through "stop_no".
+addressdisplayedingab <get|private|public>::Specifies whether to make the system address public or private in the global
+directory.
+advnetstats [{0..2}]::Get advanced network statistics for each call.
+alertusertone <get|1|2|3|4>::Get/set alert user tone.
+alertvideotone <get|1|2|3|4|5|6|7|8|9|10>::Get/set incoming video call tone.
+all <register|unregister>::Register/unregister for all user feedback.
+allowabkchanges <get|yes|no>::Get/set allow address book changes.
+allowcamerapresetssetup <get|yes|not>::Get/set Allow camera presets to be changed.
+allowdialing <get|yes|no>::Get/set allow dialing.
+allowmixedcalls <get|yes|no>::Get/set state to allow mixed H.320/H.323 calls.
+allowusersetup <get|yes|no>::Get/set state to allow user setup.
+amxdd <get|on|off>::Get/turn on/off the amx device detection beacon.
+answer <video|phone>::Answers incoming video or POTS call.
+areacode <get|set "areacode">::Get/set bri area code.
+audio3p5inputfaronly <get|enable|disable>::Get/set audio 3.5mm input.
+audiometer<micleft|micright|lineinleft|lineinright|lineoutleft|lineoutright|contentinleft|contentinright|vcrinleft|vcrinright|vcroutleft|vcroutright|farendleft|farendright|off>::Queries and displays audio levels, once per second.
+audiotransmitlevel <get|up|down|register|unregister>::Get/set audio transmit level or notification for audio transmit level changes
+audiotransmitlevel set [-6..18]::Set the level of the audio transmitted to the far side.
+autoanswer <get|yes|no|donotdisturb>::Get/set auto answer.
+autodiscovernat <get|yes|no>::Get/set auto discover NAT for QOS.
+#autoh323dialing <get|yes|no>::Get/set auto h.323 dialing.
+autoshowcontent <on|off>::Specifies whether to send content automatically when a computer is connected to the system.
+backlightcompensation <get|yes|no>::Get/set backlight compensation.
+basicmode <get|on|off>::Get/set enable/disable state for ristricted capabilities mode for interoperability compatibility with older equipment
+bri1enable <get|yes|no>::Get/set enable/disable state for BRI line 1.
+bri2enable <get|yes|no>::Get/set enable/disable state for BRI line 2.
+bri3enable <get|yes|no>::Get/set enable/disable state for BRI line 3.
+bri4enable <get|yes|no>::Get/set enable/disable state for BRI line 4.
+briallenable <get|yes|no>::Get/set enable/disable state for BRI lines 1-4.
+button <#|*|0|1|2|3|4|5|6|7|8|9|.>::Simulate remote control keypad buttons.
+button <up|down|left|right|select>::Simulate remote control arrow buttons.
+button <auto|callhangup|near|far|slides|zoom+|zoom>::Simulate remote control buttons.
+button <volume+|volume-|snapshot|mute>::Simulate remote control buttons.
+button <pickedup|putdown>::Simulate remote control feet up/down.
+button <keyboard|delete|period|preset|camera|pip|home|directory>::Simulate remote control buttons.
+button "valid_button" ["valid_button" ...]::Simulate one or more remote control buttons.
+calendarprotocol<get|auto|TLS>::Get/set calendar protocol
+calldetail <"nth_item"|all>::View all or Nth call detail record/s.
+calldetail range::View the valid calldetail range
+calldetailreport <get|yes|no>::Get/set call detail report.
+callencryption <get|whenavailable|disabled>::Get/set call encryption mode.
+#callpreference <get|h320|h323|both>::Get/set call preference. Prompt for restart after change.
+callstate <get|register|unregister>::Get/set notification registration state for call state events.
+callstats ::Get system call stats.
+callinfo <all>::Get call state information (new format with more fields)
+callinfo callid "callid"::Get call state information for call specified by callid "callid"
+camera near {1..6}::Select near camera source 1-6 (1-5 correspond to ports on the back where the 6th camera representats a logical connection (ppcip), and may not always be present.
+camera far {1..5}::Select far camera source 1-5.
+camera <far|near> move <left|right|up|down|zoom+|zoom-|stop>::Move far/near camera.
+camera <far|near> move <continuous|discrete>::Set far/near camera movement mode.  Continuous mode needs only one move command to start camera motion and requires a stop command.  Discrete mode moves camera in discrete increments.
+camera <far|near> source::Returns source of far/near camera.
+camera <far|near> stop::Stops far/near camera movement when in continuous mode.
+camera <far|near> tracking <get|on|off|to_presets>::Get/set far/near camera tracking mode.
+camera for-content {2..5}::Set the specified camera input port to content mode
+camera for-people {2..5}::Set the specified camera input port to people mode
+camera near <gettposition|setposition "x" "y" "z">::Get/set the x, y, and z of the currently selected ptz camera.  Limits: -880 <= x <= 880; -300 <= y <= 300; 0 <= z <= 1023.
+camera <register|unregister>::Register/unregister to receive feedback when user changes camera source.
+cameradirection <get|normal|reversed>::Get/set the camera pan direction.
+camerainput <1> <get>::Get inputs on cameras 1 as only component is supported for camerainput.
+camerainput <2> <get|hdmi|vga|component|sdi>::Get/set inputs on cameras 2.
+camerainput <3> <get|hdmi|vga>::Get/set inputs on cameras 3.
+camerainput <4> <get|component|composit>::Get/set inputs on cameras 4. Error string is returned if the model doesn't support input 4.
+cameraautohanguptimer <get|off|15|30|45>:: Get/set the hangup timer
+camerainvert near <get|on|off>:: Get/Set the camera invert
+cameratracking near calibrate <get|on|off>:: Get/Set the auto image calibrate option
+cameratracking near framing <get|wide|normal|tight>:: Get/Set the group framing
+cameratracking near mode <get|voice|director|group|speaker>:: Get/Set the tracking mode
+cameratracking near participant <get|on|off>:: Get/set the participant count
+cameratracking near speed <get|fast|normal|slow>:: Get/set the tracking speed
+cameratracking near wake <get|on|off>:: Get/Set the camera auto wake option
+chaircontrol end_conf::End conference.
+chaircontrol hangup_term "term_no"::Delete terminal <term_no> from conference.
+chaircontrol list::List terminals in conference.
+chaircontrol rel_chair::Release chair.
+chaircontrol <register|unregister>::Register/unregister to receive feedback on all chair control operations.
+chaircontrol req_chair::Request chair.
+chaircontrol req_floor::Request floor.
+chaircontrol req_term_name "term_no"::Request terminal name for terminal numbered <term_no>.
+chaircontrol req_vas::Request voice activated switching.
+chaircontrol set_broadcaster "term_no"::Request terminal <term_no> become the broadcaster.
+chaircontrol set_password "string"::Set chaircontrol password to use "string".
+chaircontrol set_term_name "term_no" "term_name"::Set terminal name "term_name" for terminal "term_no".
+chaircontrol view "term_no"::View terminal <term_no>.
+chaircontrol view_broadcaster::View broadcaster.
+cmdecho <on|off>::Turns command echoing on or off.
+colorbar <on|off>::Turn diagnostic color bars on/off.
+configchange <register|unregister>::Register/unregister  to receive notifications when configuration variables have changed.
+configchange get::Get the current registration state for configchange events
+configdisplay get::List monitor 1 and 2 output signal type and aspect ratios
+configdisplay <monitor1|monitor2> get::List output signal type and spect ratio for specified monitor
+configdisplay <monitor1|monitor2> <s_video|composite|vga|dvi|component> <4:3|16:9>::Set monitor signal type and aspect ratio
+configparam camera_video_quality <1|2|3|4> get:: get a camera_video_quality value
+configparam camera_video_quality <1|2|3|4> set <motion|sharpness>:: set a camera_video_quality value
+#configparam camera1_video_quality get:: get the camera1_video_quality value
+#configparam camera1_video_quality set <motion|sharpness>:: set the camera1_video_quality value
+#configparam camera2_video_quality get:: get the camera2_video_quality value
+#configparam camera2_video_quality set <motion|sharpness>:: set the camera2_video_quality value
+#configparam camera3_video_quality get:: get the camera3_video_quality value
+#configparam camera3_video_quality set <motion|sharpness>:: set the camera3_video_quality value
+#configparam camera4_video_quality get:: get the camera4_video_quality value
+#configparam camera4_video_quality set <motion|sharpness>:: set the camera4_video_quality value
+configpresentation get::Get the current presentation settings for the active monitors
+configpresentation <monitor1|monitor2> get::Get the presentation settings for the specificed monitor
+configpresentation monitor1 <near|far|content|near-or-far|content-or-near|content-or-far|all>::Set presentation settings for monitor 1
+configpresentation monitor2 <near|far|content|near-or-far|content-or-near|content-or-far|all>::Set presentation settings for monitor 2
+configpresentation monitor1 "pres_value" monitor2 "pres_value"::Set presentation settings for both monitor1 and monitor2
+confirmdiradd <get|yes|no>::Get/set confirm directory additions.
+confirmdirdel <get|yes|no>::Get/set confirm directory deletions.
+contentauto <get|on|off>::Sets or gets the automatic bandwidth adjustment for people and content in point-to-point H.323 calls.
+contentsplash <get|yes|no>::Gets or turns on/off content splash screen.
+country <get|set {algeria..zimbabwe}>::Get/set the system country value.
+#country list::List the defined country values
+cts <get|normal|inverted>::Get/set V.35 CTS.
+daylightsavings <get|yes|no>::Get/set GMS daylight savings time.
+dcd <get|normal|inverted>::Get/set V.35 DCD.
+dcdfilter <get|on|off>::Get/set V.35 DCD filter.
+defaultgateway <get|set "xxx.xxx.xxx.xxx">::Get/set default gateway. Prompt for restart after change.
+dhcp <get|off|client|server>::Get/set DHCP.  Prompt for restart after change.
+destunreachabletx <get|yes|no>::Get/set whether system generates Destination Unreachable messages.
+dial addressbook "addr book name"::Dial address book entry "addr book name".
+dial addressbook_entry "UID"::Dial address book entry with the ID "UID".
+dial auto "speed" "dialstr"::Dial number using auto h.323 dialing.
+dial manual <56|64> "dialstr1" "dialstr2" [h320]::Dial a 2x56 or 2x64 non bonded call
+dial "speed" "dialstr1" ["dialstr2"] [h323|h320|ip|isdn|sip|gateway]::Dial video call to "dialstr1" at "speed" of type "h323" or "h320".
+dial phone "dialstring"::Dial the POTS line.
+dialchannels <get|parallel|oneatatime>::Get/set dial channels.
+dialingdisplay <get|dialingentry|displaymarquee|none>::Get/set home screen dialing display.
+#dialingentryfield <get|yes|no>::Get/set home screen setting for dialing entry field.
+dialplannormalization <get|on|off>::Get/ Set value of dial plan normalization.
+diffservaudio <get|set {0..63}>::Get/set audio DiffServ.
+diffservfecc <get|set {0..63}>::Get/set fecc DiffServ.
+diffservvideo <get|set {0..63}>::Get/set video DiffServ.
+dir ["string"]::List flash files or optionally list files which partially match "string".
+directory <get|yes|no>::Get/Set home screen setting for directory button.
+display call::Display information about current calls.
+display whoami::Prints out banner info.
+displayglobaladdresses <get|yes|no>::Get/set GAB display global addresses.
+displaygraphics <get|yes|no>::Get/set display icons in a call.
+displayipext <get|yes|no>::Get/set display ip extension.
+displayipisdninfo <yes|no|both|ip-only|isdn-only|none|get>::Get/set display IP/ISDN info on Place A Call screen.
+displayparams ::Get all system settings.
+#dme3wayenable <get|yes|no>::Get/set 3-way DME.
+dns <get|set {1..4} "xxx.xxx.xxx.xxx">::Get/set DNS servers 1-4.  Prompt for restart after change.
+dsr <get|normal|inverted>::Get/set V.35 DSR.
+dsranswer <get|on|off>::Get/set V.35 DSR answer.
+dtr <get|normal|inverted|on>::Get/sett V.35 DTR.
+dualmonitor <get|yes|no>::Get/set dual monitor emulation.
+dynamicbandwidth <get|yes|no>::Get/set dynamic bandwidth for QOS.
+e164ext <get|set "e.164name">::Get/s E.164 dialing name.
+echo "string"::Echo a string to the API session.
+echocanceller <get|yes|no>::Get/set echo canceller.
+#echocancellerred <get|yes|no>::Get/set line input red echo canceller.
+#echocancellerwhite <get|yes|no>::Get/set line input white echo canceller.
+enableacousticfence <get|on|off>::Get/set enable acousticfence
+enableaes128cbc <get|on|off>::Get/set enable or disblae 129cbc cipher.
+enableecho <get|yes|no>::Get/set whether system responds to broadcast/multicast echo requests.
+enablefirewalltraversal <get|on|off>::Get/set the standard firewall traversal feature.
+enablekeyboardnoisereduction <get|yes|no>::Get/set Keyboard Noise Reduction. This will auto-disable Live Music Mode.
+enablelivemusicmode <get|yes|no>::Get/set Live Music Mode. This will auto-disable Keyboard Noise Reduction.
+enablesipka<get|off|on>::Get/Set the enable SIP keep-alive messages.
+enablersvp <get|yes|no>::Sets or gets the RSVP (Resource Reservation Setup Protocol) setting on the system, which requests that routers reserve bandwidth along an IP connection path.
+enablesnmp <get|yes|no>::Get/set enable SNMP.
+enablevisualsecurity<get|off|on|>::Get/set visual security classification
+encryption <get|yes|no|requiredvideocallsonly|requiredallcalls>::Get/set call encryption.
+#execwithoutecho <command>:: Executes <command> silently by NOT printing any response string back to api session.
+exit ::End command session.
+farcontrolnearcamera <get|yes|no>::Get/set far control of near camera.
+farnametimedisplay <get|on|off>::Get/set disable or enable display of far site name
+gabk all::Display all the global address book entries.
+gabk batch {0..59}::Display global address book entries in batches (batch size is 20).
+gabk batch define "start_no" "stop_no"::Display a batch of number over the specified interval
+gabk batch search "pattern" "count"::Display 1st match of pattern, and then count additional items
+gabk letter {a..z}::Display global address book entries beginning with the letter specified.
+gabk range "start_no" "stop_no"::Display global address book entries numbered "start_no" through "stop_no"
+gaddrbook all::Display all the global address book entries.
+gaddrbook batch {0..59}::Display global address book entries in batches in batches of 20.
+gaddrbook batch define "start_no" "stop_no"::Dump batch of addresses from "start_no" to "stop_no"
+gaddrbook batch search "pattern" "count"::Display 1st match of pattern, and then count additional items
+gaddrbook letter {a..z}::Display global address book entries beginning with the letter specified.
+gaddrbook range "start_no" "stop_no"::Display global address book entries numbered "start_no" through "stop_no"
+gabpassword <get|set "password">::Get/set global address book (GAB) server password.
+gabserverip <get|set "xxx.xxx.xxx.xxx">::Get/set GAB server ip address.
+gatekeeperip <get|set "xxx.xxx.xxx.xxx">::Get/set gatekeeper ip address. Prompt for restart after change.
+gatewayareacode <get|set "areacode">::Get/set gateway area code.
+gatewaycountrycode <get|set "countrycode">::Get/set gateway country code.
+gatewayext <get|set "gateway extension">::Get/set gateway extension.
+gatewayipaddress <get|set "number">::Get/set gateway number IP Address.
+gatewayh323extension <get|set "number">::Get/set gateway number Extension.
+gatewaynumbertype <get|did|number+extension>::Get/set gateway number type.
+gatewayprefix <get "valid_speed"|set "valid_speed" "value">::Get/set gateway prefix.
+gatewaysetup ::View all gateway prefixes and suffixes.
+gatewaysuffix <get "valid_speed"|set "valid_speed" "value">::Get/set gateway suffix.
+gdsdirectory <get|on|off|status>::Enable/Disable/Get status Polycom GDS directory server.
+gdsserverip<set|get>"Ipaddress"::Set/Get the Server address
+gdsserverpassword set "password"::set the password for GDS server
+gendial <{0..9}|#|*>::Generate DTMF dialing tones to POTS line.
+gendialset<get|inband|outofband|both>::Get/Set the frequency of the DTMF tones
+generatetone <on|off>::Turn test tone on/off.
+gendialtonepots <{0..9}|#|*>::Generate DTMF dialing tones to POTS line.
+get screen::Returns the name of the current screen.
+getcallstate ::Get the state of the calls in the current conference.
+globaldir <searchstring> :: Display global entries named "searchstring".
+globaldir <searchstring> size :: Display global size of entries which named searchstring.
+globaldir entry <UID> :: Display address book with the uid specified.
+globaldir grouplist :: Display multi-tier default group members.
+globaldir grouplist <uid> :: Searching group memebers by uid.
+globaldir grouplist <uid> <searchstring> :: Searching the sites that match the string specified in the group.
+gmscity <get|set "city">::Get/set global management system (GMS) city.
+gmscontactemail <get|set "email">::Get/set GMS contact email.
+gmscontactnumber <get|set "number">::Get/set GMS contact number.
+gmscontactperson <get|set "person">::Get/set GMS contact person.
+gmscontactfax <get|set "fax number">::Get/set GMS contact fax.
+gmscountry <get|set "country">::Get/set GMS country.
+gmsstate <get|set "state">::Get/set GMS state.
+gmstechsupport <get|set "tech_support_digits">::Get/set GMS tech support phone number.
+gmsurl <get {1..10}|set {1..10} "xxx.xxx.xxx.xxx">::Get/set GMS url 1..10.  Automatically appends "/pwx/vs_status.asp".
+groupnamegds <get|set "group name">:Set the name that appears in the address book for the GDS group.
+groupnameldap <get|set "group name">:Set the name that appears in the address book for the LDAP group.
+groupnamenortel <get|set "group name">:Set the name that appears in the address book for the Notrel group.
+groupnameocs <get|set "group name">:Set the name that appears in the address book for the OCS group.
+h239enable <get|yes|no>::Sets or gets the H.239 People+Content setting.
+h323name <get|set "H.323name">::Get/set H.323 name.
+h331audiomode <get|g728|g711u|g711a|g722-56|g722-48|off>::Get/set H.331 audio mode.
+h331framerate <get|30|15|10|7.5>::Get/set H.331 frame rate.
+h331videoprotocol <get|h263|h261>::Get/set H.331 video protocol.
+h331videoformat <get|fcif>::Get/set H.331 video format.
+h331dualstream <get|on|off>::Get/set H.331 dual stream mode.
+hangup phone::Hang up telephone call.
+hangup video::Hang up all active video call(s).
+hangup video ["callid"]::Hangup video call specified by "callid".
+hangup all::Hang up all active call(s).
+help [all|help|"string"]::Display list of command names only, help for all commands, or commands which contain "string".
+help [verbose|terse|syntax]::Switch help display mode to verbose or terse; display help syntax table.
+history ::Display the last 64 valid commands used.
+homecallquality <get|yes|no>::Get/set home screen setting for call quality.
+homemultipoint <getyes|no>::Get/set home screen setting for multipoint.
+homerecentcalls <get|yes|no>::Get/set home screen setting for recent calls.
+homesystem <get|yes|no>::Get/set home screen setting for system button.
+homesystemname <get|yes|no>::Get/set home screen setting for system name.
+hostname <get|set "hostname">::Get/set lan host name. Prompt for restart after change.
+icmpoutpacketrate <get|set {0..60000}>::Get/set ICMP packet transmission rate.
+ignoreredirect <get|yes|no>::Get/set true/false state of ignore redirects for IPv4/IPv6.
+ipaddress <get|set "xxx.xxx.xxx.xxx">::Get/set ip address.  Prompt for restart after change.
+ipdialspeed set "valid speed" <on|off>::Set ip dialing speed "valid speed" on or off.
+ipdialspeed get "valid speed"::Get on/off state of ip dialing speed "valid speed".
+ipisdninfo <get|both|ip-only|isdn-only|none>::Get/set which call type info to display on home screen.
+ipprecaudio <get|set {0..7}>::Get/set audio ip precedence for QOS.
+ipprecfecc <get|set {0..7}>::Get/set fecc ip precedence for QOS.
+ipprecvideo <get|set {0..7}>::Get/set video ip precedence for QOS.
+ipstat ::Displays current settings for LAN host name, WINS resolution, DHCP, IP address, DNS servers 1-4, gateway, subnet mask, and WINS server.
+ipv6addrmode <get|client|manual|off>::Get/set IPv6 DHCP setting.
+ipv6linklocal <get|"IPv6 link local address">::Get/set IPv6 link local address. Will need a manual system restart.
+ipv6sitelocal <get|"IPv6 site local address">::Get/set IPv6 site local address. Will need a manual system restart.
+ipv6globaladdress <get|"IPv6 global address">::Get/set IPv6 global address. Will need a manual system restart.
+ipv6defaultgateway <get|"IPv6 default gateway">::Get/set IPv6 default gateway. Will need a manual system restart.
+isdnareacode <get|set "area code">::Get/set isdn area code.
+isdncountrycode <get|set "country code">::Get/set isdn country code. Same as telecountrycode.
+isdndialingprefix <get|set "isdn prefix">::Get/set isdn dialing prefix.
+isdndialspeed set "valid speed" <on|off>::Set isdn dialing speed on or off.
+isdndialspeed get "valid speed"::Get on/off state of isdn dialing speed.
+isdnnum get <1b1|1b2|2b1|2b2|3b1|3b2|4b1|4b2>:: Get isdn number
+isdnnum set <1b1|1b2|2b1|2b2|3b1|3b2|4b1|4b2> "isdn number">::Set isdn number.
+isdnswitch get::Get isdn switch protocol.
+isdnswitch <pt-to-pt_at&t_5_ess|multipoint_at&t_5_ess|ni-1>::Set isdn switch protocol.
+isdnswitch <nortel_dms-100|standard_etsi_euro-isdn|ts-031|ntt_ins-64>::Get/set isdn switch protocol.
+ismcu callid "callid"::Get far end is mcu or not for call specified by callid "callid"
+keypadaudioconf <get|yes|no>::Get/set keypad audio confirmation.
+language get::Get the system language
+language set <englishus|englishuk|german|spanish|french>::Set the system language
+language set <italian|japanese|korean|hungarian|norwegian>::Set the system language
+language set <polish|portuguese|russian|chinese|traditional_chinese>::Set the system language
+lanport <get|auto|10|10hdx|10fdx|100|100hdx|100fdx>::Get/set LAN port settings.
+configlayout monitor1 list::Get all available layout style rotation name.
+configlayout monitor1 get::Get current layout style rotation name.
+configlayout monitor1 <layout_style_rotation_name>::Set layout settings.
+ocsdirectory <get|yes|no>::Enable/Disable Microsoft OCS directory server.
+ldapserveraddress <get|set "xxx.xxx.xxx.xxx">::Get/set LDAP server ip or dns address.
+ldapserverport <get|set "port number">::Get/set LDAP server port number.
+ldapbasedn <get|set [base dn]>::Get/set LDAP server base DN (Distinguished Name).
+ldapbinddn <get|set "bind dn">::Get/set LDAP user bind DN (Distinguished Name).
+ldapdirectory <get|yes|no>::Enable/Disable LDAP directory server.
+ldappassword set <ntlm|basic> <user password>::Set passwords to perform LDAP Simple or NTLM authentication.
+ldapauthenticationtype <get|set|anonymous|basic|ntlm>::Get/set LDAP server authentication type.
+ldapntlmdomain <get|set domain>::Get/set NTLM domain in which authentication will take place.
+ldapsslenabled <get|on|off>::Get/set TLS (Transport Layer Security).
+ldapusername <get|set "user ID">::Get and set LDAP user name for NTLM authentication.
+linestate <register|unregister>::Register/unregister to receive notifications when IP or ISDN line states change.
+listen <video|phone|sleep>::Registers session to listen for incoming video/phone call, system sleep/awake state.
+localdatetime <get|yes|no>::Get/set local date/time display on Place A Call screen.
+lyncdirectory<get|on|off|status>::Enable/Disable/Get status Microsoft directory server.
+localdir <*>:: Returns all site and data
+localdir <searchstring>:: Display local entries named "searchstring".
+localdir <searchstring> size:: Display local size of entries which named searchstring.
+localdir entry <UID>:: Display local address book with the uid specified.
+localdir range "startnum" "endnum":: Display local address book from the start number to the end number given.
+localdir <searchstring> range "startnum" "endnum":: Display searched results listing from start number to end number of the list.
+localdir grouplist:: Display groups and entries from the top-tier
+localdir grouplist <UID>:: Searching group members by uid.
+localdir grouplist <UID> <searchstring>:: Searching the sites that match the string specified in the group.
+localdir grouplist range "startnum" "endnum":: Display grouplist range from the given start to end number
+localdir grouplist <UID> range "startnum" "endnum":: Display matched UID range from the given start to end number
+marqueedisplaytext <get|set "text">::Get/set marquee text.
+maxgabinternationalcallspeed <get|set "valid speed">::Get/set the max speed for International ISDN calls made from the Global Address Book.
+maxgabinternetcallspeed <get|set "valid speed">::Get/set the max speed for Internet (IP) calls made from the Global Address Book.
+maxgabisdncallspeed <get|set "valid speed">::Get/set the max speed for ISDN calls made from the Global Address Book.
+maxtimeincall <get|set {0..99999}>::Get/set max time in call.
+mcupassword ["password"]::Enter and send the mcu password to the MCU.
+meetingpassword <set "password">::Set meeting password.
+midrangespeaker <get|on|off>::Get/set midrange speaker setting.
+monitor1 <get|4:3|16:9>::Get/set aspect ratio monitor 1.
+monitor1screensaveroutput <get|black|no_signal>::Get/Set the video output upon screensaver activation for monitor 1.
+monitor2 off::Disable monitor 2
+monitor2 <get|4:3|16:9>::Get/set aspect ratio for monitor 2.
+monitor2 vga::Set monitor Get/set aspect ratio for monitor 2 (and/or disable)
+monitor2screensaveroutput <get|black|no_signal>::Get/Set the video output upon screensaver activation for monitor 2.
+mon2cecpa <get|0..65535> :: Set/Get Set pa for cec of connected mon2
+mpautoanswer <get|yes|no|donotdisturb>::Get/set multipoint auto answer.
+mpdtmfsuppported <get|yes|no>::Get/Set sending DTMF tones in a multipoint call
+mpmode <get|auto|discussion|presentation|fullscreen>::Get/set MP mode.
+mute <register|unregister>::Register/Unregister for near or far mute state changes.
+mute near <get|on|off|toggle>::Get/set/toggle near mute state
+mute far get::Get far mute state.
+muteautoanswer <get|yes|no>::Get/set mute auto answer calls.
+muteincomingoutgoing <get|yes|no>::Get/set mute incoming/outgoing calls.
+mtumode <get|default|specify>::Get/set the mtu mode.
+mtusize <get|660|780|900|1020|1140|1260|1500>::Get/set the mtu size.
+natconfig <get|auto|manual|off>::Get/set NAT configuration.
+nearloop <on|off>::Turn near end loop on/off.
+netstats [{0..2}]::Get network statistics for each call.
+nonotify <callstatus|captions|linestatus|mutestatus|screenchanges>::Unsubscribe for notification for the specified event type
+nonotify <sysstatus|sysalerts|vidsourcechanges|multisitestatus>::Unsubscribe for notifications event [more choices]
+notify <callstatus|captions|linestatus|mutestatus|screenchanges>::Subscribe for notification for the specified event type
+notify <sysstatus|sysalerts|vidsourcechanges|multisitestatus>::Subscribe for notification events [more choices]
+notify <getregistrations>::List currently active notification subscriptions
+ntpmode <get|auto|off|manual>::Get/set time server mode.
+ntpserver get::Get the ip address/name of the ntp server.
+ntpserver set <"xxx.xxx.xxx.xxx"|server name>::Set the ip address/name of the ntp server.
+numberofmonitors get::Get the number of configured monitors for the system.
+numdigitsdid <get|{0..24}>::Get/set number of digits in DID (E.164 dialing).
+numdigitsext <get|{0..24}>::Get/set number of digits in Extension (E.164 dialing).
+pause [{0..65535}]::Pause a whole number of seconds before next command.
+phone <clear|flash>::Clear phone number from text box or flash phone channels.
+pip <get|on|off|auto|camera|swap|register|unregister>::Get/set on-screen pip mode.
+popupinfo <register|unregister>::Register/unregister to receive popup text and button choices text.
+preset <register|unregister>::Register/unregister for camera preset events
+preset far <go|set {0..15}>::Set/go to preset 0-15 for far source.
+preset near <go|set {0..99}>::Set/go to preset 0-99 for near source.
+pricallbycall <get|set {0..31}>::Get/set PRI call-by-call.
+prichannel set <all|{1..23}|{1..30}> <on|off>::Set PRI channel on/off state.
+prichannel get <all|{1..23}|{1..30}>::Get PRI channel on/off state.
+pricsu <get|internal|external>::Get/set PRI CSU.
+pridialchannels get::Get number of PRI channels to dial in parallel.
+pridialchannels set <{1..12}|15>::Set number of PRI channels to dial in parallel.
+priintlprefix <get|set ["prefix"]>::Get/set PRI international dialing prefix.
+prilinebuildout <get|set> <<0|-7.5|-15|-22.5>|<0-133|134-266|267-399|400-533|534-665>>::Get/set PRI line buildout.
+prilinesignal <get|set> <esf/b8zs|crc4/hdb3|hdb3>::Get/set PRI line signal.
+primarycallchoice <get|isdn|ip|sip|manual>::Get/set GAB primary calling choice. Automatically reset to 'manual' if setting matches secondarycalltype.
+#primarycamera <get|1|2|3>::Get/set primary camera.
+#prinumber <get|<set "pri number">>::Get/sett PRI number.
+prinumberingplan <get|isdn|unknown|::Get/set PRI numbering plan.
+prioutsideline <get|set "outside_line">::Get/set PRI outside line.
+priswitch <get|set <att5ess|att4ess|norteldms|ni2|net5/ctr4>>::Get/set PRI switch.
+reboot::Reboot the system (prompt user to confirm)
+reboot <y|now>::Reboot the system (no prompt)
+recentcalls ::View list of recent calls.
+registerall ::Alias for 'all register' command
+registerthissystem <get|yes|no>::Get/set GAB register this system.
+remotecontrol disable <all|none>::Disable IR remote for all/no buttons
+remotecontrol disable "valid button" ["valid button" ...]::Disable IR remote for specified buttons.
+remotecontrol enable <all|none>::Enable IR remote for all/no buttons
+remotecontrol enable "valid button" ["valid button" ...]::Enable IR remote specified buttons.
+remotemonitorenable get::Get the remote monitoring feature state.
+repeat {1..64}::Repeat specified command from history list.
+requireacctnumtodial <get|yes|no>::Get/set GMS require account number to dial.
+roomphonenumber <get|set "room_phone_number">::Get/set system room phone number.
+rs232 baud <get|9600|14400|19200|38400|57600|115200>::Get/set RS232 baud rate.
+rs232login<get|none|pwonly|pwuser>::Get/Set rs232 login mode
+rs232 mode <get|passthru|control|debug|sony_ptz|closed_caption|vortex_mixer>::Get/set RS232 mode.
+rs232monitor get::Return the state of the RS232 API monitor
+rs232monitor <on|off>::Set the state of the RS232 API monitor
+rs366dialing <get|on|off>::Get/set RS-366 dialing.
+rt <get|normal|inverted>::Get/set V.35 RT.
+rts <get|normal|inverted>::Get/set V.35 RTS.
+#run "scriptfilename"::Run a script file containing api commands from flash file system.
+screen ::Returns name of current UI screen being displayed.
+screen get::Get the registration state for screen change events.
+screen [register|unregister|"screen_name"]::Register/unregister for screen changes or go to a specific screen.
+screencontrol enable <all|none|"screen_name">::Enable transitions to all/none or specified screens
+screencontrol disable <all|none|"screen_name">::Disable screen transitions
+secondarycallchoice <get|isdn|ip|sip|none>::Get/set GAB secondary calling choice.
+serialnum ::Displays serial number.
+session find "name"::Report if specified session is attached to the system.
+session name "name"::Name the current session.
+setaccountnumber "account number"::Set account number when required for dialing.
+showpopup "text to display"::Displays a popup message box in the UI.
+sleep [register|unregister]::Put system in sleep mode, or register/unregister to receive notifications when system goes to sleep or wakes up.
+sleep mute<get|on|off>::Get/Set Mic mute in sleep mode
+sleeptext <get|set "text">::Get/set sleep text.
+sleeptime <get|0|1|3|15|30|60|120|240|480>::Get/set time before system goes to sleep.
+snmpadmin <get|set "admin name">::Get/set SNMP administrator name.
+snmpcommunity <get|set "read only community name">::Get/set SNMP read only community name.
+snmpconsoleip <get|set "xxx.xxx.xxx.xxx">::Get/set SNMP console ip address.
+snmplocation <get|set "location name">::Get/set SNMP location name.
+snmpsystemdescription <get|set "system description">::Get/set SNMP system description.
+snmptrapversion <get|set> <v1|v2c> ::Get/set SNMP traps version.
+soundeffectsvolume get::Get sound effects volume.
+soundeffectsvolume <set|test> {0..10}::Set/test sound effects volume.
+sourcemandebugger <get|enable|disable> :: Set/Get Source Manager debugging ability
+spidnum get <1b1|1b2|2b1|2b2|3b1|3b2|4b1|4b2>::Get spid number.
+spidnum set <1b1|1b2|2b1|2b2|3b1|3b2|4b1|4b2> "spid number"::Set spid number.
+sslverificationdepth <get|set {0..12}>::Get/set maximum length of peer chains for certificate matching.
+sshservice <get|enable|disable> :: Set/Get ssh service ability
+st <get|normal|inverted>::Get/set V.35 ST.
+status ::return all configured system status
+startnearcameratracking <on|off>::Start/stop camera tracking using the configured mode.
+subnetmask <get|set "xxx.xxx.xxx.xxx">::Get/set subnet mask. Prompt for restart after change.
+systemname <get|set "system name">::Get/set system name.
+sysinfo <get|register|unregister>::Register/unregister for system changes.
+tcpports <get|set {1024..49150}>::Get/set tcp ports for QOS.
+techsupport "phone num"::Sends phone num to GMS tech support.
+teleareacode <get|set "telephone_area_code">::Get/set system area code.
+telecountrycode <get|set "telephone_country_code">::Get/set system country code. Same as isdncountrycode.
+telenumber <get|set "telephone_number">::Get/set system number.
+telnetmonitor get::Get state of the telnet API monitor
+telnetmonitor <on|off>::Set state of the telnet API monitor
+timediffgmt <get|{-12:00..+12:00}>::Get/set GMS time diff from GMT.
+typeofservice <get|ipprecedence|diffserv>::Get/set type of service for QOS.
+udpports <get|set {1024..49150}>::Get/set udp ports for QOS.
+unregisterall ::Alias for 'all unregister' command
+usefixedports <get|yes|no>::Get/set use fixed ports for QOS.
+usegatekeeper <get|off|specify|auto>::Get/set gatekeeper setting.  Prompt for restart after change.
+usepathnavigator <get|always|never|required>::Get/set PathNavigator/MGC to dial multi-way calls.
+useroompassword <get|yes|no>::Sets or gets the Use Room Password for Remote Access setting.
+v35broadcastmode <get|on|off>::Get/set V.35 broadcast mode.
+v35dialingprotocol <get|rs366>::Get/set V.35 dialing protocol.
+v35num get <1b1|1b2>::Get V.35 numbers.
+v35num set <1b1|1b2> "v35 number"::Set V.35 numbers.
+v35portsused <get|1|1+2>::Get/set V.35 ports used.
+v35prefix get "valid_speed"::Get V.35 dialing prefix.
+v35prefix set "valid speed" "value">::Set V.35 dialing prefix.
+v35profile <get|special_1|special_2|adtran|adtran_isu512|ascend|ascend_vsx|ascend_mb+|ascend_max|avaya_mcu|fvc.com|initia|lucent_mcu|madge_teleos|promptus|view>::Get/set/view all settings of V.35 dialing profile.
+v35suffix get "valid_speed"::Get V.35 dialing suffix.
+v35suffix set "valid speed" "value"::Set V.35 dialing suffix.
+validateacctnum <get|yes|no>::Get/set GMS validate account number when dialing.
+vc <lan|pod> <get|play|stop|register|unregister>::Visual Concert (VC) lan/pod remote control, get VC state, register/unregister for VC events.
+vcbutton <get|stop|register|unregister>::Visual Concert (VC) Remote control, Get VC state, register/unregister for VC events.
+vcbutton play <input>::Play content from any valid content source.
+vcbutton map "cam#"::Map vcbutton operation to the specified content camera.
+vcbutton map get::Query the current vcbutton content camera mapping.
+vcbutton source get::Get the input source, if any, which is currently playing.
+vcraudioout <get|yes|no>::Get/set vcr audio out always on.
+vcrrecordsource get::Get the vcr record source
+vcrrecordsource <none|near|far|auto|content|content-or-near|content-or-far|content-or-auto|none>::Set vcr record source.
+version ::Returns the current viewstation version string.
+#vgahorizpos <get|left|right>::Get/set VGA horizontal position.
+#vgaoffmode <get|black|nosignal>::Get/set VGA off mode.
+#vgaphase <get|increase|decrease>::Get/set VGA phase.
+vgaqualitypreference <get|content|people|both>::Sets or gets the bandwidth split for people and content video.
+#vgavertpos <get|up|down>::Get/set VGA vertical position.
+videocallorder <isdn|h323|sip|gateway323|gateway320|gateway> <1|2|3|4|5|6>::Set the call order of the specified protocol to the specified slot number.
+voicecallorder <pots|isdn_phone|vtx|sip_speakerphone> <1|2|3|4>::Set the call order of the specified protocol to the specified slot number.
+videomute near <get|on|off>::Get/set video mute status.
+visualboard <get|on|off>:: Get/Set Visualboard
+visualboardzoom <get|on|off>::Get/set zoom in visualboard
+visualboardppt <get|on|off>::Get/ set enabling ppt in visualboard
+visualboardswipe <get|on|off>::Get/set enabling swipe in visualboard
+volume <register|unregister>::Register/unregister for volume notification events on volume changes
+volume <get|up|down|set {0..50}>::Get/set the volume level
+volume range::View the valid volume range.
+vortex <0|1> mute <on|off>::Set vortex amute state for vortex mixer attached unit to serial port (0 or 1)
+vortex <0|1> forward "vortex_macro"::Send a vortex mixer macro command to attached unit on serial port (0 or 1)
+#vtxstate get::Returns whether a speakerphone is attached to the system.
+waitfor <callcomplete|systemready>::Wait for callcomplete or systemready state.
+wanipaddress <get|set "xxx.xxx.xxx.xxx">::Get/set WAN ip address.
+wake ::Wake system from sleep mode.
+webport <get|set "port">::Get/set the port the web server uses to N.
+whoami ::Prints out banner info.
+#widescreenvideo <get|yes|no>::Get/set wide screen video.
+winsresolution <get|yes|no>::Get/set WINS resolution. Prompt for restart after change.
+xmlnetstats [{0..2}]::Get network statistics in xml for each call.
+snapshot::Capture near camera image and upload to ftp server.

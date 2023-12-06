@@ -1,0 +1,10 @@
+*.py text=auto
+*.js text=auto
+*.css text=auto
+
+*.map -text
+static/distv2/* -diff
+static/dist/* -diff
+locale/**/*.mo -diff
+endpoint_data/temp/*.xsd -diff
+endpoint/tests/data/**/*.xsd -diff

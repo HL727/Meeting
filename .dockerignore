@@ -1,0 +1,13 @@
+**/*.pyc
+node_modules
+db.sqlite3
+.git
+site_media
+static/dist
+build
+deploy/*.sh
+deploy/docker/Dockerfile*
+README.md
+bitbucket-pipelines.yml
+.gitlab-ci.yml
+.sentryclirc

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera möten{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Möten" %}</strong>{% endblock %}
+
+{% block content %}
+    {% include "blocks/page_notification.html" %}
+
+    {% if can_view_providers and providers|length > 1 %}
+    <div>{% trans "Visa alla samtal för" %}: {% for p in providers %}<a href="?provider={{ p.pk }}">{{ p }}</a> {% endfor %}</div>
+    {% endif %}
+
+        <div class="mb-2 mb-md-4 d-md-flex">
+            <div>
+                <span class="h1 mb-0 d-inline-block align-middle">{% trans "Aktiva samtal" %} <span class="badge badge-dark">{{ count }}</span></span>
+            </div>
+        </div>
+
+        {% if calls %}
+
+            <hr class="d-none d-md-block">
+
+            <div class="table-responsive">
+                <table class="table table-striped table-borderless">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Tid" %}</th>
+                            <th>{% trans "Källa" %}</th>
+                            <th>{% trans "Destination" %}</th>
+                            <th>{% trans "Traversal" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for call in calls %}
+                        <tr>
+                            <td>Kl {{ call.start_time|date:"H:i:s" }}<br />
+                            {{ call.duration }}</td>
+                            <td>
+                                {{ call.source_alias }}<br />
+                                {{ call.protocols.0 }}
+                            </td>
+                            <td>
+                                {{ call.destination_alias }}<br />
+                                {{ call.protocols.1 }}
+                            </td>
+
+                            <td>
+                                {% if call.traversal_license_tokens %}
+                                    {{ call.traversal_license_tokens }}
+                                {% else %}
+                                    Nej
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% elif not filter_legs %}
+            <div class="alert alert-primary text-center my-4">{% trans "Inga aktiva möten just nu" %}</div>
+        {% endif %}
+
+    </div>
+
+{% endblock content %}

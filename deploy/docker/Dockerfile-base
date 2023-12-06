@@ -1,0 +1,46 @@
+FROM python:3.8-slim-buster AS mividas-core-base-build
+
+ENV DOCKER_CONTAINER 1
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH=.:..
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN grep '^deb ' /etc/apt/sources.list | head -n1 | sed 's/deb/deb-src/' >> /etc/apt/sources.list
+RUN apt-get update && apt-get install -y libldap2-dev build-essential libsasl2-dev git && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Hotfix update
+RUN apt-get update && apt-get install -y \
+    libexpat1 libgmp10 zlib1g gzip liblzma5 libssl1.1 openssl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY ./requirements*.txt /code/
+RUN pip install -U pip && python -mvenv /opt/venv/ --symlinks \
+    && /opt/venv/bin/python -mpip install --no-cache-dir --no-compile -U pip wheel \
+    && /opt/venv/bin/python -mpip install --no-cache-dir --no-compile -r /code/requirements.txt
+
+RUN python -m compileall -b -j 0 /opt/venv/ && find /opt/venv/ -name '*.py' \
+    ! -path '*/bin/*' ! -path '*/migrations/*' ! -name manage.py ! -path '*/test*' \
+    ! -name '__init__.py' -delete
+
+# base
+FROM python:3.8-slim-buster AS mividas-core-base
+
+ENV DOCKER_CONTAINER 1
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONPATH=.:..
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libsasl2-2 wait-for-it libldap-2.4-2 \
+	&& rm -rf /var/lib/apt/lists/* && apt-get clean
+
+# Hotfix update (see above as well for python compilation)
+RUN apt-get update && apt-get install -y \
+    libexpat1 libgmp10 zlib1g gzip liblzma5 libssl1.1 openssl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=mividas-core-base-build /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN groupadd mividas && useradd -g mividas -ms /bin/bash mividas
+

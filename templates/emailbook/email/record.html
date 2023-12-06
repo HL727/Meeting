@@ -1,0 +1,30 @@
+{% load tz i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    {% localtime on %}
+
+    {% if is_duplicate %}
+    <p>{% trans "Mötet var redan bokat, och kommer inte ändras" %}</p>
+    {% elif rebook %}<p>{% trans "Mötet har bokats om från tidigare" %} {{ rebook_old_info.title }} {{ rebook_old_info.ts_start|date:"D j M, H:i" }}</p>
+    {% else %}
+	    <p>{% blocktrans with action=action ts_start=ts_start|date:"D j M, H:i" ts_stop=ts_stop|date:"D j M, H:i" %}Ditt möte kommer {{action}} mellan {{ ts_start }} och {{ ts_stop }}.{% endblocktrans %}</p>
+    {% endif %}
+
+    {% endlocaltime %}
+    <p>{% trans "Mötesrum som kommer ringas upp" %}: {{ dialstring }}</p>
+
+    {% if playback_urls %}
+	{% trans "Mötet går att se genom följande adress" %}:
+        {% for url in playback_urls %}
+            <a href="{{ url }}">{{ url }}</a>
+        {% endfor %}
+    {% endif %}
+
+    <p>{% trans "För att avboka, gå in" %} <a href="{{ email_meeting.get_unbook_url }}">{% trans "på denna länk" %}</a></p>
+
+</body>
+</html>

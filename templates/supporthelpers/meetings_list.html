@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera bokningar{% endblock %}
+
+{% block content %}
+
+        <div class="d-flex">
+            <h1 class="view__title">
+                <a href="{% url 'meeting_debug_list' %}">{% trans "Bokningar" %}
+                <span class="badge badge-dark">{{ paginator.count }}</span>
+                    </a>
+            </h1>
+            <div class="ml-auto">
+
+            </div>
+        </div>
+
+        <div class="v-card v-sheet theme--light">
+
+    <div class="row">
+        <div class="col-12 col-lg-4 order-lg-1">
+            <div class="card card-shadow mb-4">
+                <div class="card-header">
+                    <h5><span class="fa fa-filter"></span> {% trans "Filtrera" %}</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+
+                        {% bootstrap_form_errors form %}
+                        {% bootstrap_form form %}
+
+                        <div>
+                            <button class="btn btn-primary">{% trans "Filtrera" %}</button>
+                            <button name="reset_filter" value="1" class="btn btn-outline-primary">
+                                <span class="fa fa-fw fa-times"></span> {% trans "Töm filter" %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            {% if object_list %}
+                <hr>
+
+                <table class="table table-striped table-borderless">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Rubrik" %}</th>
+                            <th>{% trans "Datum" %}</th>
+                            <th>{% trans "Tid" %}</th>
+                            <th>{% trans "Typ" %}</th>
+                            <th>{% trans "Skapad av" %}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for meeting in object_list %}
+                        <tr>
+                            <td><a href="{{ meeting.get_debug_details_url }}?{{ request.META.QUERY_STRING }}">{{ meeting.title|default:"-- Inget --" }}</td>
+                            <td>{{ meeting.ts_start|date:"Y-m-d" }}</td>
+                            <td>{{ meeting.ts_start|date:"H:i" }} - {{ meeting.ts_stop|date:"H:i" }}</td>
+                            <th>{{ meeting.type_str }}</th>
+                            <td>{{ meeting.creator }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if is_paginated %}
+                    <nav class="mb-4">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&amp;{{ query }}" tabindex="-1">{% trans "Föregående sida" %}</a>
+                                </li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                {% trans "Sida" %} {{ page_obj.number }} av {{ page_obj.paginator.num_pages }}
+                            </li>
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&amp;{{ query }}">{% trans "Nästa sida" %}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+
+            {% else %}
+                <div class="alert alert-primary text-center my-4">{% trans "Inga aktiva bokningar just nu" %}</div>
+            {% endif %}
+        </div>
+    </div>
+        </div>
+
+
+{% endblock content %}

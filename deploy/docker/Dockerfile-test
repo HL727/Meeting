@@ -1,0 +1,33 @@
+FROM mividas-core-base AS mividas-core-base-test
+
+USER root
+RUN apt-get update && apt-get install --no-install-recommends -y rabbitmq-server redis postgresql-11 sudo psmisc build-essential git && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-dev.txt requirements.txt requirements-deps.txt .
+RUN /opt/venv/bin/python -mpip install --no-cache-dir --no-compile -r requirements-dev.txt
+
+WORKDIR /code/
+
+FROM mividas-core-base-test AS mividas-core-test
+
+COPY --from=mividas-core-build /code/ /code/
+COPY deploy/docker-tests/*.sh /
+
+RUN mkdir -p /code/site_media/media/_is_default /code/site_media/static /code/cdrdata/_is_default && \
+    chown -R mividas /code/site_media/media/ /code/site_media/static/ /code/cdrdata/
+
+RUN touch /code/coverage.xml ; \
+   echo CELERY_TASK_ALWAYS_EAGER=True > /code/conferencecenter/local_settings.py
+
+
+RUN /etc/init.d/postgresql start && wait-for-it localhost:5432 && sudo -u postgres psql template1 -c "CREATE USER test WITH PASSWORD 'test' SUPERUSER CREATEDB" -c "CREATE DATABASE test OWNER test" -c "CREATE DATABASE test_django OWNER test" && /etc/init.d/postgresql stop
+
+RUN sed -i 's~/var/run/~/var/lib/~' /etc/postgresql/11/main/postgresql.conf && mkdir -p /var/lib/postgresql/11-main.pg_stat_tmp
+RUN chown -R mividas /code/site_media/media/ /code/cdrdata/ /var/lib/rabbitmq/ /var/log/rabbitmq/ /var/lib/postgresql /etc/ssl/private/ /var/lib/postgresql/ /etc/postgresql/11/  \
+    && chmod 0600 /etc/ssl/private/ssl-cert-snakeoil.key
+
+RUN echo "mividas        ALL=(ALL)       NOPASSWD: /usr/bin/find, /opt/venv/bin/python -m compileall -b -j 0 /code/" >> /etc/sudoers
+
+USER mividas
+
+CMD bash -c 'bash /run_migrations.sh && bash /run_tests.sh && bash /run_lint.sh'

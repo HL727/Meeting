@@ -1,0 +1,510 @@
+addressdisplayedingab	dir.gds.publishingab
+alertusertone	audio.alerttone
+alertvideotone	audio.audiotone.alertvideotone
+allowabkchanges	dir.allowdirchange
+allowcamerapresetssetup	allowcamerapresetssetup
+allowdialing	allowdialing
+allowlistenabled	security.remoteaccess.web.whitelist.enabled
+allowmixedcalls	allowmixedcalls
+allowstreaming	allowstreaming
+allowusersetup	security.allowusersetup
+amxdd	system.discovery.broadcastbeacon
+apiport	security.remoteaccess.telnet.apiport
+areacode set	comm.callsetting.callfeatures.dialplan.areacode
+autoanswer	comm.callsetting.callfeatures.autoanswer.answersinglecall
+autodiscovernat	sys.ip.firewall.natconfigmode
+autoh323dialing	autoh323dialing
+autoshowcontent	pm.autoplaycontent
+backlightcompensation set	camerasys.backlightcompensation
+basicmode	comm.callpreference.diagnosticmode
+bootvideoskip	system.uboot.skipvideo
+calendardomain set	cal.ews.domain
+calendarpassword	cal.ews.password
+calendarplaytone	cal.playremindertone
+calendarpollinginterval	calendarpollinginterval
+calendarprotocol	cal.ews.secureconnectionprotocol
+calendarregisterwithserver	cal.enabled
+calendarremindertime	cal.remindertime
+calendarresource	cal.ews.mailbox
+calendarserver	cal.ews.server
+calendarshowpvtmeetings	cal.showprivatemeeting
+calendaruser	cal.ews.username
+calldetailreport	usecalllog
+camera1input	camerainputsignal
+camera1ptz	camera1ptz
+camera2input	camerainputsignal1
+camera3input	camerainputsignal2
+camera4ptz	camera4ptz
+cameraautohanguptimer	sourceman.camera.autohanguptime
+cameradirection	sourceman.pandirection
+camerainvert near	sourceman.camera1.orientation
+cameraname1 set	cameraname
+cameraname2 set	cameraname1
+cameraname3 set	cameraname2
+cameratracking near calibrate	sourceman.camera1.alwaysautoimage
+cameratracking near framing	sourceman.camera1.groupviewsize
+cameratracking near participant	sourceman.camera1.participantcount
+cameratracking near speed	sourceman.camera1.trackingspeed
+cameratracking near wake	sourceman.autowakeup
+clientvalidatepeercert	security.cert.validateclients
+colorscheme	screentheme
+configdisplay monitor1	video.monitor1.signaltype|video.monitor1.monitordisplay={1}
+configdisplay monitor2	video.monitor2.signaltype|video.monitor2.monitordisplay={1}
+configparam [camera_video_quality 1 set|camera1_video_quality set]	sourceman.camera1.videoquality
+configparam [camera_video_quality 2 set|camera2_video_quality set]	sourceman.camera2.videoquality
+configparam [camera_video_quality 3 set|camera3_video_quality set]	sourceman.camera3.videoquality
+configparam [camera_video_quality 4 set|camera4_video_quality set]	sourceman.camera4.videoquality
+confirmdiradd	uicontrol.callapp.confirmdiradd
+confirmdirdel	uicontrol.dirapp.confirmdirdel
+contentauto	comm.conference.content.contentauto
+contentsplash	contentsplash
+contentvideoadjustment	video.monitor.vidcfgmonitorcontentadjust
+country set	location.country
+daylightsavings	time.autoadjustdlst
+destunreachabletx	lan.gendestunreachable
+dhcp	system.network.wired.ipv4nic.mode
+dialchannels set	dialparallel
+dialingentry	dialingentryfield
+dialplannormalization	comm.Callpreference.sipdialplannormalization
+diffservaudio set	comm.qos.diffservaudio
+diffservfecc set	comm.qos.diffservfecc
+diffservvideo set	comm.qos.diffservvideo
+disablestaticciphers	security.disableStaticCiphers
+disabletlsv1_1	security.disabletlsversionone_one
+disabletlsv1	security.disabletlsversionone
+displayglobaladdresses	uicontrol.dirapp.globaladdrdisplay
+displaygraphics	displayiconsincall
+displayipext	comm.nics.h323nic.displayh323extension
+dme3wayenable	dme3wayenable
+dualmonitor	pm.dualmonitor
+dynamicbandwidth	comm.qos.dynamicbandwidth
+e164ext set	comm.nics.h323nic.h323extension
+echocanceller	audio.in2.enableechocancellation
+echoreply	system.network.enableecho
+emptykeepalive	comm.callsetting.callfeatures.emptykeepalive
+enableacousticfence	audio.qualityprocess.enableacousticfence
+enableaes128cbc	security.enablecipheraescbc
+enableaudioadd	comm.callpreference.audioaddinenable
+enableescalatevideo	comm.Callsetting.callFeatures.escalateVideo.Enabled
+enablefirewalltraversal	comm.firewall.enablefirewalltraversal
+enablemp1080ptx	comm.MP1080pTx.UserPref
+enablepresettracking	enablepresettracking
+enablepvec	comm.qos.errorconcealment.dba.pvecenable
+enablersvp	comm.qos.rsvpenabled
+enablesecurityclassification	comm.securityclassification.enabled
+enablesipka	comm.nics.sipnic.sipsbckeepaliveenable
+enablesnmp	management.snmp.enabled
+enablevisualsecurity	comm.SecurityClassification.enabled
+encryption	comm.callsetting.callfeatures.encryptionenable
+encryptionstate	apiencryptionstateregister8
+farcontrolnearcamera	sourceman.farcontrolnearcamera
+farnametimedisplay	farnamedisplaytime
+farnametimedisplay	video.setting.sitenameenable
+forcecertverify	forcecertverify
+gabserverip set	dir.gds.url
+gatekeeperip set	comm.nics.h323nic.gatekeeper.gkipaddress
+gatewayareacode set	gatewaynumberareacode
+gatewaycountrycode set	gatewaynumbercountrycode
+gatewayext set	comm.nics.h323nic.h323extension
+gatewaynumber set	gatewaydirectorynumber
+gatewaynumbertype	gatewaynumbertype
+gdsdirectory	dir.gds.enabled
+gdsdirectory	dir.globalserver
+gdsserverip set	dir.gds.serveraddress
+gmscity set	globalmanagecity
+gmscontactemail set	globalmanageemail
+gmscontactfax set	globalmanagecontactfax
+gmscontactnumber set	globalmanagecontactnumber
+gmscontactperson set	globalmanagecontactperson
+gmscountry set	globalmanagecountry
+gmsstate set	globalmanagestate
+gmstechsupport set	globalmanagetechsupport
+graphicsmonitor	graphicsmonitor
+groupnamegds set	grouppolycomgds
+groupnameldap set	groupldap
+groupnamenortel set	groupnortel
+groupnameocs set	grouplcs
+h323authenticate enable	comm.nics.h323nic.gatekeeper.authentication.enabled
+h323authenticate name	comm.nics.h323nic.gatekeeper.authentication.username
+h323name set	comm.nics.h323nic.h323name
+homecallquality	mainscreencallquality
+homemultipoint	mainscreenmultipoint
+homerecentcalls	uicontrol.homeapp.showrecentcalls
+homesystemname	uicontrol.menuapp.showsysinfo
+homesystem	uicontrol.menuapp.showsysconfig
+hostname set	system.network.hostname
+icmpoutpacketrate set	system.network.icmptransratelimit
+idletimeoutapi	idletimeoutapi
+ignoreredirect	lan.ignoreredirect
+incompleterevocationcheck	security.revocation.incomplete
+ipaddress set	system.network.wired.ipv4nic.address
+ipprecaudio set	comm.qos.intservqos.ipprecaudio
+ipprecfecc set	comm.qos.intservqos.ipprecfecc
+ipprecvideo set	comm.qos.intservqos..ipprecvideo
+ipv6addrmode	lan.ipv6.dhcpmode
+ipv6defaultgateway set	lan.ipv6.defaultgateway
+ipv6globaladdress set	lan.ipv6.globaladdress
+ipv6linklocal set	lan.ipv6.linklocaladdress
+ipv6sitelocal set	lan.ipv6.sitelocaladdress
+isdnareacode set	areacode0_0
+isdncountrycode	isdncountrycode
+isdndialingprefix	isdndialingprefix
+isdnprefix set	pbxprefix
+itpmodel	itpmodel
+keypadaudioconf	keypadaudioconf
+language set	location.language
+ldapauthenticationtype set	dir.ldap.authtype
+ldapbasedn set	dir.ldap.basedn
+ldapbinddn set	dir.ldap.binddn
+ldapdirectory	dir.globalserver
+ldapntlmdomain set	dir.ldap.domain
+ldappassword set	dir.ldap.authtype|dir.ldap.password={1}
+ldapserveraddress set	dir.ldap.serveraddress
+ldapserverport set	dir.ldap.serverport
+ldapsslenabled set	dir.ldap.enablessl
+ldapusername set	dir.ldap.userid
+lineoutputslevel	lineoutputlevelredandwhite
+localdatetime	displaylocaltime
+lockoutattemptsadmin	security.acctmgmt.lockoutattemptadmin
+lockoutattemptsport	lockoutattemptsport
+lockoutattemptsuser0	security.acctmgmt.lockoutattemptuser
+lockouttimeadmin	security.acctmgmt.lockouttimeadmin
+lockouttimeport	lockouttimeport
+lockouttimeuser0	security.acctmgmt.lockoutattimeuser
+loginwindowduration set	failedloginwindow
+loglevel set	system.log.level
+lyncdirectory	dir.globalserver
+marqueedisplaytext set	marqueedisplaytext
+maxgabinternationalcallspeed	globaladdrmaxh320intl
+maxgabinternetcallspeed	comm.callpreference.preferredspeed.globaladdrmaxh323
+meetingpassword set	comm.meetingpassword
+midrangespeaker	midrangeenable
+mon2cecpa	video.cec.mon2cecpa
+monitor1	monitor1display
+monitor1screensaveroutput	system.screensavermode
+monitor2	monitor2display
+monitor2screensaveroutput	system.screensavermode
+mouseonscreenwidgetsenabled	apimouseonscreenwidgetsenable
+mpautoanswer	comm.callsetting.callfeatures.autoanswer.answermultipointcall
+mpdtmfsupported	comm.conference.cascadedDTMFEnabled
+mpmode	pm.mpmode
+mtumode	comm.Qos.mtumode
+mtusize	comm.Qos..mtusize
+muteautoanswer	comm.callsetting.callfeatures.autoanswer.muteautoanswer
+muteincomingoutgoing	comm.callsetting.callfeatures.muteincomingoutgoing
+natconfig	comm.firewall.nat.usenataddress
+nath323compatible	comm.firewall.nat.h323compatiblenat
+nidsdynamic	comm.firewall.nidsdynamic
+nidsenabled	comm.firewall.nidsenabled
+ntpmode	time.timeserver.mode
+ntpsecondaryserver set	time.timeserver.address1
+ntpserver set	time.timeserver.address0
+numberofrouterhops set	numberofrouterhops
+numdigitsdid set	numdigitsindid
+numdigitsext set	numdigitsinext
+o365authtype	comm.callsetting.security.o365authtype
+ocsdirectory	dir.ocs.enabled
+outboundcallroute	outboundcallroute
+peoplevideoadjustment	vidoe.monitor.vidcfgmonitorpeopleadjust
+poc_background camera	weathermanmediasource
+pricallbycall set	sys.pri.callbycalenabled
+prichannel set	sys.pri.channel
+pricsu	sys.pri.csumode
+pridialchannels set	sys.pri.dialchannel
+priintlprefix set	sys.pri.intldialprefix
+prilinebuildout set	sys.pri.linebuildout
+prilinesignal set	sys.pri.linesignal
+primarycamera	primarycamera
+prinumberingplan	sys.pri.numberingplan
+priswitch set	switchprotocol
+priswitch set	sys.pri.switch
+provisionserveraddress set	management.provisioning.server
+provisionserverdomain set	management.provisioning.domain
+provisionserverenable	management.provisioning.enabled
+provisionservertype	management.provisioning.servertype
+provisionserveruser set	management.provisioning.user
+rdpenhancement	uicontrol.apps.rdp.rdpenhancement
+recordingaudio mon1 set	audio.recordingoutdevices.mon1enable
+recordingaudio mon2 set	audio.recordingoutdevices.mon2enable
+recordingaudio mon3 set	audio.recordingoutdevices.mon3enable
+recordingaudio rcaleft set	audio.recordingoutdevices.rcaleftenable
+recordingaudio rcaright set	audio.recordingoutdevices.rcarighenable
+redlinelevel	lineinlevelred
+registerthissystem	registersystemonpowerup
+requireacctnumtodial	requireaccountnumber
+rs232 flowcontrol	rs232.flowcontrol
+rs232login	security.remoteaccess.serialport.loginmode
+rs232monitor	rs232apimonitor
+rs232 parity	rs232.parity
+rs232port1 baud	system.ports.serial2.baud
+rs232port1 flowcontrol	rs232.flowcontrol1
+rs232port1 mode	system.ports.serial2.mode
+rs232port1 parity	rs232.parity1
+rs232port1 stopbit	rs232.stopbits1
+rs232 stopbit	rs232.stopbits
+servervalidatepeercert	security.cert.validateservers
+sessionsenabled	security.session.enabled
+setaccountnumber	dialaccountnumber
+sleep mute	audio.micsleepmute
+sleeptext set	sleepmarquee
+sleeptime	system.sleeptimeout
+snapshottimeout	snapshottimeout
+snmpadmin set	management.snmp.admin
+snmpauthenticationalgorithm	management.snmp.authenticationalgorithm
+snmpauthenticationpassword	management.snmp.authenticationpassword
+snmpcommunity set	management.snmp.community
+snmpconsoleip set	management.snmp.traptarget.targetaddress
+snmpengineid	management.snmp.engineid
+snmplisteningport	management.snmp.listeningport
+snmplocation set	management.snmp.location
+snmpmessagetype set 1	management.snmp.traptarget0.messagetype
+snmpmessagetype set 2	management.snmp.traptarget1.messagetype
+snmpmessagetype set 3	management.snmp.traptarget2.messagetype
+snmpnotification legacy	management.snmp.legacynotification.enabled
+snmpnotification new	management.snmp.newnotification.enabled
+snmpprivacyalgorithm	management.snmp.privacyalgorithm
+snmpprivacypassword	management.snmp.privacypassword
+snmpprotocolversion set 1	management.snmp.traptarget0.protocolversion
+snmpprotocolversion set 2	management.snmp.traptarget1.protocolversion
+snmpprotocolversion set 3	management.snmp.traptarget2.protocolversion
+snmpsetcommunity set	snmpsetcommunity
+snmpsystemdescription set	management.snmp.systemdesc
+snmptargetaddress set 1	management.snmp.traptarget0.targetaddress
+snmptargetaddress set 2	management.snmp.traptarget1.targetaddress
+snmptargetaddress set 3	management.snmp.traptarget2.targetaddress
+snmptargetport set 1	management.snmp.traptarget0.targetport
+snmptargetport set 2	management.snmp.traptarget1.targetport
+snmptargetport set 3	management.snmp.traptarget2.targetport
+snmptransportprotocol	management.snmp.transportprotocol
+snmptraptargetenable set 1	management.snmp.traptarget0.traptargetenable
+snmptraptargetenable set 2	management.snmp.traptarget1.traptargetenable
+snmptraptargetenable set 3	management.snmp.traptarget2.traptargetenable
+snmptrapversion set	management.snmp.traptarget.protocolversion
+snmpusername	management.snmp.id
+snmpversionone	management.snmp.versionone
+snmpversionthree	management.snmp.versionthree
+snmpversiontwo	management.snmp.versiontwo
+soundeffectsvolume set	audio.volume.soundeffectsvolume
+sourcemandebugger	sourceman.sourcemandebug
+sshdelaystart	security.remoteaccess.telnet.delaystart
+sshenable	security.remoteaccess.ssh.enabled
+sshservice	security.remoteaccess.sshservice.enabled
+sslverificationdepth set	sslverificationdepth
+stdout	stdout
+streamannounce	streamannounce
+streamenable	allowstreaming
+streammulticastip	ipmulticastaddress
+streamrouterhops	numberofrouterhops
+streamspeed	streamspeed
+subnetmask set	system.network.wired.ipv4nic.subnetmask
+systemname set	system.info.systemname
+systemsetting 320gatewayenable	320gatewayenable
+systemsetting 323gatewayenable	comm.nics.h323nic.gatekeeper.gateway.enabled
+systemsetting answerincomingcallflash	uicontrol.apps.inacalllayout.answerincomingcallflash
+systemsetting apiportswitch	security.remoteaccess.telnet.switchport
+systemsetting areacode0_0	comm.nic.isdn.areacode0_0
+systemsetting bass	audio.qualityprocess.bass
+systemsetting bfcptransportprotocol	comm.nics.sipnic.bfcptransportprotocol
+systemsetting brilineenable0_0	brilineenable0_0
+systemsetting brilineenable0_1	brilineenable0_1
+systemsetting brilineenable0_2	brilineenable0_2
+systemsetting brilineenable0_3	brilineenable0_3
+systemsetting buddylistashomescreen	buddylistashomescreen
+systemsetting cameraaspectratio1	cameraaspectratio1
+systemsetting cameraaspectratio2	cameraaspectratio2
+systemsetting cameraaspectratio3	cameraaspectratio3
+systemsetting cameraaspectratio4	cameraaspectratio4
+systemsetting cameraaspectratio	sourceman.cameravideo.cameraaspectratio
+systemsetting camerainputsignal1	camerainputsignal1
+systemsetting camerainputsignal2	camerainputsignal2
+systemsetting camerainputsignal3	camerainputsignal3
+systemsetting camerainputsignal4	camerainputsignal4
+systemsetting camerainputsignal	camerainputsignal
+systemsetting cameraname1	cameraname1
+systemsetting cameraname2	cameraname2
+systemsetting cameraname3	cameraname3
+systemsetting cameraname4	cameraname4
+systemsetting cameraname	sourceman.cameraname
+systemsetting cameratype	sourceman.cameratype
+systemsetting cameravideoquality1	cameravideoquality1
+systemsetting cameravideoquality2	cameravideoquality2
+systemsetting cameravideoquality3	cameravideoquality3
+systemsetting cameravideoquality4	cameravideoquality4
+systemsetting cameravideoquality	sourceman.cameravideo.cameravideoquality
+systemsetting componentresolution1	video.monitor2.cabletype.component.resolution
+systemsetting componentresolution	video.monitor1.cabletype.component.resolution
+systemsetting connectionpreference	comm.callpreference.networkdialing.connectionpreference
+systemsetting contentpercent	comm.conference.content.contentpercent
+systemsetting country	sys.loc.country
+systemsetting crldownloadhours	system.pki.revocation.crldownloadhours
+systemsetting customsecuritytext	customsecuritytext
+systemsetting dialingmethod	comm.callpreference.networkdialing.dialingmethod
+systemsetting directorynum0_0_0	directorynum0_0_0
+systemsetting directorynum0_0_1	directorynum0_0_1
+systemsetting directorynum0_1_0	directorynum0_1_0
+systemsetting directorynum0_1_1	directorynum0_1_1
+systemsetting directorynum0_2_0	directorynum0_2_0
+systemsetting directorynum0_2_1	directorynum0_2_1
+systemsetting directorynum0_3_0	directorynum0_3_0
+systemsetting directorynum0_3_1	directorynum0_3_1
+systemsetting displayiconsincall	comm.callsetting.callfeatures.displayiconsincall
+systemsetting displaylastnumberdialed	comm.lastaddressdialed
+systemsetting dmeborder	dmeborder
+systemsetting domainname	system.network.domainname
+systemsetting dviresolution1	video.monitor2.cabletype.dvia.resolution
+systemsetting dviresolution3	video.monitor3.cabletype.dvia.resolution
+systemsetting dviresolution	video.monitor1.cabletype.dvia.resolution
+systemsetting enablegdsdirectory	dir.gds.enabled
+systemsetting enablempdemo	comm.callsetting.callfeatures.multipoint.enablempdemo
+systemsetting enablepolycommics	audio.microphone.enablepolycommics
+systemsetting enablesnapshot	sourceman.preset.enablesnapshot
+systemsetting enablesnmp	snmp.enabled
+systemsetting enablestereoautorotation1	enablestereoautorotation1
+systemsetting enablestereoautorotation2	enablestereoautorotation2
+systemsetting enablestereoautorotation3	enablestereoautorotation3
+systemsetting enablestereoautorotation4	enablestereoautorotation4
+systemsetting enablestereoautorotation	audio.qualityprocess.stereoautorotation
+systemsetting farnamedisplaytime	uicontrol.callapp.farnamedisplaytime
+systemsetting gatewayenable	comm.Callpreference.gatewayenable
+systemsetting gatewayh323extension	comm.Callpreference.gatewayh323extension
+systemsetting gatewayipaddress	comm.Callpreference.gatewayipaddress
+systemsetting gatewaynumbertype	comm.Callpreference.gatewaynumbertype
+systemsetting h350basedn	h350basedn
+systemsetting iph323enable	comm.callpreference.iph323enable
+systemsetting ipmaxincoming	comm.callpreference.preferredspeed.ipmaxincoming
+systemsetting isdnh320enable	isdnh320enable
+systemsetting isdnmaxincoming	isdnmaxincoming
+systemsetting language	location.language
+systemsetting largeconfdebug	comm.callsetting.debug.largeconfdebug
+systemsetting ldapuserid	dir.ldap.userid
+systemsetting lineinlevel	audio.in2.level
+systemsetting lineintype	audio.lineIO.lineintype
+systemsetting mainscreencallquality	mainscreencallquality
+systemsetting mainscreendnd	mainscreendnd
+systemsetting mainscreensites	mainscreensites
+systemsetting maxrosterparticipants	comm.callsetting.callfeatures.maxrosterparticipants
+systemsetting maxrxbandwidth	comm.qos.maxrxbandwidth
+systemsetting maxtimeincall	comm.maxtimeincall
+systemsetting maxtxbandwidth	comm.qos.maxtxbandwidth
+systemsetting mediainlevel	audio.in3.level
+systemsetting micmode0	micmode0
+systemsetting micmode1	micmode1
+systemsetting micmode2	micmode2
+systemsetting micmode3	micmode3
+systemsetting micmode4	micmode4
+systemsetting micswap	audio.microphone.micswap
+systemsetting monitor1display	video.monitor.monitordisplay1
+systemsetting monitor1screensaveroutput	uicontrol.current.image.screensaver1
+systemsetting monitor1videoout	monitor1videoout
+systemsetting monitor2display	video.monitor.monitordisplay2
+systemsetting monitor2screensaveroutput	uicontrol.current.image.screensaver2
+systemsetting monitor2videoout	monitor2videoout
+systemsetting monitor3display	video.monitor3.monitordisplay
+systemsetting monitor3screensaveroutput	uicontrol.current.image.screensaver3
+systemsetting monitor3videoout	monitor3videoout
+systemsetting monitor4display	video.monitor4.monitordisplay
+systemsetting monitor4screensaveroutput	uicontrol.current.image.screensaver4
+systemsetting monitor4videoout	monitor4videoout
+systemsetting monitoroutputsignal1	monitoroutputsignal1
+systemsetting monitoroutputsignal2	video.monitor2.signaltypel
+systemsetting monitoroutputsignal3	video.monitor3.signaltypel
+systemsetting monitoroutputsignal	monitoroutputsignal
+systemsetting mpenabled	comm.nics.h323nic.h323capability.mpenabled
+systemsetting nejpegresolution	nejpegresolution
+systemsetting ntlmversion	comm.nics.sipnic.ntlmversion
+systemsetting o365agentstring	comm.callsetting.callfeatures.o365agentstring
+systemsetting peopledisplaymode	peopledisplaymode
+systemsetting piptimer	piptimer
+systemsetting potsenable	comm.nic.pots.enable
+systemsetting primarycamera	sourceman.primarypeople
+systemsetting provisionserveraddress	provisioning.server
+systemsetting provisionserveraddress	provisionserveraddress
+systemsetting pvecenable	comm.qos.errorconcealment.dba.pvecenable
+systemsetting registersystem	registersystem
+systemsetting remotechannelid	system.remote.channelid
+systemsetting remotecontrolkeypad	remotecontrolkeypad
+systemsetting rs232baudrate1	rs232.baudrate1
+systemsetting rs232baudrate2	rs232.baudrate2
+systemsetting rs232baudrate3	rs232.baudrate3
+systemsetting rs232baudrate	rs232.baudrate
+systemsetting rs232controlpass1	rs232.mode1
+systemsetting rs232controlpass2	rs232.mode2
+systemsetting rs232controlpass3	rs232.mode3
+systemsetting rs232controlpass	rs232.mode
+systemsetting rs232parity1	rs232.parity1
+systemsetting rs232parity2	rs232.parity2
+systemsetting rs232parity3	rs232.parity3
+systemsetting rs232parity	rs232.parity
+systemsetting serialnumberresetsys	serialnumberresetsys
+systemsetting sipaccountname	comm.nics.sipnic.sipaccountname
+systemsetting sipconfigtype	comm.nics.sipnic.sipconfigtype
+systemsetting sipdebug	comm.callsetting.debug.sipdebug
+systemsetting sipenable	comm.callpreference.sipenable
+systemsetting sipforcereuse	comm.nics.sipnic.forceconnectionreuse
+systemsetting sippassword	comm.nics.sipnic.sippassword
+systemsetting sipproxyserver	comm.nics.sipnic.sipproxyserver
+systemsetting sipregistrarserver	comm.nics.sipnic.sipregistrarserver
+systemsetting siptransportprotocol	comm.nics.sipnic.siptransportprotocol
+systemsetting sipusername	comm.nics.sipnic.sipusername
+systemsetting speedstranslated	speedstranslated
+systemsetting stereoenable	audio.qualityprocess.stereoenable
+systemsetting stereotablestyle	stereotablestyle
+systemsetting systemname	sys.systemname
+systemsetting telepresenceaudio	audio.telepresenceaudio
+systemsetting telepresence	telepresence
+systemsetting telnetenabled	security.remoteaccess.telnet.enabled
+systemsetting thirdpartyremotecsupported	thirdpartyremotecsupported
+systemsetting timeelapsed	timeelapsed
+systemsetting tpxcameraconfig	tpxcameraconfig
+systemsetting transcodingenabled	comm.callpreference.transcodingenabled
+systemsetting treble	audio.qualityprocess.treble
+systemsetting userdomain	provisioning.domain
+systemsetting uspairingenabled	security.authentication.uspairing.enabled
+systemsetting vcrdvdinlevel	audio.in4.level
+systemsetting vcrdvdoutlevel	audio.in4.level
+systemsetting vgaresolution1	vgaresolution1
+systemsetting vgaresolution3	vgaresolution3
+systemsetting vgaresolution	vgaresolution
+systemsetting webenabled	security.remoteaccess.web.enabled
+systemsetting whitebalancemode1	sourceman.camera2.whitebalancemode
+systemsetting whitebalancemode2	sourceman.cameraproperty.whitebalancemode2
+systemsetting whitebalancemode3	sourceman.cameraproperty.whitebalancemode3
+systemsetting whitebalancemode4	sourceman.cameraproperty.whitebalancemode4
+systemsetting whitebalancemode	sourceman.camera1.whitebalancemode
+tcpports set	comm.firewall.fixedh323portstcp
+techsupport	supportinfo.techsupport
+teleareacode	polycomconferencephoneac
+telecountrycode	polycomconferencephonecc
+telenumber	polycomconferencephonedn
+telnetechoeol	eol
+telnetmonitor	telnetapimonitor
+timediffgmt	time.gmttimedifference
+tpapimode	tpapimode
+tpautopreset	tpautopreset
+tpdndtime	tpdndtime
+tpscreencontrol	tpscreencontrol
+typeofservice	comm.ip.qos.typeofservice
+udpports set	sys.ip.firewall.fixedh323ports
+usefixedports	comm.firewall.fixedh323ports
+usegatekeeper	comm.nics.h323nic.gatekeeper.gatekeeperenable
+usepathnavigator	comm.nics.h323nic.gatekeeper.usepathnavigator
+useroompassword	security.useroompassword
+validateacctnum	validateaccountnumber
+vcraudioinmode	vcraudioinmode
+vcraudioout	audio.vcr.vcrdvdouton
+vgaoffmode	vgaoutputnographics
+vgaqualitypreference	comm.conference.content.contentqualitypreference
+visualboardppt	uicontrol.apps.visualboard.enablepowerpoint
+visualboardswipe	uicontrol.apps.visualboard.enableswipe
+visualboard	uicontrol.apps.visualboard.enabled
+visualboardzoom	uicontrol.apps.visualboard.enablezoom
+wanipaddress set	comm.firewall.nat.natoutside
+webport set	web.httpport
+whitelistenabled	security.remoteaccess.web.whitelist.enabled
+widescreenvideo	widescreenvideo
+winsresolution	winsresolution
+xmppdirectory	enablexmppdirectory
+ystemsetting overscanenabled1	video.overscanenabled1
+ystemsetting overscanenabled2	video.overscanenabled2
+ystemsetting overscanenabled3	video.overscanenabled3
+ystemsetting overscanenabled4	video.overscanenabled4

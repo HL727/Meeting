@@ -1,0 +1,39 @@
+{% extends "base_real.html" %}
+
+{% block content %}
+
+    {% block page_header %}{% endblock page_header %}
+
+    <div role="list" class="v-list pb-0 v-sheet theme--light">
+        <div tabindex="-1" role="listitem" class="px-0 align-center v-list-item theme--light">
+            <div class="v-list-item__icon mr-4">
+                <i aria-hidden="true" class="v-icon notranslate mdi {% block page_icon %}{% endblock %} theme--light" style="font-size: 40px;"></i>
+            </div>
+            <div class="v-list-item__content">
+                {% block page_title_outer %}
+                    <h1>{% block page_title %}{% endblock %}</h1>
+                {% endblock page_title_outer %}
+            </div>
+            {% block page_actions %}{% endblock %}
+        </div>
+        <hr role="separator" aria-orientation="horizontal" class="my-0 v-divider theme--light">
+    </div>
+
+    {% block page_search_filter %}
+        <div role="list" class="v-list white v-sheet theme--light">
+            <div tabindex="-1" role="listitem" class="px-0 v-list-item theme--light">
+                <div class="v-list-item__content" style="max-width: 20rem;">
+                    {% block search %}search{% endblock search %}
+                </div>
+                <div class="ml-auto d-flex align-center">
+                    {% block filter %}filter{% endblock filter %}
+                </div>
+            </div>
+        </div>
+    {% endblock page_search_filter %}
+
+    {% block page_content %}{% endblock page_content %}
+
+    {% block page_footer %}{% endblock page_footer %}
+
+{% endblock content %}

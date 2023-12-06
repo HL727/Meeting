@@ -1,0 +1,10 @@
+BEGIN:VEVENT
+UID:{{ uid }}
+SUMMARY:{{ title }}
+DESCRIPTION:{{ description }}
+DTSTART:{{ ts_start }}
+DTEND:{{ ts_stop }}{{ recurring }}{{ recurring_exceptions }}
+TRANSP:OPAQUE
+RESOURCES:VIDEO={{ participant_count|default:2 }} VOICE=0
+X-LIFESIZE:resolution=720p performanceMode=off maxParticipantBitrate=0 uiLayoutName=auto language=en_US conferenceId={{ conference_id }} voiceCodecs=auto videoCodecs=auto presentationCodecs=auto uiUserControl=on uiAnnouncements=on uiStickyNames=off uiTalkerOrder=on uiOverlay=on uiInset=7 presentations=on register=true authName=auto security=auto encoderSharing=unique uiSelfView=off audioOnly=false maxAncVideoBitRatePercentage=0 password={{ password }}
+END:VEVENT

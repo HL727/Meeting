@@ -1,0 +1,473 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{{ cospace.title }} - Mötesrum{% endblock %}
+
+{% block page_icon %}mdi-door-closed{% endblock %}
+{% block page_title %}{{ cospace.title|default:"Mötesrum" }}{% endblock %}
+{% block page_actions %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-primary btn-sm" href="{% url 'cospaces_edit' cospace.cospace %}?customer={{ customer.pk }}">
+            <i class="v-icon notranslate mdi mdi-pencil mr-1"></i>
+            {% trans "Redigera" %}
+        </a>
+    </div>
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-primary btn-sm ml-4" href="{% url 'cospaces_invite' cospace.cospace %}?customer={{ customer.pk }}">
+            <i class="v-icon notranslate mdi mdi-email-outline mr-1"></i>
+            {% trans "Inbjudan" %}
+        </a>
+    </div>
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <form action="{% url 'cospaces_edit' cospace.cospace %}?customer={{ customer.pk }}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm ml-4" name="remove_cospace" value="{{ cospace.cospace }}"
+                    onclick="return confirm('{% trans "Är du säker?" %}')">
+                <i class="v-icon notranslate mdi mdi-delete mr-1"></i>
+                {% trans "Ta bort" %}
+            </button>
+        </form>
+    </div>
+
+    {% if perms.provider.api_client %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a href="{% url 'rest_client' %}?url=cospaces/{{ cospace.cospace }}&amp;customer={{ customer.pk }}" class="btn btn-sm btn-outline-secondary ml-4">
+            <i class="v-icon notranslate mdi mdi-package-variant-closed mr-1"></i>
+            {% trans "API" %}
+        </a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    <strong>{{ cospace.title }}</strong>
+{% endblock %}
+
+{% block page_content %}
+    {% include "blocks/page_notification.html" %}
+
+    {% if customer %}
+
+        <div class="row mt-4">
+            <div class="col-12 col-lg-8">
+
+                {% if cospace.auto_generated %}
+                    <div class="alert alert-danger">
+                        {% trans "Detta rum är autogenererat, och det är därför inte säkert att det går att redigera." %}
+                    </div>
+                {% endif %}
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-bordered">
+                        {% if owner %}
+                            <tr>
+                                <th>{% trans "Ägare" %}</th>
+                                <td>
+                                    <a href="{% url 'user_details' owner.id %}">{{ owner.jid }}</a>
+                                    {% if owner.email %}<a href="{% url 'cospaces_invite' cospace.cospace %}?customer={{ customer.pk }}&amp;email={{ owner.email }}"><span class="fa fa-paper-plane"></span></a>{% endif %}
+                                </td>
+                            </tr>
+                        {% elif cospace.owner_email %}
+                        <tr>
+                            <th>{% trans "E-postadress" %}</th>
+                            <td>
+
+                                <div class="input-group mb-3">
+                                    <input id="owner_email" class="form-control" value="{{ cospace.owner_email }}" />
+                                    <div class="input-group-append">
+                                        <a href="#" class="btn btn-outline-primary" onclick="document.getElementById('owner_email').select(); document.execCommand('copy'); return false;"> <span class="fa fa-copy"></span> </a>
+                                        <a target="_blank" class="btn btn-outline-primary" href="{{ cospace.owner_email }}"> <span class="fa fa-paper-plane"></span> </a>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if booked_meeting %}
+                            <tr>
+                                <th>{% trans "Tillhör bokat möte" %}</th>
+                                <td>
+
+                                    <a href="{% url 'meeting_debug_details' booked_meeting.pk %}">{{ booked_meeting.ts_start|date:"Y-m-d" }} kl {{ booked_meeting.ts_start|date:"H:i" }}-{{ booked_meeting.ts_stop|date:"H:i" }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{% trans "Typ av möte" %}</th>
+                                <td>
+                                    {{ booked_meeting.is_webinar|yesno:_("Webinar,Möte") }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th class="w-50">{% trans "URI" %}</th>
+                            <td>{{ cospace.uri }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "Call ID" %}</th>
+                            <td>{{ cospace.call_id }}</td>
+                        </tr>
+
+                        {% if has_organization %}
+                            {% if owner and owner_org_unit %}
+                                <tr>
+                                    <th>{% trans "Ägarens organisationsenhet" %}</th>
+                                    <td>
+                                        {{ owner_org_unit.full_name }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        <tr>
+                            <th>{% trans "Organisationsenhet" %}</th>
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                <div data-vue="OrganizationPicker" {% if organization_unit %}data-value="{{ organization_unit.pk }}"{% endif %}
+                                     data-text-path-input-name="organization_unit_full_name"></div>
+                                    <button type="submit" class="btn btn-primary">{% trans "Spara" %}</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if cospace.password %}
+                            <tr>
+                                <th>{% trans "PIN-kod" %}</th>
+                                <td>{{ cospace.password }}</td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>{% trans "Webb" %}</th>
+                            <td>
+
+                                <div class="input-group mb-3">
+                                    <input id="weburl" class="form-control" value="{{ web_url }}" />
+                                    <div class="input-group-append">
+                                        <a href="#" class="btn btn-outline-primary" onclick="document.getElementById('weburl').select(); document.execCommand('copy'); return false;"> <span class="fa fa-copy"></span> </a>
+                                        <a target="_blank" class="btn btn-outline-primary" href="{{ web_url }}"> <span class="fa fa-external-link-alt"></span> </a>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{% trans "SIP" %}</th>
+                            <td>
+
+                                <div class="input-group mb-3">
+                                    <input id="sipurl" class="form-control" value="sip:{{ sip_uri }}" />
+                                    <div class="input-group-append">
+
+                                        <a href="#" class="btn btn-outline-primary" onclick="document.getElementById('sipurl').select(); document.execCommand('copy'); return false;"> <span class="fa fa-copy"></span> </a>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        {% if access_methods %}
+                            <tr>
+                                <th>{% trans "Ytterligare anslutningsmetoder" %}:</th>
+                                <th></th>
+                            </tr>
+                            {% for am in access_methods %}
+                                <tr>
+                                    <th>
+                                        {% trans "Namn" %}
+                                    </th>
+                                    <td>
+                                        {% if am.name %}{{ am.name }}{% else %}Role{% endif %}
+
+                                        {% if perms.provider.api_client %}
+                                            <a class="btn btn-outline-primary btn-sm" href="{% url 'rest_client' %}?url=cospaces/{{ cospace.cospace }}/accessMethods/{{ am.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-primary">{% trans "API-klient" %}</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% if am.uri and am.uri != cospace.uri %}
+                                    <tr>
+                                        <th>{% trans "URI" %}</th>
+                                        <td>
+                                            {{ am.uri }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if am.callId and am.callId != cospace.call_id %}
+                                    <tr>
+                                        <th>{% trans "Call ID" %}</th>
+                                        <td>
+                                            {{ am.callId }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+
+                                {% if am.passcode and am.passcode != cospace.passcode %}
+                                    <tr>
+                                        <th>{% trans 'PIN-kod' %}</th>
+                                        <td>
+                                            {{ am.passcode }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if am.web_url %}
+                                    <tr>
+                                        <th>{% trans "Webb" %}</th>
+                                        <td>
+
+                                            <div class="input-group mb-3">
+                                                <input id="weburl" class="form-control" value="{{ am.web_url }}" />
+                                                <div class="input-group-append">
+                                                    <a href="#" class="btn btn-outline-primary" onclick="document.getElementById('weburl').select(); document.execCommand('copy'); return false;"> <span class="fa fa-copy"></span> </a>
+                                                    <a target="_blank" class="btn btn-outline-primary" href="{{ am.web_url }}"> <span class="fa fa-external-link-alt"></span> </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% if am.sip_uri %}
+                                    <tr>
+                                        <th>{% trans "SIP" %}</th>
+                                        <td>
+
+                                            <div class="input-group mb-3">
+                                                <input id="sipurl" class="form-control" value="sip:{{ am.sip_uri }}" />
+                                                <div class="input-group-append">
+
+                                                    <a href="#" class="btn btn-outline-primary" onclick="document.getElementById('sipurl').select(); document.execCommand('copy'); return false;"> <span class="fa fa-copy"></span> </a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+
+                <div class="d-flex">
+                    <div>
+                        <h2>{% trans "Medlemmar" %}</h2>
+                        <p class="mb-0">
+                            {% blocktrans with members|length as count %}Totalt {{ count }} st{% endblocktrans %}
+                        </p>
+                    </div>
+                    <div class="ml-auto w-50">
+                        <label>{% trans "Lägg till ny medlem" %}:</label>
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div data-vue="UserPicker" data-input-name="add_member" data-item-value="jid" data-auto-submit="true"></div>
+                        </form>
+                    </div>
+                </div>
+
+                {% if members %}
+
+                    <hr>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="cospace" value="{{ cospace.cospace }}"/>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped mb-0" id="member_list">
+                                <thead>
+                                    <th>{% trans "Välj" %}</th>
+                                    <th>{% trans "Namn" %}</th>
+                                    <th>{% trans "Rättigheter" %}</th>
+                                </thead>
+                                <tbody>
+                                    {% for m in members %}
+                                        <tr>
+                                            <td><input name="remove_member" type="checkbox" value="{{ m.user_jid }}"/></td>
+                                            <td>
+                                                <a href="{% url 'user_details' m.id %}?customer={{ customer.pk }}&amp;user={{ m.id }}">{{ m.user_jid }}</a>{% if m.email %}
+
+                                                <a href="{% url 'cospaces_invite' cospace.cospace %}?customer={{ customer.pk }}&amp;email={{ m.email }}"><span class="fa fa-paper-plane"></span></a>
+                                                {% endif %}
+                                        </td>
+                                            <td>
+                                                <div class="member-permissions">
+                                                    {% for permission_code, permission_type in m.permissionTypes.items %}
+                                                        {% if permission_type.permitted %}
+                                                            <div class="badge badge-success">{{ permission_type.label }}</div>
+                                                        {% else %}
+                                                            <div class="badge badge-secondary badge-inactive">{{ permission_type.label }}</div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <a href="#" class="badge badge-primary change-member-permission">{% trans "Ändra" %}</a>
+                                                </div>
+
+                                                <div class="member-permissions-form" style="display:none;">
+                                                    <div class="row mr-0 mb-3" >
+                                                        {% for permission_code, permission_type in m.permissionTypes.items %}
+                                                            <div class="col-12 col-md-6">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input name="permission_{{ m.user_id }}" class="custom-control-input" type="checkbox" value="{{ permission_code }}" id="cospaceCheck{{ m.user_id }}_{{ permission_code }}" {% if permission_type.permitted %}checked{% endif %}>
+                                                                    <label class="custom-control-label" for="cospaceCheck{{ m.user_id }}_{{ permission_code }}">
+                                                                        {{ permission_type.label }}
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <button class="btn btn-primary btn-sm" name="form_action" value="update_permissions">{% trans "Uppdatera" %}</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button class="btn btn-danger my-4" name="form_action" value="remove_members">{% trans "Ta bort valda användare" %}</button>
+                    </form>
+
+                    <script>
+                        jQuery(function ($) {
+                            $('#member_list').on('click', '.change-member-permission', function(e) {
+                                e.preventDefault();
+                                var $td = $(this).closest('td');
+                                $td.find('.member-permissions').hide();
+                                $td.find('.member-permissions-form').show();
+                            });
+                        });
+                    </script>
+                {% endif %}
+
+            </div>
+            <div class="col-12 col-lg-4">
+
+                <div class="card card-grey card-bottom mb-4">
+                    <div class="card-body">
+
+                        {% if calls %}
+                            <h5 class="mb-4">{% trans "Aktiva samtal" %}</h5>
+
+                            <table class="table table-no-top-border table-no-bottom-padding table-text-edge mb-0">
+                                <tbody>
+
+                                    {% for call in calls %}
+                                    <tr>
+                                        <td><a href="{% url 'call_handler' call.id %}?customer={{ customer.id }}">{{ call.name }}</a></td>
+                                        <td class="text-right">
+                                            {% blocktrans with call.legs|length as count %}{{ count }} st deltagare{% endblocktrans %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        {% else %}
+                            <form method="post" id="start_meeting">
+                                {% csrf_token %}
+
+                                <h5 class="mb-4">{% trans "Aktivera mötesrum" %}</h5>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" name="name" class="form-control" value="{{ cospace.title }}" title="{% trans "Ange namn på mötet" %}" placeholder="{% trans "Ange namn" %}...">
+                                        <div class="input-group-append">
+                                            <button name="form_action" value="new_call" class="btn btn-primary">{% trans "Aktivera" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="small mb-0">
+                                    {% trans "Aktivera mötesrum för att kunna ringa upp externa videokonferenssystem. För övriga klienter" %} <a href="{% url 'cospaces_invite' cospace.cospace %}?customer={{ customer.pk }}">{% trans "skicka instruktioner" %}</a>.
+                                </p>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">{% trans "Inställningar" %}</h5>
+                        <table class="table table-text-edge table-no-bottom-padding mb-0">
+                            {% if has_clear_chat %}
+                            <tr>
+                                <td class="align-middle">{% trans "Rensa chatt" %}</td>
+                                <td class="text-right">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <button name="clear_chat" class="btn btn-sm btn-danger" value="1">{% trans "Rensa" %}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <td class="align-middle">
+                                    {% trans "Automatisk uppringning" %}
+
+                                    {% if hook and hook.is_active %}
+                                        <span class="badge badge-success text-center mb-0">{% trans "Aktiverad" %}</span>
+                                    {% else %}
+                                        <span class="badge badge-danger text-center mb-0">{% trans "Ej aktiv" %}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary btn-sm" href="{% url 'cospace_hooks' cospace.cospace %}?customer={{ customer.pk }}">{% trans "Ändra" %}</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                {% if latest_calls %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">{% trans "Senaste samtal" %}</h5>
+                        <table class="table table-text-edge table-no-bottom-padding mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Start" %}</th>
+                                    <th>{% trans "Deltagare" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for call in latest_calls %}
+                            <tr>
+                                <td><a href="/stats/debug/{{ call.guid }}">{{ call.ts_start|date:"Y-m-d H:i:s" }}</a></td>
+                                <td>{{ call.leg_count }} st</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if recordings %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">{% trans "Inspelningar" %}</h5>
+                        <table class="table table-text-edge table-no-bottom-padding mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Start" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for recording in recordings %}
+                            <tr>
+                                <td><a href="{{ recording.get_absolute_url }}">{{ recording.ts_start|date:"Y-m-d H:i:s" }}</a></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock page_content %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera möten{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Möten" %}</strong>{% endblock %}
+
+{% block content %}
+    {% include "blocks/page_notification.html" %}
+
+    <div class="">
+        <div class="view__header">
+            <h1 class="view__title">
+                {% trans "Kundinställningar" %}
+            </h1>
+        </div>
+    </div>
+
+    <div class="v-card v-sheet theme--light">
+
+	    {% if epm_customers %}
+	    <h2>{% trans "Rooms CMS-provisionering path" %}</h2>
+	    <table class="table">
+		    <tbody>
+	    {% for c, c_settings in epm_customers %}
+	    <tr>
+		    <td>{{ c }}</td>
+		    <td>{{ c_settings.provision_path }}</td>
+	    </tr>
+	    {% endfor %}
+		    </tbody>
+	    </table>
+	    {% endif %}
+
+	    {% if stat_servers %}
+
+	    <h2>{% trans "CDR-urler" %}</h2>
+	    <table class="table">
+		    <tbody>
+	    {% for server in stat_servers %}
+	    <tr>
+		    <td>{{ server }}</td>
+		    <td>{{ server.get_type_display }}</td>
+		    <td>{{ server.get_cdr_url }}</td>
+	    </tr>
+	    {% endfor %}
+		    </tbody>
+	    </table>
+	    {% endif %}
+
+	    <h2>{% trans "Kunder" %}</h2>
+	    <table class="table">
+        <thead>
+        <tr>
+            <th>{% trans "Kund" %}</th>
+            <th>{% trans "Videobrygga" %}</th>
+            <th>{% trans "Inspelning" %}</th>
+            <th>{% trans "Separat streaming" %}</th>
+            <th>{% trans "Tjänster" %}</th>
+        </tr>
+        </thead>
+        <tbody>
+	    {% for c in customers %}
+	    <tr>
+		    <td>{{ c }}</td>
+		    <td>{{ c.get_provider|default:"--" }}</td>
+		    <td>{{ c.videocenter_provider|default:"--" }}</td>
+		    <td>{{ c.streaming_provider|default:"--" }}</td>
+		    <td>{{ c.enable_core|yesno:_("Core,") }} {{ c.enable_epm|yesno:_("Rooms,") }}</td>
+	    {% endfor %}
+		    </tbody>
+	    </table>
+
+    </div>
+
+{% endblock content %}

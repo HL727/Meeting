@@ -1,0 +1,22 @@
+{% extends "base_standalone.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block page_body %}
+<div class="full-page">
+    <div class="card card-settings">
+        <div class="card-body">
+            <h3>{% trans "Installation" %}</h3>
+            <p>{% blocktrans with product=product %}Välkommen till en ny installation av {{product}}. Ange namn på din organisation nedan för att komma vidare.{% endblocktrans %}</p>
+            <hr>
+            <form action="{% url 'onboard_setup' %}?next={{ next }}" method="post" role="form" class="form mb-0">
+                {% csrf_token %}
+                {% bootstrap_field form.customer_name show_label=False placeholder=_("Organisation...") %}
+                <button type="submit" class="btn btn-primary">
+                    {% trans "Gå vidare" %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock page_body %}

@@ -1,0 +1,154 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{% if cospace %}Redigera {{ cospace.title }}{% else %}Skapa nytt mötesrum{% endif %}{% endblock %}
+
+{% block page_icon %}mdi-door-closed{% endblock %}
+{% block page_title %}
+    {% if cospace %}
+        {{ cospace.title|default:"Mötesrum" }}
+    {% else %}
+        <strong>{% trans "Skapa nytt mötesrum" %}</strong>
+    {% endif %}
+{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    {% if cospace %}
+        <a href="{% url 'cospaces_details' cospace.cospace %}?customer={{ customer.pk }}">{{ cospace.title }}</a> /
+        <strong>{% trans "Redigera" %}</strong>
+    {% else %}
+        <strong>{% trans "Skapa nytt mötesrum" %}</strong>
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+
+    {% if customer %}
+        {% include "blocks/page_notification.html" %}
+
+        <div class="row mt-4">
+        <div class="col-lg-8">
+        <div class="card card-shadow">
+            <div class="card-body">
+                <form method="post">
+                    {% if cospace %}
+                        <input type="hidden" name="cospace" value="{{ cospace }}"/>
+                    {% else %}
+                        <h2>{% trans "Nytt mötesrum" %}</h2>
+                    {% endif %}
+                    {% for field in form.visible_fields %}
+                        {% if field.name == 'owner_jid' %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                <div data-vue="UserPicker" data-input-name="owner_jid" data-item-value="jid" data-value="{{ field.value|default:'' }}"></div>
+                            </div>
+
+                        {% elif field.name == 'org_unit' %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                <div data-vue="OrganizationPicker" {% if organization_unit %}data-value="{{ organization_unit.pk }}"{% endif %}
+                                     data-text-path-input-name="org_unit"></div>
+                            </div>
+                        {% elif field.name == 'uri' and number_series %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                <div
+                                    data-vue="NumberSeriesGetter"
+                                    data-field-ids='["{{ form.uri.auto_id }}", "{{ form.call_id.auto_id }}"]'
+                                    data-series-id="{{ number_series.pk }}"
+                                ></div>
+                                {% bootstrap_field field show_label=False %}
+                            </div>
+                        {% else %}
+                            {% bootstrap_field field %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% for am_form in access_method_forms %}
+                        <div class="card compact">
+                            <div class="card-header"><h3>{{ am_form.name.initial|default:"Role" }}</h3></div>
+                            <div class="card-body">
+                                {% bootstrap_form am_form %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+
+                    {% if cospace %}
+                        {% if cospace.auto_generated %}
+                            <br/>
+                            <p class="text-danger">
+                                <i>{% trans "VARNING: Detta rum är autogenererat, och det är därför inte säkert att det går att redigera." %}</i>
+                            </p>
+                        {% endif %}
+                        <button class="btn btn-primary">{% trans "Spara" %}</button>
+                        <button class="btn btn-danger" name="remove_cospace" value="{{ cospace.cospace }}"
+                                onclick="return confirm('{% trans "Är du säker?" %}')">{% trans "Ta bort" %}
+                        </button>
+                        <a href="{% url 'cospaces_details' cospace.cospace %}" class="btn btn-outline-primary btn-sm">{% trans "Avbryt" %}</a>
+                    {% else %}
+                        <button class="btn btn-primary">{% trans "Skapa" %}</button>
+                        <a href="{% url 'cospaces' %}" class="btn btn-outline-primary btn-sm">{% trans "Avbryt" %}</a>
+
+                    {% endif %}
+
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+
+                    <input type="hidden" name="customer" value="{{ customer.pk }}"/>
+                    <input type="hidden" name="form_action" value="edit_cospace"/>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <script>
+            jQuery(function ($) {
+                var pin = $('input[name=password]').closest('.form-group');
+
+                var enable_pin = $('<div class="checkbox"><label><input type="checkbox" /> {% trans "Aktivera PIN-kod" %}</label></div>').insertBefore(pin).change(function() {
+                    pin.toggle(this.checked);
+                    if (!this.checked) pin.find('input').val('')
+                    $(this).toggle(!this.checked)
+                });
+
+                if (!pin.find('input').val()) {
+                    pin.hide();
+                    enable_pin.find('input').prop('checked', false)
+                } else {
+                    enable_pin.find('input').prop('checked', true)
+                }
+
+                var $lobby = $('input[name="lobby"]');
+                var $lobbyPin = $('input[name="lobby_pin"]').closest('.form-group');
+
+                function maybeShowLobbyPin(duration) {
+                    var shouldShow = $lobby.is(':checked');
+                    if (shouldShow) {
+                        $lobbyPin.show(duration);
+                    } else {
+                        $lobbyPin.hide(duration);
+                    }
+                }
+
+                $lobby.change(maybeShowLobbyPin);
+                maybeShowLobbyPin(0);
+            });
+        </script>
+
+
+    {% endif %}
+
+
+
+{% endblock page_content %}

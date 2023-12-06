@@ -1,0 +1,139 @@
+.navbar {
+    padding: 0;
+
+    > .container-fluid {
+        // Override navbars no padding when using navbar-expand-lg
+        @extend .container-fluid;
+    }
+}
+
+.navbar-brand {
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    img {
+        width: 150px;
+        height: 30px;
+
+        @include media-breakpoint-down(xs) {
+            display: none;
+        }
+
+        &.compact {
+            width: 25px;
+            display: none;
+            @include media-breakpoint-down(xs) {
+                display: inline-block;
+            }
+        }
+    }
+    .tagline {
+        display: inline-block;
+        margin-left: 10px;
+        padding-left: 10px;
+        border-left: 1px solid $white;
+        font-size: 1rem;
+        line-height: 30px;
+        opacity: 0.5;
+    }
+}
+
+.navbar-select-customer .navbar-text {
+    color: #000;
+}
+
+.nav-item {
+    &.active {
+        background: $gray-900;
+    }
+}
+
+.navbar-dark .navbar-nav .active > .nav-link {
+    color: $gray-300;
+}
+
+.nav-link {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link--text {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+// Desktop transitions
+
+.not-mobile {
+    .navbar-brand {
+        .tagline {
+            transition: all 0.25s ease;
+        }
+        &:hover {
+            .tagline {
+                padding-left: 15px;
+                margin-left: 15px;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+//
+//
+//.navbar-brand {
+//  $breakpoint: xs;
+//
+//  @include media-breakpoint-down($breakpoint) {
+//    padding-top: 0;
+//    padding-bottom: 0;
+//  }
+//
+//  &:after {
+//    display: inline-block;
+//    vertical-align: top;
+//    content: 'CLOUD BACKEND';
+//    line-height: 1.2;
+//    font-size: 0.9rem;
+//    @include media-breakpoint-down($breakpoint) {
+//      vertical-align: middle;
+//    }
+//  }
+//
+//  &:before {
+//    $separatorPadding: 15px;
+//    content: '';
+//    display: inline-block;
+//    vertical-align: bottom;
+//    height: 29px;
+//    width: 150px + $separatorPadding;
+//    background: url("/site_media/static/images/logo.svg") left no-repeat;
+//
+//    border-right: 1px solid white;
+//    margin-right: $separatorPadding;
+//
+//    @include media-breakpoint-down($breakpoint) {
+//      background: url("/site_media/static/images/logo-compact.png") left no-repeat;
+//      background-size: contain;
+//      vertical-align: middle;
+//      height: 38px;
+//      width: 34px;
+//      border-right: none;
+//      margin-right: 12px;
+//    }
+//  }
+//}
+//
+//.navbar-select-customer {
+//  width: 385px;
+//
+//  label.navbar-text {
+//    color: $gray-800;
+//  }
+//
+//  form {
+//    padding-left: 15px;
+//    display: inline-block;
+//    width: 200px;
+//  }
+//}

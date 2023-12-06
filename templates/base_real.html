@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="en" {% block html_attrs %}{% endblock %}>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block fulltitle %}{% block title %}{{ title|default:"Start" }}{% endblock %} :: Mividas{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load bootstrap3 static %}
+    {% get_current_language as LANGUAGE_CODE %}
+
+    {% if not request.META.HTTP_X_STATICFALLBACK %}
+
+    <link rel="icon" id="favicon" href="/site_media/static/favicon.ico">
+    <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+
+    <script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/jquery-migrate-1.4.1.min.js" %}"></script>
+    <script src="/jsoni18n/?{{ LANGUAGE_CODE }}"></script>
+
+    <script src="{% static "distv2/bundle.js" %}"></script>
+        {% if not debug %}
+            <link rel="stylesheet" href="{% static "dist/css/chunk-vendors.css" %}" />
+            <link rel="stylesheet" href="{% static "dist/css/app.css" %}" />
+
+            {% for prefetch in prefetch_files %}<link rel='prefetch' href='{% static prefetch %}' />{% endfor %}
+        {% endif %}
+
+    {% block extra_head %}{% endblock %}
+    <style>
+.page-header .customer-select input[type=text] {
+    color: #fff !important;
+}
+    .react-datepicker__input-container, .react-datepicker-wrapper {
+        display: block;
+    }
+
+    .react-datepicker__time-list {
+        padding-left: 0;
+    }
+
+        #staticvue.not-loaded {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+    </style>
+
+<script>
+window.MIVIDAS_ALLOW_SENTRY = {{ allow_sentry|yesno:"true,false" }};
+window.MIVIDAS = Object.assign({},
+    JSON.parse('{{ settings_json|escapejs|default:'{}' }}') || {},
+    {
+        'csrftoken': "{{ csrf_token }}",
+        'language': "{{ LANGUAGE_CODE }}".replace(/-.*/, ''),
+        'vue_spa': null
+    })
+</script>
+    {% endif %}
+
+</head>
+<body class="{% block body_class %}bg-light not-mobile{% endblock %}" {% block body_attrs %}{% endblock %}>
+    {% block page_body %}
+        {% if not request.META.HTTP_X_STATICFALLBACK %}
+        {% if debug %}
+            {# must be in body, otherwise plotly 1.50.1 breaks #}
+	    <script src="http://{{ http_host_without_port|default:'localhost' }}:8083/js/chunk-vendors.js"></script>
+	    <script src="http://{{ http_host_without_port|default:'localhost' }}:8083/js/app.js"></script>
+        {% else %}
+            <script src="{% static "dist/js/chunk-vendors.js" %}"></script>
+            <script src="{% static "dist/js/app.js" %}"></script>
+        {% endif %}
+        {% endif %}
+
+
+        {% block outer_content %}
+        <div id="staticvue" class="not-loaded" data-url-name="{{ request.resolver_match.url_name }}">
+            <div id="staticbreadcrumb" style="display: none;">{% block breadcrumb %}{% endblock %}</div>
+
+            {% block content %}{% endblock %}
+        </div>
+        {% endblock %}
+    {% endblock %}
+
+    {% if not request.META.HTTP_X_STATICFALLBACK %}
+    <script>
+    if (window.init_js) window.init_js(jQuery);
+    </script>
+
+    <script>
+        jQuery(function ($) {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    {% endif %}
+
+</body>
+</html>
+

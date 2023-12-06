@@ -1,0 +1,164 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n supporthelpers_tags %}
+
+{% block title %}Användare {{ cms_user.name }}{% endblock %}
+
+{% block page_icon %}mdi-account{% endblock %}
+{% block page_title %}{{ cms_user.name }}{% endblock %}
+{% block page_actions %}
+    {% if user_cospace %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-primary btn-sm ml-4" href="{% url 'user_invite' cms_user.id %}?customer={{ customer.pk }}">
+            <i class="v-icon notranslate mdi mdi-email-outline mr-1"></i>
+            {% trans "Inbjudan" %}
+        </a>
+    </div>
+    {% endif %}
+{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+
+{% block breadcrumb %}
+    <a href="{% url 'users' %}">{% trans "Användare" %}</a>
+    {% if cms_user.name %}
+         / <strong>{{ cms_user.name }}</strong>
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+    {% include "blocks/page_notification.html" %}
+    {% if customer %}
+    <div class="row mt-4">
+        <div class="col-12 col-lg-8">
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ cms_user.jid }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Namn" %}</th>
+                        <td>{{ cms_user.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "E-post" %}</th>
+                        <td><a href="mailto:{{ cms_user.email }}">{{ cms_user.email }}</a></td>
+                    </tr>
+
+                    {% if first_call_date or last_call_date %}
+                    <tr>
+                        <th>{% trans "Första samtal" %}</th>
+                        <td>{{ first_call_date|date|default:"--" }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Senaste samtal" %}</th>
+                        <td>{{ last_call_date|date|default:"--" }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if has_organization %}
+                    <tr>
+                        <th class="align-middle">{% trans "Organisationsenhet" %}</th>
+                        <td>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div data-vue="OrganizationPicker" {% if organization_unit %}data-value="{{ organization_unit.pk }}"{% endif %}
+                                     data-text-path-input-name="organization_unit_full_name"></div>
+                                <button type="submit" class="btn btn-primary">{% trans "Spara" %}</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    {% endif %}
+                    {% if perms.provider.api_client %}
+                        <tr>
+                            <th class="align-middle">{% trans "API-klient" %}</th>
+                            <td><a href="{% url 'rest_client' %}?url=users/{{ cms_user.id }}&amp;customer={{ customer.pk }}">{% trans "Klicka här" %}</a></td>
+                        </tr>
+                    {% endif %}
+                </table>
+        </div>
+        <div class="col-12 col-lg-4">
+            {% if calls %}
+            <div class="card card-shadow position-relative mb-0 card-top">
+                <div class="card-header">
+                    <h5 class="mb-0">{% trans "Aktiv i samtal" %}</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-no-top-border table-text-edge" id="cospace_list">
+                        <tbody>
+                        {% for call in calls %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'call_handler' call.id %}?customer={{ customer.pk }}">{{ call.name }}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="card card-shadow position-relative mb-0 card-top">
+                <div class="card-header">
+                    <h5 class="mb-0">{% trans "Lägg till i mötesrum" %}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ request.get_full_path }}">
+                        {% csrf_token %}
+                        <div data-react="AjaxSelect" data-is-multi="true" data-name="cospaces_to_add" data-extra-params='{"customer": {{ customer.pk }}}' data-option-value-key="id" data-option-label-key="name" data-endpoint-url="/json-api/v1/cospace/"></div>
+                        <button class="btn btn-primary mt-3 d-block w-100" name="form_action" value="add_cospaces">{% trans "Lägg till rum" %}</button>
+                    </form>
+                </div>
+            </div>
+            {% if cospaces %}
+            <div class="card card-grey mb-4 card-bottom">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user" value="{{ cms_user.user }}"/>
+                        <table class="table table-no-top-border table-text-edge" id="cospace_list">
+                            <tbody>
+                            {% for c in cospaces %}
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input name="remove_cospace" class="custom-control-input" type="checkbox" value="{{ c.relation_id }}" id="cospaceCheck{{ c.relation_id }}">
+                                            <label class="custom-control-label" for="cospaceCheck{{ c.relation_id }}">
+                                                {% if c.ownerJid == cms_user.jid %}<span class="fa fa-star"></span>{% endif %}
+                                                {% firstof c.name c.title %}
+                                                <a href="{% url 'cospaces_details' c.cospace_id %}">{% trans "Visa" %}</a>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <button class="btn btn-danger d-block w-100" name="form_action" value="remove">{% trans "Ta bort" %}</button>
+                        <script>
+                            jQuery(function ($) {
+                                var rows = $('#cospace_list tbody tr');
+                                var limit = 3;
+                                if (rows.length > limit + 2) {
+                                    rows.slice(limit).hide();
+                                    var toggler = $('<tr><td class="text-center"><a href="#">{% trans "Visa" %} ' + (rows.length - limit) + ' fler</a></td></tr>')
+                                        .insertBefore(rows.eq(limit)).on('click', function () {
+                                            rows.show();
+                                            toggler.hide();
+                                        });
+                                }
+                            });
+                        </script>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock page_content %}

@@ -1,0 +1,234 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load i18n %}
+
+{% block breadcrumb %}
+    REST Client
+{% endblock %}
+
+{% block title %}API-klient {{ url }}{% endblock %}
+
+
+
+{% block page_header %}
+    <form method="post" action="{{ request.path }}?provider={{ provider.pk }}">
+        {% csrf_token %}
+{% endblock page_header %}
+
+{% block page_title %}{% trans "API-klient" %}{% endblock %}
+{% block page_icon %}mdi-package-variant-closed{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+
+{% block page_content %}
+
+    {% if error %}
+    <div class="alert alert-danger">
+        <strong>{{ error }}</strong>
+    </div>
+    {% endif %}
+
+
+{% if customer %}
+<div class="row mt-4" style="max-width: 1480px;">
+    <div class="col-sm-8">
+        <input class="form-control mb-6" name="url" value="{{ url }}" placeholder="{% trans "Api" %}..." />
+
+        <p>
+            <strong>{% trans "Argument" %}:</strong><br>
+            <i>{% trans "Antingen som key = value, eller som &lt;key&gt;value&lt;/key&gt;" %}</i>
+        </p>
+
+        <textarea placeholder="{% trans "POST/PUT-data" %}" class="form-control"  name="data" cols="80" rows="10">{{ data }}</textarea>
+        <br />
+
+            <p><strong><a href="#" onclick="jQuery('#filterlist').toggle(); return false">{% trans "Filter" %}</a></strong> <i>{% trans "(används inte på alla vyer)" %}</i></p>
+
+        <table class="table" id="filterlist" style="display: none;">
+
+            {% for k, v in filters.items %}
+                <tr>
+                    {% if v.hidden %}
+                    {% elif k == 'tenantFilter' %}
+                        <td>{% trans "Tenant" %}</td>
+
+                        <td>
+                            <select name="tenantFilter" class="form-control">
+                                <option value="">-- Alla tenants --</option>
+                                {% for t in tenants %}
+                                    <option value="{{ t.id }}" {% if filters.tenantFilter == t.id %}selected{% endif %}>{{ t.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    {% elif k == 'filter' %}
+                        <td>{% trans "filter" %}</td>
+                        <td>
+                            <input placeholder="{{ v.help_text }}" title="{% trans "filter" %}" class="form-control" name="{{ k }}" value="{{ v.value|default:'' }}" />
+                        </td>
+                    {% else %}
+                        <td>{{ k }}</td>
+                        <td><select class="form-control" name="mod_{{ k }}">
+                            {% for mod in v.mods %}
+                                <option {% if v.mod == mod %}selected{% endif %}>{{ mod }}</option>
+                            {% endfor %}
+                        </select>
+                        </td>
+                        <td>
+
+                            <input placeholder="{{ v.help_text }}" title="{% trans "filter" %}" class="form-control" name="f_{{ k }}" value="{{ v.value|default:'' }}" />
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if help %}
+            <a href="#" onclick="jQuery('#helplist').toggle(); return false;">{% trans "Visa hjälp/beskrivning om argument" %}</a>
+            <table class="table" id="helplist" style="display: none;">
+            <tbody>
+            {% for field, help_text in help.items %}
+                <tr>
+                <th>{{ field }}</th>
+                <td>{{ help_text }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            </table>
+        {% endif %}
+
+        <div class="form-buttons mt-4">
+            <button class="btn btn-primary" name="method" value="GET">GET</button>
+            <button class="btn btn-warning" name="method" value="PUT">PUT</button>
+            <button class="btn btn-warning" name="method" value="PATCH">PATCH</button>
+            <button class="btn btn-warning" name="method" value="POST">POST</button>
+            <button class="btn btn-danger" name="method" value="DELETE" onclick="return confirm('Säker?')">DELETE</button>
+        </div>
+
+        <input type="hidden" name="customer" value="{{ customer.pk }}" />
+        <input type="hidden" name="provider" value="{{ provider.pk }}" />
+
+
+        <h3 class="mt-4">{% trans "Navigation" %}</h3>
+        {% for u, crumb in crumbs %}
+            <a href="?url={{ u }}&amp;provider={{ provider.pk }}&amp;customer={{ customer.pk }}">{{ crumb }}</a> /
+        {% endfor %}
+
+        {% if subviews %}
+        <h3>{% trans "Undervyer" %}</h3>
+        {% for e in subviews %}
+        <a href="?url={{ extra_base }}/{{ e }}&amp;provider={{ provider.pk }}&amp;customer={{ customer.pk }}">{{ e }}</a>  <br />
+        {% endfor %}
+        {% endif %}
+
+        {% if related_views %}
+        <h3>{% trans "Relaterade vyer" %}</h3>
+        {% for url, title in related_views %}
+        <a href="?url={{ url }}&amp;provider={{ provider.pk }}&amp;customer={{ customer.pk }}">{{ title }}</a>  <br />
+        {% endfor %}
+        {% endif %}
+
+        {% if args %}
+        <h2>{% trans "Data" %}</h2>
+        <table class="table">
+            <thead>
+            <tr><td>{% trans "Key" %}</td><td>{% trans "Value" %}</td></tr>
+        </thead>
+        <tbody>
+        {% for k, v in args.items %}
+        <tr>
+        <td>{{ k }}</td> <td> {{ v }}</td></tr>
+        {% endfor %}
+        </tbody>
+        </table>
+
+        {% endif %}
+
+        {% if response.status_code %}
+            <h2>{% trans "Response" %} (status {{ response.status_code }})</h2>
+        {% endif %}
+
+        {% if pagination %}
+        <p>
+            <strong>{% trans "Sida" %}:</strong>
+            {{ pagination.page }} / {{ pagination.pages }}
+            {% if pagination.page > 1 %}
+            <a href="{{ pagination.prev.url }}">&laquo; {% trans "föregående sida" %}</a>
+            {% endif %}
+            {% if pagination.page < pagination.pages %}
+            {% if pagination.page > 1 %}
+            |
+            {% endif %}
+            <a href="{{ pagination.next.url }}">{% trans "nästa sida" %} &raquo;</a>
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% if location %}
+            <h2>{% trans "New object (redirect)" %}</h2>
+            <a href="?url={{ location }}&amp;provider={{ provider.pk }}&amp;customer={{ customer.pk }}">{{ location }}</a> <input class="form-control" value="{{ location_id }}">
+        {% endif %}
+
+
+        {% if response.status_code %}
+        <pre>{{ xml|safe }}</pre>
+
+        <h2>{% trans "Headers" %}</h2>
+        <table class="table">
+            <thead>
+            <tr><td>{% trans "Header" %}</td><td>{% trans "Value" %}</td></tr>
+        </thead>
+        <tbody>
+            {% for k, v in response.headers.items %}
+            <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
+            {% endfor %}
+        </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+    <div class="col-sm-4">
+
+    {% if can_view_providers and clusters %}
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <h5 class="overline">{% trans "Välj brygga" %}</h5>
+            <ul class="mb-0">
+
+                {% for cluster in clusters %}
+                    {% for p in cluster %}
+                        {% if forloop.first and clusters|length > 1 %}
+                            <li>
+                                <strong>
+                                    <a href="?url={{ url }}&amp;provider={{ p.pk }}">{% trans "Kluster" %} {{ p.cluster }}</a>
+                                </strong>
+                            </li>
+                        {% endif %}
+                        <li>
+                           {% if p.pk == provider.pk %} &raquo; {% endif %}
+                            <a href="?url={{ url }}&amp;provider={{ p.pk }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <h5 class="overline">{% trans "URLS" %}</h5>
+            {% for url_real, url_visible in urls %}
+            <a href="?url={{ url_real }}&amp;provider={{ provider.pk }}&amp;customer={{ customer.pk }}">{{ url_visible }}</a><br />
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock page_content %}
+
+{% block page_footer %}
+    </form>
+{% endblock page_footer %}

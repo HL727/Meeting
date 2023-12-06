@@ -1,0 +1,489 @@
+<?xml version="1.0"?>
+<Status product="Cisco Codec" version="ce9.6.1.4516ae5aaa1" apiVersion="4">
+  <Audio>
+    <Input>
+      <Connectors>
+        <HDMI item="3" maxOccurrence="n">
+          <Mute>On</Mute>
+        </HDMI>
+        <Microphone item="1" maxOccurrence="n">
+          <ConnectionStatus>Connected</ConnectionStatus>
+          <EcReferenceDelay>0</EcReferenceDelay>
+          <Mute>Off</Mute>
+        </Microphone>
+        <Microphone item="2" maxOccurrence="n">
+          <ConnectionStatus>Unknown</ConnectionStatus>
+          <EcReferenceDelay>0</EcReferenceDelay>
+          <Mute>Off</Mute>
+        </Microphone>
+      </Connectors>
+    </Input>
+    <Microphones>
+      <Mute>Off</Mute>
+    </Microphones>
+    <Output>
+      <Connectors>
+        <Line item="1" maxOccurrence="n">
+          <DelayMs>0</DelayMs>
+        </Line>
+      </Connectors>
+    </Output>
+    <Volume>50</Volume>
+    <VolumeMute>Off</VolumeMute>
+  </Audio>
+  <Bookings>
+    <Current>
+      <Id></Id>
+    </Current>
+  </Bookings>
+  <Cameras>
+    <Camera item="1" maxOccurrence="n">
+      <Capabilities>
+        <Options>ptzf</Options>
+      </Capabilities>
+      <Connected>True</Connected>
+      <Flip>On</Flip>
+      <Manufacturer>Cisco</Manufacturer>
+      <Model>SX10</Model>
+      <Position>
+        <Focus>610</Focus>
+        <Pan>0</Pan>
+        <Tilt>-500</Tilt>
+        <Zoom>7726</Zoom>
+      </Position>
+    </Camera>
+  </Cameras>
+  <Capabilities>
+    <Conference>
+      <MaxActiveCalls>1</MaxActiveCalls>
+      <MaxAudioCalls>1</MaxAudioCalls>
+      <MaxCalls>7</MaxCalls>
+      <MaxVideoCalls>1</MaxVideoCalls>
+    </Conference>
+  </Capabilities>
+  <Conference>
+    <ActiveSpeaker>
+      <CallId>0</CallId>
+    </ActiveSpeaker>
+    <DoNotDisturb>Active</DoNotDisturb>
+    <Multipoint>
+      <Mode>Off</Mode>
+    </Multipoint>
+    <Presentation>
+      <CallId>0</CallId>
+      <Mode>Off</Mode>
+    </Presentation>
+    <SpeakerLock>
+      <CallId>0</CallId>
+      <Mode>Auto</Mode>
+    </SpeakerLock>
+  </Conference>
+  <Diagnostics>
+    <Message item="1" maxOccurrence="n">
+      <Description>There is one or more users without a passphrase set</Description>
+      <Level>Critical</Level>
+      <References></References>
+      <Type>ValidPasswords</Type>
+    </Message>
+    <Message item="2" maxOccurrence="n">
+      <Description>Wizard will start after a boot and system will not be able to receive calls</Description>
+      <Level>Critical</Level>
+      <References></References>
+      <Type>FirstTimeWizardNotCompleted</Type>
+    </Message>
+    <Message item="3" maxOccurrence="n">
+      <Description>Not registered on default call protocol</Description>
+      <Level>Warning</Level>
+      <References></References>
+      <Type>DefaultCallProtocolRegistered</Type>
+    </Message>
+  </Diagnostics>
+    <HttpFeedback item="2" maxOccurrence="n">
+    <Expression item="1" maxOccurrence="n">/Status/Call/*/Status</Expression>
+    <Expression item="2" maxOccurrence="n">/Status/Network/IPv4/Address</Expression>
+    <Expression item="3" maxOccurrence="n">/Status/SystemUnit/Software/Version</Expression>
+    <Format>XML</Format>
+    <Status>OK</Status>
+    <URL>https://core.localhost/tms/event/ep123customerkey/</URL>
+  </HttpFeedback>
+  <HttpFeedback item="4" maxOccurrence="n">
+    <Expression item="1" maxOccurrence="n">/Status/Call/*/Status</Expression>
+    <Expression item="2" maxOccurrence="n">/Status/Network/IPv4/Address</Expression>
+    <Expression item="3" maxOccurrence="n">/Status/SystemUnit/Software/Version</Expression>
+    <Format>XML</Format>
+    <Status>Failed</Status>
+    <URL>https://core.localhost/epm/tms/event/</URL>
+  </HttpFeedback>
+  <H320>
+    <Gateway>
+      <Address></Address>
+      <Id></Id>
+      <Mode>Unknown</Mode>
+      <Number></Number>
+      <Reason></Reason>
+      <Status>Inactive</Status>
+    </Gateway>
+  </H320>
+  <H323>
+    <Gatekeeper>
+      <Address></Address>
+      <Port>0</Port>
+      <Reason></Reason>
+      <Status>Inactive</Status>
+    </Gatekeeper>
+    <Mode>
+      <Reason></Reason>
+      <Status>Enabled</Status>
+    </Mode>
+  </H323>
+  <Network item="1" maxOccurrence="n">
+    <CDP>
+      <Address></Address>
+      <Capabilities></Capabilities>
+      <DeviceId></DeviceId>
+      <Duplex></Duplex>
+      <Platform></Platform>
+      <PortID></PortID>
+      <PrimaryMgmtAddress></PrimaryMgmtAddress>
+      <SysName></SysName>
+      <SysObjectID></SysObjectID>
+      <VTPMgmtDomain></VTPMgmtDomain>
+      <Version></Version>
+      <VoIPApplianceVlanID></VoIPApplianceVlanID>
+    </CDP>
+    <DNS>
+      <Domain>
+        <Name></Name>
+      </Domain>
+      <Server item="1" maxOccurrence="n">
+        <Address>192.168.1.1</Address>
+      </Server>
+      <Server item="2" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="3" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="4" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+      <Server item="5" maxOccurrence="n">
+        <Address></Address>
+      </Server>
+    </DNS>
+    <Ethernet>
+      <MacAddress>11:22:33:44:55:66</MacAddress>
+      <Speed>100full</Speed>
+    </Ethernet>
+    <IPv4>
+      <Address>192.168.1.123</Address>
+      <Gateway>192.168.1.1</Gateway>
+      <SubnetMask>255.255.255.0</SubnetMask>
+    </IPv4>
+    <IPv6>
+      <Address></Address>
+      <Gateway></Gateway>
+      <LinkLocalAddress>fe80::b6de:fffa:fffa:fffa</LinkLocalAddress>
+    </IPv6>
+    <VLAN>
+      <Voice>
+        <VlanId>Off</VlanId>
+      </Voice>
+    </VLAN>
+  </Network>
+  <NetworkServices>
+    <NTP>
+      <CurrentAddress>91.216.111.52</CurrentAddress>
+      <Server item="1" maxOccurrence="n">
+        <Address>193.228.143.23</Address>
+      </Server>
+      <Server item="2" maxOccurrence="n">
+        <Address>193.228.143.13</Address>
+      </Server>
+      <Server item="3" maxOccurrence="n">
+        <Address>193.228.143.22</Address>
+      </Server>
+      <Status>Synced</Status>
+    </NTP>
+  </NetworkServices>
+  <Provisioning>
+    <CUCM>
+      <ExtensionMobility>
+        <Enabled>False</Enabled>
+        <LastLoggedInUserId></LastLoggedInUserId>
+        <LoggedIn>False</LoggedIn>
+      </ExtensionMobility>
+    </CUCM>
+    <Software>
+      <Current>
+        <CompletedAt></CompletedAt>
+        <URL></URL>
+        <VersionId>ce9.6.1 4516ae5aaa1 2018-12-12</VersionId>
+      </Current>
+      <UpgradeStatus>
+        <LastChange></LastChange>
+        <Message></Message>
+        <Phase>None</Phase>
+        <SessionId></SessionId>
+        <Status>None</Status>
+        <URL></URL>
+        <VersionId></VersionId>
+      </UpgradeStatus>
+    </Software>
+    <Status>NeedConfig</Status>
+  </Provisioning>
+  <Proximity>
+    <Services>
+      <Availability>Disabled</Availability>
+    </Services>
+  </Proximity>
+  <RoomPreset item="1" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="2" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="3" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="4" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="5" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="6" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="7" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="8" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="9" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="10" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="11" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="12" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="13" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="14" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <RoomPreset item="15" maxOccurrence="n">
+    <Defined>False</Defined>
+    <Description></Description>
+    <Type>All</Type>
+  </RoomPreset>
+  <SIP>
+    <Authentication>Off</Authentication>
+    <CallForward>
+      <DisplayName></DisplayName>
+      <Mode>Off</Mode>
+      <URI></URI>
+    </CallForward>
+    <Mailbox>
+      <MessagesWaiting>0</MessagesWaiting>
+      <URI></URI>
+    </Mailbox>
+    <Proxy item="1" maxOccurrence="n">
+      <Address></Address>
+      <Status>Off</Status>
+    </Proxy>
+    <Registration item="1" maxOccurrence="n">
+      <Reason></Reason>
+      <Status>Inactive</Status>
+      <URI>sip@example.org</URI>
+    </Registration>
+    <Secure>False</Secure>
+    <Verified>False</Verified>
+  </SIP>
+  <Security>
+    <FIPS>
+      <Mode>Off</Mode>
+    </FIPS>
+    <Persistency>
+      <CallHistory>Persistent</CallHistory>
+      <Configurations>Persistent</Configurations>
+      <DHCP>Persistent</DHCP>
+      <InternalLogging>Persistent</InternalLogging>
+      <LocalPhonebook>Persistent</LocalPhonebook>
+    </Persistency>
+  </Security>
+  <Standby>
+    <State>Standby</State>
+  </Standby>
+  <SystemUnit>
+    <Hardware>
+      <Module>
+        <CompatibilityLevel>3</CompatibilityLevel>
+        <SerialNumber>1234567890</SerialNumber>
+      </Module>
+      <Temperature>46.6</Temperature>
+      <TemperatureThreshold>85</TemperatureThreshold>
+    </Hardware>
+    <ProductId>Cisco TelePresence SX10</ProductId>
+    <ProductPlatform>SX10</ProductPlatform>
+    <ProductType>Cisco Codec</ProductType>
+    <Software>
+      <DisplayName>ce 9.6.1 4516ae5aaa1 2018-12-12</DisplayName>
+      <Name>s52030</Name>
+      <OptionKeys>
+        <Encryption>True</Encryption>
+        <MultiSite>NotApplicable</MultiSite>
+        <RemoteMonitoring>False</RemoteMonitoring>
+      </OptionKeys>
+      <ReleaseDate>2018-12-12</ReleaseDate>
+      <Version>ce9.6.1.4516ae5aaa1</Version>
+    </Software>
+    <State>
+      <NumberOfActiveCalls>0</NumberOfActiveCalls>
+      <NumberOfInProgressCalls>0</NumberOfInProgressCalls>
+      <NumberOfSuspendedCalls>0</NumberOfSuspendedCalls>
+    </State>
+    <Uptime>3329</Uptime>
+  </SystemUnit>
+  <Time>
+    <SystemTime>2019-03-11T15:33:53+0000</SystemTime>
+  </Time>
+  <UserInterface>
+    <ContactInfo>
+      <ContactMethod item="1" maxOccurrence="n">
+        <Number>1234@example.org</Number>
+      </ContactMethod>
+      <Name>System name</Name>
+    </ContactInfo>
+    <Features>
+      <Call>
+        <End>Visible</End>
+        <MidCallControls>Visible</MidCallControls>
+        <Start>Visible</Start>
+      </Call>
+      <Share>
+        <Start>Visible</Start>
+      </Share>
+    </Features>
+  </UserInterface>
+  <Video>
+    <ActiveSpeaker>
+      <PIPPosition>UpperCenter</PIPPosition>
+    </ActiveSpeaker>
+    <Input>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>True</Connected>
+        <SignalState>OK</SignalState>
+        <SourceId>1</SourceId>
+        <Type>Camera</Type>
+      </Connector>
+      <Connector item="2" maxOccurrence="n">
+        <Connected>False</Connected>
+        <SignalState>Unknown</SignalState>
+        <SourceId>2</SourceId>
+        <Type>HDMI</Type>
+      </Connector>
+      <Connector item="3" maxOccurrence="n">
+        <Connected>False</Connected>
+        <SignalState>Unknown</SignalState>
+        <SourceId>2</SourceId>
+        <Type>VGA</Type>
+      </Connector>
+      <MainVideoSource>1</MainVideoSource>
+      <Source item="1" maxOccurrence="n">
+        <ConnectorId>1</ConnectorId>
+        <FormatStatus>Ok</FormatStatus>
+        <FormatType>Digital</FormatType>
+        <MediaChannelId>107</MediaChannelId>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>30</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+      </Source>
+      <Source item="2" maxOccurrence="n">
+        <ConnectorId>2</ConnectorId>
+        <FormatStatus>NotFound</FormatStatus>
+        <FormatType>Unknown</FormatType>
+        <MediaChannelId>108</MediaChannelId>
+        <Resolution>
+          <Height>0</Height>
+          <RefreshRate>0</RefreshRate>
+          <Width>0</Width>
+        </Resolution>
+      </Source>
+    </Input>
+    <Layout>
+      <LayoutFamily>
+        <Local>overlay</Local>
+      </LayoutFamily>
+    </Layout>
+    <Monitors>Single</Monitors>
+    <Output>
+      <Connector item="1" maxOccurrence="n">
+        <Connected>False</Connected>
+        <ConnectedDevice>
+          <Name></Name>
+          <PreferredFormat></PreferredFormat>
+          <ScreenSize>-1</ScreenSize>
+        </ConnectedDevice>
+        <MonitorRole>First</MonitorRole>
+        <Resolution>
+          <Height>1080</Height>
+          <RefreshRate>60</RefreshRate>
+          <Width>1920</Width>
+        </Resolution>
+        <Type>HDMI</Type>
+      </Connector>
+      <Monitor item="1" maxOccurrence="n">
+        <FirmwareVersion></FirmwareVersion>
+        <ModelName></ModelName>
+        <SerialNumber></SerialNumber>
+      </Monitor>
+    </Output>
+    <Presentation>
+      <PIPPosition>CenterLeft</PIPPosition>
+    </Presentation>
+    <Selfview>
+      <FullscreenMode>Off</FullscreenMode>
+      <Mode>Off</Mode>
+      <OnMonitorRole>First</OnMonitorRole>
+      <PIPPosition>CenterRight</PIPPosition>
+    </Selfview>
+  </Video>
+</Status>

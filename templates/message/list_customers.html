@@ -1,0 +1,40 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Redigera meddelanden{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Meddelanden" %}</strong>{% endblock %}
+
+{% block page_icon %}mdi-email-box{% endblock %}
+{% block page_title %}{% trans "Kunder" %}{% endblock %}
+
+{% block page_actions %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-outline-secondary btn-sm" href="{% url "list_messages" "default" %}">{% trans "Standard-meddelanden" %}</a>
+    </div>
+{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+{% block page_content %}
+    <table class="table table-striped table-borderless mt-4">
+        <thead>
+        <tr>
+            <th>{% trans "Kund" %}</th>
+            <th>{% trans "Har egna meddelanden" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer }}</td>
+                <td>{{ customer.has_custom_messages|yesno:_("Ja,") }}</td>
+                <td class="text-right"><a class="btn btn-primary btn-sm"
+                       href="{% url "list_messages" customer.pk %}">{% trans "redigera" %}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock page_content %}

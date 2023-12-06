@@ -1,0 +1,6 @@
+.CospaceTable {
+  &__bulk-action {
+    display: inline-block;
+    @extend .m-3;
+  }
+}

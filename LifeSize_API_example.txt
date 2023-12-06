@@ -1,0 +1,177 @@
+
+####
+new session
+####
+
+URL:https://217.115.35.221/uvcmcu/rest/new?_=1409583291297
+
+{
+  "session": "07697bf3d1704b47ac3c8ec7bb594db6",
+  "_rv": 0
+}
+
+
+URL: https://88.83.48.56/uvcmcu/rest/request/cf3b4f5f3929401a9114e9e76e16f63c
+
+####
+Scheduler_getUUID
+#####
+
+->
+    {"call":"Scheduler_getUUID","params":{}}
+
+<-
+
+    {
+  "buffer": "a60fb75f-3675-4c80-8a6f-f198462c0963",
+  "_rv": 0
+}
+
+
+
+####
+Scheduler_getConferenceIdBoundsLong
+#####
+
+->
+
+    {"call":"Scheduler_getConferenceIdBoundsLong","params":{}}
+Response Headersview source
+
+
+<-
+
+    {
+      "_rv": 0,
+      "max": 9999,
+      "min": 1000,
+      "digits": 4
+    }
+
+####
+Scheduler_getNextConferenceIdLong
+#####
+->
+    {"call":"Scheduler_getNextConferenceIdLong","params":{}}
+
+
+<-
+    {
+      "conferenceId": 1023,
+      "_rv": 0
+}
+
+
+####
+Scheduler_getAvailablePortsFlexible
+#####
+->
+    {"call":"Scheduler_getAvailablePortsFlexible","params":{"startDate":1408514400,"endDate":1408518000,"resolution":"720p","encoderSharing":"unique","uid":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+
+<-
+    {
+      "voicePorts": 128,
+      "videoPorts": 128,
+      "_rv": 0
+    }
+
+####
+Scheduler_saveEventLongStrict
+#####
+
+->
+
+    {"call":"Scheduler_saveEventLongStrict","params":{"event":"BEGIN:VEVENT\r\nUID:a60fb75f-3675-4c80-8a6f-f198462c0963\r\nSUMMARY:test name\r\nDESCRIPTION:test desc\r\nDTSTART:20140820T060000Z\r\nDTEND:20140820T070000Z\r\nTRANSP:OPAQUE\r\nRESOURCES:VIDEO=2 VOICE=0\r\nX-LIFESIZE:resolution=720p performanceMode=off maxParticipantBitrate=0 uiLayoutName=auto language=en_US conferenceId=1023 voiceCodecs=auto videoCodecs=auto presentationCodecs=auto uiUserControl=on uiAnnouncements=on uiStickyNames=off uiTalkerOrder=on uiOverlay=on uiInset=7 presentations=on register=true authName=auto security=auto encoderSharing=unique uiSelfView=off audioOnly=false maxAncVideoBitRatePercentage=0 password=12345\r\nEND:VEVENT\r\n","transId":"2000000","conferenceId":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+
+
+-> (recurring)
+  RRULE:FREQ=WEEKLY;UNTIL=20140819T142700Z
+
+<-
+
+    {
+     "_rv": 0
+    }
+
+####
+Scheduler_saveEventLongStrict (utan tid)
+#####
+
+->
+
+{"call":"Scheduler_saveEventLongStrict","params":{"event":"BEGIN:VEVENT\r\nUID:0692b98c-6b94-4927-9c25-6289dd45d821\r\nSUMMARY:New Conference\r\nDESCRIPTION:desc\r\nTRANSP:TRANSPARENT\r\nRESOURCES:MAX_PARTICIPANTS=0\r\nX-LIFESIZE:resolution=720p performanceMode=off maxParticipantBitrate=0 uiLayoutName=auto language=en_US conferenceId=1011 voiceCodecs=auto videoCodecs=auto presentationCodecs=auto uiUserControl=on uiAnnouncements=on uiStickyNames=off uiTalkerOrder=on uiOverlay=on uiInset=7 presentations=on register=true authName=auto security=auto encoderSharing=unique uiSelfView=off audioOnly=false maxAncVideoBitRatePercentage=0 password=12345\r\nEND:VEVENT\r\n","transId":"9000064","conferenceId":"0692b98c-6b94-4927-9c25-6289dd45d821"}}
+
+<-
+
+    {
+      "_rv": 0
+    }
+
+
+####
+Scheduler_getEventByUid
+#####
+
+->
+
+    {"call":"Scheduler_getEventByUid","params":{"uid":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+Response Headersview source
+
+<-
+
+    {
+      "buffer": "BEGIN:VEVENT\r\nUID:a60fb75f-3675-4c80-8a6f-f198462c0963\r\nSUMMARY:test name\r\nDESCRIPTION:test desc\r\nDTSTART:20140820T060000Z\r\nDTEND:20140820T070000Z\r\nTRANSP:OPAQUE\r\nRESOURCES:VIDEO=2 VOICE=0\r\nX-LIFESIZE:conferenceId=1023 password=12345 language=en_US \r\n videoCodecs=auto voiceCodecs=auto maxParticipantBitrate=0 \r\n maxAncVideoBitRatePercentage=0 presentations=on performanceMode=off \r\n presentationCodecs=auto register=true resolution=720p security=auto \r\n encoderSharing=unique audioOnly=false streaming=false expanded=false \r\n uiAnnouncements=on uiInput=dtmf uiInset=7 uiLayoutLocked=false \r\n uiUserControl=on uiLayoutName=auto uiOverlay=on uiSelfView=off \r\n uiTalkerOrder=on uiStickyNames=off uiAudioIntro=100 uiAudioDoor=100 \r\n uiPrintIntro=on uiPrintNames=on uiUserMenus=on fec=off vop=false \r\n createdByVop=false mediaServer=-1 profile= version= template=false \r\n region=-1 bridgeType=auto authName=auto \r\nCREATED:20140819T141159Z\r\nEND:VEVENT\r\n",
+      "_rv": 1
+    }
+
+
+
+
+####
+GuiPlayer_getConferenceState
+#####
+
+->
+    {"call":"GuiPlayer_getConferenceState","params":{"confUid":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+
+
+<-
+
+    {
+      "_rv": -2,
+      "state": null
+    }
+
+
+##########################################
+Klart. Event sparat
+#####
+
+
+####
+Scheduler_getAvailablePortsFlexible
+#####
+
+->
+    {"call":"Scheduler_getAvailablePortsFlexible","params":{"startDate":1408514400,"endDate":1408518000,"resolution":"720p","encoderSharing":"unique","uid":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+
+<-
+    {
+      "voicePorts": 128,
+      "videoPorts": 128,
+      "_rv": 0
+}
+
+
+######
+Scheduler_removeEvents
+######
+
+->
+    {"call":"Scheduler_removeEvents","params":{"uids":"a60fb75f-3675-4c80-8a6f-f198462c0963"}}
+
+<-
+    {
+      "_rv": 1
+    }
+

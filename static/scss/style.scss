@@ -1,0 +1,312 @@
+// Settings
+
+@import "variables";
+
+// Packages
+
+@import "../../js-ui/deprecated/node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../js-ui/deprecated/node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+@import "../../js-ui/deprecated/node_modules/bootstrap/scss/functions";
+@import "../../js-ui/deprecated/node_modules/bootstrap/scss/variables";
+@import "../../js-ui/deprecated/node_modules/bootstrap/scss/mixins";
+
+.static-dom {
+    @import "../../js-ui/deprecated/node_modules/bootstrap/scss/bootstrap";
+
+    // vuetify
+    h1 {
+        display: block;
+        font-size: 2em;
+        font-weight: bold;
+    }
+    .v-list-item__content h1:last-child {
+        margin-bottom: 0;
+    }
+
+
+
+
+
+    height: 100%;
+    body {
+        height: 100%;
+    }
+
+    .full-page {
+        min-height: 100%;
+        padding: 4rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-login {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+
+        background: $white;
+        color: $black;
+        border: none;
+        box-shadow: 0 0 5rem rgba(0,0,0,0.15);
+
+        .card-header {
+            background: transparent;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+
+            img {
+                height: 40px;
+                width: auto;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+
+    .card-settings {
+        border: none;
+        box-shadow: 0 0 5rem rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 420px;
+
+        .card-header {
+            background: transparent;
+
+            img {
+                height: 60px;
+                width: auto;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        .card-footer {
+            background: transparent;
+        }
+    }
+    .bg-light .card-settings {
+        margin: auto;
+    }
+    .bg-light {
+        background-color: #fff !important;
+    }
+}
+
+// Layout
+
+@import "layout/grid";
+@import "layout/table";
+@import "layout/page-header";
+
+.input-group {
+    .form-control--clean {
+        padding: 0;
+        border: none;
+
+        > span > div > div {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+}
+
+strong {
+    font-weight: 700;
+}
+.custom-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.input-group-append-space {
+    margin-left: 1px;
+}
+.input-group-prepend-space {
+    margin-right: 0px;
+}
+.bg-none {
+    background: none !important;
+}
+.message-border {
+    border: 1px dashed $gray-600;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.call_legs .fa {
+    margin-right: 2px;
+}
+// Components
+
+@import "components/navbar";
+@import "components/card";
+@import "components/badge";
+@import "components/accordion";
+@import "components/CospaceTable";
+
+@import "tt"; // some typeahead. still in use?
+
+.only-loading {
+    display: none;
+}
+
+.loading .only-loading {
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+.form-group.has-error {
+    .form-control {
+        border: 2px #f00 solid;
+    }
+    .help-block {
+        color: #f00;
+    }
+}
+
+.view {
+
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+    padding-bottom: 32px !important;
+
+    @media (min-width: 600px) {
+        padding-right: 24px !important;
+        padding-left: 24px !important;
+    }
+    @media (min-width: 960px) {
+        padding-right: 32px !important;
+        padding-left: 32px !important;
+    }
+
+/*
+    padding: 3rem 60px;
+
+    @media (max-width: 1600px) {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+
+    @media (max-width: 1420px) {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    @media (max-width: 1280px) {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    @media (max-width: 840px) {
+        padding-top: 1rem;
+    }
+    @media (max-width: 420px) {
+        padding-top: 0.5rem;
+    }
+*/
+    a {
+        text-decoration: none;
+    }
+}
+
+.view__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    margin-top: -10px;
+
+    @media (min-width: 840px) { /* TODO fix jump */
+        min-height: 70px;
+    }
+
+    @media (max-width: 840px) {
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .view__title {
+        margin-bottom: 0;
+    }
+
+    .filters {
+        margin-left: auto;
+
+        @media (max-width: 840px) {
+            margin-left: 0;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.static-dom .view__title {
+    font-size: 32px; /* TODO, without view__header wrapper */
+}
+
+.view__title {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3rem;
+    @media (max-width: 840px) {
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    @media (max-width: 840px) {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    @media (max-width: 420px) {
+        font-size: 1rem;
+    }
+
+    > button, > .v-btn {
+        margin-left: 1rem;
+    }
+    > .v-icon, > .v-icon.v-icon {
+        margin-right: 0.5rem;
+        font-size: 2rem;
+
+        @media (max-width: 420px) {
+            font-size: 24px;
+        }
+    }
+}
+
+.px-0 .v-expansion-panel-content__wrap {
+    padding-left: 0;
+    padding-right: 0;
+
+    .v-divider {
+        margin: 0;
+    }
+}
+.v-list a {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.v-card__title {
+
+    > .v-icon {
+        margin-right: 0.5rem;
+    }
+}
+
+.v-expansion-panel-header {
+    > .v-icon {
+        margin-right: 1rem;
+        flex-grow: 0 !important;
+    }
+}

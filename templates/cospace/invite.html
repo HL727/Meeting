@@ -1,0 +1,168 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Visa/skicka inbjudan{% endblock title %}
+
+{% block page_icon %}
+    {% if meeting %}
+        mdi-calendar
+    {% elif cms_user %}
+        mdi-account
+    {% else %}
+        mdi-door-closed
+    {% endif %}
+{% endblock %}
+{% block page_title %}
+    {% if meeting %}
+        {{ meeting.title }}
+    {% elif cms_user %}
+        {{ cms_user.name }}
+    {% else %}
+        {{ cospace.title }}
+    {% endif %}
+{% endblock %}
+{% block page_actions %}
+    {% if cospace %}
+    <div class="v-list-item__icon ma-0 align-self-center">
+        <a class="btn btn-primary btn-sm" href="{{ web_url }}">
+            <span class="fa fa-fw fa-desktop mr-1"></span>
+            {% trans "Delta via webbläsare" %}
+        </a>
+    </div>
+    {% endif %}
+{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+
+{% block breadcrumb %}
+    {% if meeting %}
+            <a href="{% url 'meetings' %}">{% trans "Bokade möten" %}</a>
+    / <a href="{{ meeting.get_debug_details }}">{{ meeting }}</a>
+
+{% elif cms_user %}
+    <a href="{% url 'users' %}">{% trans "Användare" %}</a>
+    / <a href="{% url 'user_details' cms_user.uid %}">{{ cms_user.name }}</a>
+    {% if cms_user.name %}
+         / <strong>{% trans "Skicka uppgifter" %}</strong>
+    {% endif %}
+
+{% else %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    <a href="{{ cospace_url }}">{{ cospace.title }}</a> /
+    <strong>{% trans "Inbjudan" %}</strong>
+    {% endif %}
+{% endblock %}
+
+
+{% block page_content %}
+    {% if invite_sent %}
+        <div class="alert alert-primary"><p>{% trans 'Inbjudan skickades via e-post' %}</p></div>
+    {% endif %}
+
+    {% if cospace %}
+        <div class="row mt-4">
+            <div class="col-12 col-lg-8">
+                <div class="mb-3 message-border">
+                    {% if invite_message %}
+                        {{ invite_message|safe }}
+                    {% else %}
+                        <div class="text-center">{% trans "Kunde inte generera meddelande" %}</div>
+                    {% endif %}
+                </div>
+
+                {% if attachment %}
+                    <div class="alert alert-primary"><p>{% trans "Skickar med bilaga" %}: {{ attachment }}</p></div>
+                {% endif %}
+            </div>
+
+            <div class="col-12 col-lg-4">
+
+                <div class="card card-grey mb-4 card-bottom">
+                    <div class="card-body">
+                        <h5 class="mb-4">{% trans "Uppringningsinformation" %}</h5>
+
+                        <table class="table table-no-top-border table-no-bottom-padding table-text-edge mb-0" id="cospace_list">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="{% trans "SIP" %}" value="{{ dialstring }}">
+                                            <div class="input-group-append">
+                                                <a href="sip:{{ dialstring }}" class="btn btn-outline-primary">{% trans "Anslut via SIP" %}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans "Rumsnummer" %}</td>
+                                    <td class="text-right">{{ cospace.call_id }}</td>
+                                </tr>
+                                {% if cospace.password %}
+                                <tr>
+                                    <td>{% trans "PIN-kod" %}</td>
+                                    <td class="text-right">{{ cospace.password }}</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+             <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-1">{% trans "Välj meddelandemall" %}</h5>
+                        <form>
+                            <div class="input-group">
+
+                                <select name="message_type" class="form-control">
+                                    {% for k, v in meeting_types %}
+                                        <option {% if k == meeting_type %}selected{% endif %} value="{{ k }}">{{ v }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="submit">{% trans "Visa" %}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+             </div>
+
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-1">{% trans "Skicka inbjudan" %}</h5>
+                        <div class="mb-4"><i>{% trans "Skickas från" %} {{ sender_email }}</i></div>
+
+                        <form method="post" class="form mb-0">
+                            {% csrf_token %}
+                            <input type="hidden" name="cospace" value="{{ cospace.cospace }}" />
+                            <input type="hidden" name="form_action" value="invite" />
+
+                            <input name="subject" class="form-control" placeholder="{% trans "Ange rubrik" %}" value="{{ invite_title }}" /><br />
+                            <textarea name="emails" class="form-control" placeholder="{% trans "Ange e-postadresser" %}">{% spaceless %}
+                                {% if cms_user %}{{ cms_user.email }}{% endif %}
+                                {% if initial_email %}{{ initial_email }}{% endif %}
+                        {% endspaceless %}</textarea><br />
+                            <button class="btn btn-primary w-100 mb-3">{% trans "Skicka" %}</button>
+
+                            {% if cms_user %}
+                                <p>
+                                    {% trans "Skickades senast" %}:
+                                    {% if cms_user.ts_instruction_email_sent %}
+                                        {{ cms_user.ts_instruction_email_sent|date:'Y-m-d H:i:s' }}
+                                    {% else %} {% trans "Okänt" %} {% endif %}
+                                </p>
+                            {% endif %}
+                        </form>
+                        <div class="text-center">
+                            ...{% trans "eller skicka med" %} <a href="mailto:?subject={{ invite_title|urlencode }}&amp;body={{ invite_plain|urlencode }}">{% trans "din e-postklient" %}</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock page_content %}

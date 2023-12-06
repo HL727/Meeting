@@ -1,0 +1,209 @@
+.card-grey {
+    background: $gray-200;
+    border: none;
+
+    .card-body {
+        padding-bottom: $card-spacer-y;
+    }
+    .card-footer {
+        background: none;
+        padding: $card-spacer-x;
+        padding-top: 0;
+        border-top: none;
+    }
+}
+.card-shadow {
+    border: none;
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+
+    .card-header {
+        background: none;
+        border: none;
+        padding: $card-spacer-x;
+        padding-bottom: 0;
+    }
+    .card-body {
+        padding-top: $card-spacer-y;
+    }
+    .card-footer {
+        background: none;
+    }
+}
+
+.card-ribbon {
+    .card-header {
+        padding-top: $card-spacer-x;
+    }
+    .card-body {
+        background: #151515;
+        padding-top: $card-spacer-y * .5;
+        padding-bottom: $card-spacer-y * .5;
+
+        > div {
+            display: inline-block;
+            overflow: hidden;
+            margin: 0 0.5rem;
+
+            > span {
+                display: block;
+                float: left;
+                line-height: 1.2;
+                vertical-align: middle;
+                padding: 0.4rem 1rem;
+                text-align: left;
+                opacity:  0.5;
+
+                &:first-child {
+                    font-size: 3rem;
+                    line-height: 1;
+                    padding: 0;
+                    opacity:  1;
+                }
+            }
+        }
+    }
+    .card-footer {
+        padding-bottom: $card-spacer-x;
+    }
+
+    a:hover {
+        color: $white;
+    }
+}
+
+.card-list {
+    .card-header {
+        background: none;
+        //padding-top: $card-spacer-x;
+    }
+    .card-body {
+        position: relative;
+        border-bottom: 1px solid $gray-300;
+        padding-top: $card-spacer-y;
+        padding-bottom: $card-spacer-y;
+        font-size: 1rem;
+
+        padding-left: $card-spacer-x + 2.75rem;
+
+        &:last-child {
+            border: none;
+            //padding-bottom: $card-spacer-x;
+        }
+    }
+    .card-count {
+        position: absolute;
+        top: $card-spacer-y + 0.5rem;
+        left: $card-spacer-x;
+        width: 2rem;
+        height: 2rem;
+        border-radius: $border-radius;
+        font-weight: 700;
+        line-height: 2rem;
+        text-align: center;
+    }
+}
+
+.card-top {
+    position: relative;
+    z-index: 1;
+    border-radius: $border-radius $border-radius 0 0;
+}
+
+.card-bottom {
+    border-radius: 0 0 $border-radius $border-radius;
+}
+
+.card-above {
+    position: relative;
+    z-index: 2;
+}
+
+
+.card-toggle {
+    @include media-breakpoint-down(md) {
+        display: none;
+    }
+}
+#toggleForm {
+    display: none;
+
+    @include media-breakpoint-down(md) {
+        display: block;
+    }
+}
+
+
+.card-baselogin-container {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+
+    @include media-breakpoint-down(md) {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    @include media-breakpoint-down(xs) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+.card-baselogin {
+    width: 100%;
+    max-width: 740px;
+    border: none !important;
+
+    .card-body {
+        padding: 4rem 3rem;
+
+        @include media-breakpoint-down(md) {
+            padding: 4rem 2rem;
+        }
+        @include media-breakpoint-down(xs) {
+            padding: 3rem 1rem;
+
+        }
+    }
+    .card-form {
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+
+        .btn {
+            margin-top: 1rem;
+
+            @include media-breakpoint-down(xs) {
+                margin-top: 0;
+            }
+        }
+    }
+}
+.card-baselogin .form-control {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+    outline: none;
+}
+.card-baselogin .form-control:focus {
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0,0,0,0.35);
+}
+.card-baselogin .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-right: 1px solid rgba(0,0,0,0.15);
+    padding: 2rem;
+
+    @include media-breakpoint-down(xs) {
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        border-radius: 0;
+    }
+}
+.card-baselogin .logo-container.dark {
+    background: #424242;
+    border: none;
+}

@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    build
+  | .mypy-cache
+  | venv
+)/
+'''
+
+[tool.isort]
+profile = "black"

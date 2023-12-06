@@ -1,0 +1,17 @@
+{% extends "setup/base_form.html" %}
+{% load bootstrap3 static i18n %}
+{% block form_title %}{% trans "Lägg till CMS-server" %}{% endblock %}
+
+{% block form_content %}
+    {% if auto_add %}
+        <p><i>{% trans "Mividas Core har hittat potentiella servrar i klustret. Kontrollera om detta är en separat server eller om den redan finns tillagd med ett annat IP-nummer" %}
+    {% endif %}
+
+    {% csrf_token %}
+    {% for f in forms %}
+        {% bootstrap_form f %}
+        {% if not forloop.last %}
+        <hr />
+        {% endif %}
+    {% endfor %}
+{% endblock %}

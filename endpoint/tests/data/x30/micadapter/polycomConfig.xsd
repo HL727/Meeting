@@ -1,0 +1,58 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en">
+<xsd:simpleType name="Enum_SyslogLevel">
+<xsd:restriction base="xsd:string">
+	<xsd:enumeration value="Debug"/>
+	<xsd:enumeration value="Info"/>
+	<xsd:enumeration value="Warning"/>
+	<xsd:enumeration value="Error"/>
+	<xsd:enumeration value="Critical"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="Enum_EncryptionEnable">
+<xsd:restriction base="xsd:string">
+	<xsd:enumeration value="Off"/>
+	<xsd:enumeration value="When_Available"/>
+	<xsd:enumeration value="Required_Video"/>
+	<xsd:enumeration value="Required_All"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="String_0_64">
+<xsd:restriction base="xsd:string">
+	<xsd:minLength value="0"/>
+	<xsd:maxLength value="64"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="String_General">
+<xsd:restriction base="xsd:string">
+	<xsd:minLength value="0"/>
+	<xsd:maxLength value="65535"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="String_1_40">
+<xsd:restriction base="xsd:string">
+	<xsd:minLength value="1"/>
+	<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:attribute name="device.syslog.level" type="Enum_SyslogLevel">
+<xsd:annotation><xsd:documentation>Discard msgs below this level. Translated value passed to syslogd.</xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="call.encryption.requireAES" type="Enum_EncryptionEnable">
+<xsd:annotation><xsd:documentation></xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="device.net.dot1x.enable" type="xsd:boolean">
+<xsd:annotation><xsd:documentation>dot1xenabled</xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="device.net.dot1x.identity" type="String_0_64">
+<xsd:annotation><xsd:documentation>dot1xid</xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="device.net.dot1x.password" type="String_General">
+<xsd:annotation><xsd:documentation>dot1xpwd</xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="sec.TLS.disableVersion1" type="xsd:boolean">
+<xsd:annotation><xsd:documentation></xsd:documentation></xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="device.local.deviceName" type="String_1_40">
+<xsd:annotation><xsd:documentation>name of the system</xsd:documentation></xsd:annotation>
+</xsd:attribute>
+</xsd:schema>

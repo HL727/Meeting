@@ -1,0 +1,30 @@
+{% extends "drf-yasg/swagger-ui.html" %}
+
+{% load i18n %}
+
+{% block extra_styles %}
+    <style>
+    #swagger-ui .topbar {
+        display: none;
+    }
+    #swagger-ui .swagger-ui .info {
+        margin: 25px 0;
+    }
+    </style>
+{% endblock %}
+
+{% block user_context_message %}
+    {% if request.user.is_authenticated %}
+        <div class="hello">
+            <span class="django-session">{% trans "User" %}</span> <span
+                class="label label-primary">{{ request.user }}</span>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block django_logout_message %}
+    Logout
+{% endblock %}
+{% block django_login_message %}
+    Login
+{% endblock %}

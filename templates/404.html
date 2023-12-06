@@ -1,0 +1,27 @@
+{% extends "base_standalone.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block page_body %}
+<div class="full-page">
+    <div class="card border-0 card-shadow">
+        <div class="card-body text-center">
+            <h1>{% trans "404" %}</h1>
+
+            <p class="my-3"><strong>{% trans "Sidan hittas inte" %}</strong></p>
+            <p class="mb-0" style="max-width:420px;">{% trans "Vi hittar inte sidan du söker. Se över sökvägen och försök igen eller kontakta supporten om felet kvarstår." %}</p>
+            <hr class="mt-5 mb-4" />
+            <div class="d-flex">
+                <a href="javascript:window.history.back()" class="btn btn-primary">{% trans "Gå tillbaka" %}</a>
+                <a href="/" class="btn btn-link ml-auto">{% trans "Gå till startsidan" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onpopstate = function(event) { /* fix spa back navigation */
+      window.location.reload()
+    };
+</script>
+{% endblock page_body %}

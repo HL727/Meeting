@@ -1,0 +1,28 @@
+{% extends "base_standalone.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block page_body %}
+<div class="full-page">
+    <div class="card border-0 card-shadow">
+        <div class="card-body text-center">
+            <h1>{% trans "500" %}</h1>
+
+            <p class="my-3"><strong>{% trans "Ett oväntat fel har uppstått" %}</strong></p>
+            <p>{{ message|default:"Vi har blivit notifierade om felet" }}</p>
+            <div class="alert alert-danger mt-4"><pre class="mb-0">{{ title }}</pre></div>
+            <hr class="mt-5 mb-4" />
+            <div class="d-flex">
+                <a href="javascript:window.history.back()" class="btn btn-primary">{% trans "Gå tillbaka" %}</a>
+                <a href="/" class="btn btn-link ml-auto">{% trans "Gå till startsidan" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onpopstate = function(event) { /* fix spa back navigation */
+      window.location.reload()
+    };
+</script>
+{% endblock page_body %}

@@ -1,0 +1,155 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}Hantera webinar{% endblock %}
+
+{% block page_icon %}mdi-door-closed{% endblock %}
+{% block page_title %}{% trans "Mötesrum" %}{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    <strong>{% trans "Webinar" %}</strong>
+{% endblock %}
+
+{% block page_content %}
+    {% if customer %}
+        <div data-vue="CoSpacesTabs"></div>
+        <hr role="separator" aria-orientation="horizontal" class="my-0 v-divider theme--light">
+
+        <div class="row mt-4">
+            <div class="col-12 col-lg-4 order-lg-1">
+                <div class="mb-4">
+                    <div class="card card-toggle card-shadow">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <span class="h5"><span class="fa fa-fw fa-plus"></span> {% trans "Skapa webinar" %}</span>
+                                <div class="float-right d-lg-none">
+                                    <a href="#" class="btn btn-primary-outline btn-sm toggle-form">{% trans "Stäng" %} <span class="fa fa-fw fa-times"></span></a>
+                                </div>
+                            </div>
+
+                            <form method="post">
+                                {% bootstrap_form form %}
+                                <input type="hidden" name="customer" value="{{ customer.pk }}" />
+                                {% csrf_token %}
+                                <button class="btn btn-primary w-100">{% trans "Skapa" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline-primary toggle-form" id="toggleForm">
+                        <span class="fa fa-fw fa-plus"></span>
+                        {% trans "Skapa webinar" %}
+                    </a>
+                    <script>
+                        jQuery(function($) {
+
+                            var $filterButton = $('#toggleForm');
+
+                            $('.toggle-form').on('click', function(e) {
+                                e.preventDefault();
+                                $filterButton.toggle().parent().find('.card').toggle();
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                {% if done %}
+                    <div class="alert alert-success text-center my-4">
+                        {% trans "Webinar skapat!" %}
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>{% trans "URI-namn" %}</th>
+                                    <td class="room-number">{{ meeting.get_preferred_uri }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{% trans "Rums-nr" %}</th>
+                                    <td class="room-number">{{ meeting.provider_ref }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{% trans "PIN-kod" %}</th>
+                                    <td class="{% if meeting.password %}pin-number{% endif %}">{{ meeting.password|default:"Nej" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{% trans "PIN-kod moderator" %}</th>
+                                    <td class="{% if webinar.password %}pin-number{% endif %}">{{ webinar.password|default:"Nej" }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>{% trans "Webblänk" %}</th>
+                                    <td><a target="_blank" href="{{ meeting.join_url }}">{{ meeting.join_url }}</a></td>
+                                </tr>
+                                <tr>
+                                    <th>{% trans "Web moderator" %}</th>
+                                    <td><a target="_blank" href="{{ meeting.join_url }}">{{ meeting.join_url }}</a></td>
+                                </tr>
+                                {% if meeting.h323_uri %}
+                                <tr>
+                                    <th>{% trans "H.323" %}</th>
+                                    <td>{{ meeting.h323_uri }}</td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <th>{% trans "SIP" %}</th>
+                                    <td>{{ meeting.sip_uri }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% elif error %}
+                    <div class="alert alert-danger text-center my-4">
+                        <span class="fa fa-fw fa-exclamation-triangle"></span>
+                        {{ error }} ({{ error.args.1 }})
+                    </div>
+                {% endif %}
+                {% if webinars %}
+                    <table class="table table-striped table-borderless">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Namn/URI" %}</th>
+                                <th>{% trans "Deltagare" %}</th>
+                                <th>{% trans "Moderator" %}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for webinar in webinars %}
+                            <tr>
+                                <td class="room-number">
+                                    {{ webinar.meeting.title }}<br/>
+                                    {{ webinar.meeting.get_preferred_uri }}</td>
+                                <td class="room-number">
+                                    {% trans "Call-ID" %}: {{ webinar.meeting.get_connection_data.provider_ref }}<br />
+                                    <a target="_blank" href="{{ webinar.meeting.join_url }}">{% trans "Webblänk" %}</a><br />
+                                    {% trans "PIN" %}: {{ webinar.meeting.get_connection_data.password|default:"Nej" }}
+
+                                </td>
+                                <td class="room-number">
+                                    {% trans "Call-ID" %} {{ webinar.get_moderator_meeting.get_connection_data.provider_ref }}<br />
+                                    <a target="_blank" href="{{ webinar.get_moderator_meeting.join_url }}">{% trans "Webblänk" %}</a><br />
+                                    {% trans "PIN" %}: {{ webinar.get_moderator_meeting.get_connection_data.password|default:"Nej" }}
+                                </td>
+                                <td><form method="post">
+                                <input type="hidden" name="customer" value="{{ customer.pk }}" />
+
+                                {% csrf_token %}
+                                <button class="btn btn-danger" value="{{ webinar.meeting.pk }}" name="unbook">{% trans "Avboka" %}</button>
+                                </form></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-primary text-center my-4">{% trans "Inga webinar för tillfället" %}</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock page_content %}

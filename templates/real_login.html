@@ -1,0 +1,48 @@
+{% extends "base_standalone.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block page_body %}
+<div class="full-page card-baselogin-container">
+    <div class="card card-shadow card-baselogin">
+
+        {% if theme.logo_image %}
+        <div class="row no-gutters">
+            <div class="col-12 col-sm-6 logo-container {% if theme.dark_mode %}dark{% endif %}">
+                <div>
+                {% block logo %}
+                    <img src="{{ theme.logo_image }}" alt="" style="width:100%;max-width:240px;" />
+                {% endblock %}
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+        {% endif %}
+                <div class="card-body">
+                    <div class="card-form">
+                        <h1 class="h4 font-weight-bold">{% trans "Logga in" %}</h1>
+                        <p>{% trans "Fyll i dina uppgifter och klicka på logga in nedan för att komma vidare." %}</p>
+
+                        {% if form.is_bound and not form.is_valid %}
+                        <div class="alert alert-danger">
+                            {% trans "Inloggningen misslyckades" %}
+                        </div>
+
+                        {% endif %}
+                        <form action="{% url 'login' %}?next={{ next }}" method="post" role="form" class="form mb-0 mt-4">
+                            {% csrf_token %}
+                            {% bootstrap_field form.username show_label=False %}
+                            {% bootstrap_field form.password show_label=False %}
+                            <button type="submit" class="btn btn-primary px-4">
+                                {% trans "Logga in" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+        {% if theme.logo_image %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock page_body %}

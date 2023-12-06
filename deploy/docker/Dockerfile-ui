@@ -1,0 +1,54 @@
+FROM node:12 AS mividas-core-js-base
+
+ENV DOCKER_CONTAINER 1
+ENV NODE_PATH=/node_modules
+
+WORKDIR /code/
+
+RUN groupadd mividas && useradd -g mividas -ms /bin/bash mividas && \
+    mkdir -p /node_modules/ /code/ && chown mividas.mividas /node_modules/ /code/
+
+USER mividas
+
+# Npm install
+COPY --chown=mividas.mividas package.json package-lock.json /code/
+RUN npm ci
+
+# Copy files
+FROM mividas-core-js-base AS js-code
+
+COPY vue.config.js /code/
+COPY js-ui/ /code/js-ui/
+
+# UI test
+FROM js-code AS mividas-core-ui-test
+
+#RUN npm install npx
+COPY .eslint* /code/
+
+# Build UI
+FROM js-code AS js-ui
+
+RUN npm run build \
+    && for x in app chunk-vendors; do \
+        mv /code/static/dist/js/$x.*.js /code/static/dist/js/$x.js \
+        && mv /code/static/dist/css/$x.*.css /code/static/dist/css/$x.css \
+    ; done
+
+# Cleanup
+FROM js-ui AS cleanup
+RUN find /code/static/dist -name '*.map' -delete
+
+FROM cleanup AS mividas-core-ui-vulnscan
+COPY --from=aquasec/trivy:latest /usr/local/bin/trivy /usr/local/bin/trivy
+USER root
+ARG TRIVY_FAIL=1
+ENV TRIVY_SKIP_FILES=/usr/local/bin/trivy,/opt/venv/lib/python3.8/site-packages/slapdtest/certs/server.key,/opt/venv/lib/python3.8/site-packages/slapdtest/certs/client.key
+RUN trivy rootfs --no-progress --format json --output "/gl-container-scanning-report.json" /
+RUN trivy rootfs --no-progress /
+RUN trivy rootfs --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed --no-progress /
+
+# Build new nginx container
+FROM nginx AS mividas-core-build-js
+COPY --from=cleanup /code/static/dist/ /usr/share/nginx/html/site_media/static/dist/
+

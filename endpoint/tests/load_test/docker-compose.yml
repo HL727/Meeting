@@ -1,0 +1,40 @@
+version: '3.6'
+
+services:
+
+  web:
+    image: ${REGISTRY_BASE:-registry.mividas.com/mividas-tools}/endpoint-simulator:${COMPONENT_VERSION:-latest}
+
+    restart: always
+    deploy:
+      restart_policy:
+        condition: any
+      update_config:
+        order: start-first
+        failure_action: continue
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=web"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.services.${SERVICE_PREFIX:-endpoint_simulator}_web.loadbalancer.server.port=8087"
+
+      - "traefik.http.routers.${SERVICE_PREFIX:-endpoint_simulator}_web.rule=HostRegexp(`{subdomain:[A-z0-9]+}.${MAIN_HOSTNAME}`, `${MAIN_HOSTNAME}`)"
+      - "traefik.http.routers.${SERVICE_PREFIX:-endpoint_simulator}_web.tls=true"
+      - "traefik.http.routers.${SERVICE_PREFIX:-endpoint_simulator}_web.tls.certResolver=${MAIN_HOSTNAME_CERTRESOLVER}"
+      - "traefik.http.routers.${SERVICE_PREFIX:-endpoint_simulator}_web.middlewares=${SERVICE_PREFIX:-endpoint_simulator}_web-compress"
+      - "traefik.http.middlewares.${SERVICE_PREFIX:-endpoint_simulator}_web-compress.compress=true"
+
+    networks:
+      - default
+      - traefik
+
+    environment:
+      - ENV_HASH  # force reload in case of volume mount of env
+
+    expose:
+      - 8087
+
+networks:
+    traefik:
+        external: true

@@ -1,0 +1,56 @@
+.page-content {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 100px;
+}
+.page-footer {
+    background: $gray-900 url(../images/header-background.svg) center center;
+    background-size: 600px 600px;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+    padding: 2rem 0;
+}
+.container-fluid {
+    max-width: 100rem;
+
+    padding-left: 5rem;
+    padding-right: 5rem;
+
+    @include media-breakpoint-down(lg) {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    @include media-breakpoint-down(xs) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    &--start {
+        margin-top: -5.25rem;
+        padding-bottom: 2rem;
+
+        @include media-breakpoint-down(md) {
+            padding-bottom: 1.5rem;
+        }
+        @include media-breakpoint-down(xs) {
+            padding-bottom: 1rem;
+        }
+    }
+
+    &--padding {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+
+        @include media-breakpoint-down(md) {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        @include media-breakpoint-down(xs) {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+    }
+}

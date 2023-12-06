@@ -1,0 +1,60 @@
+{% extends "setup/base_form.html" %}
+{% load i18n bootstrap3 %}
+{% block form_title %}{% trans "Lägg till EWS-koppling" %}{% endblock %}
+
+{% block content %}
+    <div class="card card-settings" style="max-width: 800px;">
+        <form action="{{ request.path }}?next={{ next }}" method="post" role="form" class="form mb-0">
+            <div class="card-header">
+                <h3 class="mb-0">{% trans "EWS-server" %} - {{ customer }}</h3>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-danger my-4">
+                <strong>{% trans "Fel" %}</strong>: {{ error }}
+            </div>
+            {% elif form.errors %}
+                {% bootstrap_form_errors form error_types='all' %} {# TODO remove error_types='all' when fields are marked inline #}
+            {% endif %}
+
+            <div class="card-body pb-0">
+                <p>
+                    <strong>{% trans "Inloggning via" %}:</strong>
+                    {% if oauth %}
+                    OAuth <a href="{% url 'onboard_ews' %}">{% trans "ändra till Basic Auth" %}</a>
+                    {% else %}
+                    Basic Auth <a href="{% url 'onboard_ews_oauth' %}">{% trans "ändra till OAuth" %}</a>
+                    {% endif %}
+                </p>
+
+                {% if oauth %}
+                <div class="border pa-4 mb-5">
+                    <h5>{% trans "Instruktioner" %}</h5>
+                    <ol class="mb-0">
+                        <li>{% trans "Logga in på Office 365 &gt; Admin. Gå till Azure Active Directory" %}</li>
+                        <li>{% trans "Välj App registrations" %}
+                            [<a target="_blank" href="https://aad.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps">{% trans "Länk" %}</a>]
+                        </li>
+                        <li>{% trans "Skapa en ny appregistrering. Låt checkrutan vid single tenant vara kvar, och ange följande adress som Redirect URI (typ Web)" %}<br />
+                            <input class="form-control" value="{{ callback_url }}" />
+                        </li>
+                        <li>{% trans "Fyll i Application (Client) ID samt Directory (Tenant) ID nedan" %}</li>
+                        <li>{% trans "Gå till Certificates and Secrets-menyn och välj skapa ny. Välj 'aldrig' som expiry. Kopiera nyckeln och klistra in nedan, du kommer inte kunna få visa den igen." %}</li>
+                    </ol>
+                </div>
+                {% endif %}
+
+                {% csrf_token %}
+                {% bootstrap_form form %}
+            </div>
+            <div class="card-footer">
+                <div class="d-flex align-items-center">
+                    <button type="submit" class="btn btn-primary">
+                        {% trans "Gå vidare" %}
+                    </button>
+                    <a href="{% url 'cloud_dashboard_epm' %}" class="ml-auto">{% trans "Avbryt" %}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

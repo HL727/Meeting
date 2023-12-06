@@ -1,0 +1,118 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block title %}Redigera standardmeddelanden{% endblock %}
+
+{% block page_icon %}mdi-email-box{% endblock %}
+{% block page_title_outer %}
+    <h1>
+        {% if customer %}
+            {{ customer }}
+        {% else %}
+            {% trans "Standard-meddelanden" %}
+        {% endif %}
+    </h1>
+{% endblock %}
+{% block page_actions %}
+    {% if customers|length > 1 %}
+        {% if customer %}
+        <div class="v-list-item__icon ma-0 align-self-center">
+            <a class="btn btn-outline-secondary btn-sm ml-2" href="{% url "list_messages" "default" %}">{% trans "Standard-meddelanden" %}</a>
+        </div>
+        {% endif %}
+        <div class="v-list-item__icon ma-0 align-self-center">
+            <a class="btn btn-outline-secondary btn-sm ml-2" href="{% url "list_customers" %}">{% trans "Kunder" %}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+{% block page_content %}
+
+    {% if error %}
+        <div class="alert alert-danger mt-4">{{ error }}</div>
+    {% elif updated %}
+        <div class="alert alert-success mt-4">{% trans "Ändringarna är uppdaterade!" %}</div>
+    {% endif %}
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>{% trans "Typ av meddelande" %}</th>
+                <th>{% trans "Beskrivning" %}</th>
+                <th>{% trans "Använd standard" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>
+                    <a href="{% url 'update_single_message' customer_id message.pk %}">{{ message.type_title }}</a>
+                </td>
+                <td>
+                    <p class="desc">{{ message.type_description }}</p>
+                </td>
+                <td>
+                    {% if not message.active %}<span class="fa fa-check"></span>{% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary" href="{% url 'update_single_message' customer_id message.pk %}">{% trans "redigera" %}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" class="text-right">
+                    <a class="btn btn-outline-primary ml-auto" href="{% url 'update_messages' customer_id %}">{% trans "redigera alla" %}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if user.is_staff and strings %}
+    <form action="{{ request.path }}" method="post" role="form" enctype="multipart/form-data" >
+        {% csrf_token %}
+
+        <hr />
+
+        {% if strings %}
+            <h2>{% trans "Textsträngar i gränssnitt" %}</h2>
+        {% endif %}
+        {% for string in strings %}
+            <div>
+                <h3>{{ string.type_title }}</h3>
+                {% if customer %}
+                    <input type="checkbox" name="default_string{{ string.pk }}" id="active_string{{ string.pk }}" {% if not string.active %}checked="checked"{% endif %}
+onchange="
+jQuery(this.parentNode).find('.toggle').toggle(!this.checked)
+      "
+      />
+                    <label for="active_string{{ string.pk }}" >{% trans "Använd standardmeddelande" %}</label>
+                    {% if not string.active %}
+                        <div style="display: none" class="toggle">
+                    {% else %}
+                        <div class="toggle">
+                    {% endif %}
+                {% endif %}
+
+                <div class="form-group">
+                    <input name="string_title" id="str_title{{ forloop.counter }}" class="form-control"  value="{{ string.title }}" />
+                    <label for="string_title{{ forloop.counter }}">{{ string.type_description }}</label>
+                </div>
+                <input type="hidden" name="string_id" value="{{ string.pk }}" />
+
+                {% if customer %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% buttons %}
+            <button class="btn btn-primary">{% trans "Spara" %}</button>
+        {% endbuttons %}
+    </form>
+    {% endif %} {# /is_staff #}
+
+{% endblock page_content %}

@@ -1,0 +1,15 @@
+{% if error %}
+    <div class="alert alert-danger page-notification">{{ error }}</div>
+{% elif message %}
+    <div class="alert alert-success page-notification">{{ message }}</div>
+{% endif %}
+
+{% if error or message %}
+    <script>
+        jQuery(function ($) {
+            setTimeout(function() {
+                $('.page-notification').slideUp();
+            }, 2000);
+        });
+    </script>
+{% endif %}

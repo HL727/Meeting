@@ -1,0 +1,128 @@
+stages:
+  - test
+  - build
+  - cleanup
+
+
+.docker-before: &docker-before
+  - ( [ -z "$DOCKER_AUTH_CONFIG" ] || (mkdir -p $HOME/.docker ; echo "$DOCKER_AUTH_CONFIG" > $HOME/.docker/config.json ))
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+.docker-base: &docker-base
+  #services:
+  #- docker:dind
+  image: docker:latest
+  cache:
+    paths:
+      - scripts/sentry-cli
+  artifacts:
+    when: always
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+
+  coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
+
+  before_script:
+    - *docker-before
+
+lint:
+  <<: *docker-base
+  stage: test
+  before_script:
+    - *docker-before
+    - sh deploy/docker_tests.sh build
+  script:
+    - NOBUILD=1 sh deploy/docker_tests.sh lint
+  allow_failure: true
+
+test:
+  <<: *docker-base
+  stage: test
+  artifacts:
+    when: always
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+      junit: xunit.xml
+  before_script:
+    - *docker-before
+    - sh deploy/docker_tests.sh build
+  script:
+    - NOBUILD=1 sh deploy/docker_tests.sh migrate &
+    - NOBUILD=1 sh deploy/docker_tests.sh test
+    - wait
+  allow_failure: true
+
+check_security:
+  <<: *docker-base
+  stage: test
+  artifacts:
+    when: always
+    paths:
+      - trivy-scanning-report-backend.json
+      - trivy-scanning-report-ui.json
+  before_script:
+    - *docker-before
+    - sh deploy/docker_tests.sh build
+  script:
+    - NOBUILD=1 sh deploy/docker_tests.sh security || true  # FIXME
+
+test_exchange:
+  <<: *docker-base
+  stage: test
+  artifacts:
+    reports:
+      junit: xunit.xml
+  before_script:
+    - *docker-before
+    - sh deploy/docker_tests.sh build
+  script:
+    - NOBUILD=1 sh deploy/docker_tests.sh exchange
+  when: manual
+  allow_failure: true  # Too many external dependencies that can break to create any value otherwise
+
+
+docker-build:
+  <<: *docker-base
+  stage: build
+  except:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+/
+
+  script:
+    - sh deploy/build_docker.sh
+    - sh deploy/sentry_tag.sh || true
+    - sh deploy/push_docker.sh "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_PASSWORD" "${CI_COMMIT_BRANCH:-$CI_COMMIT_TAG}" $CI_REGISTRY_USER
+
+    # push base images:
+    - export IMG="$CI_REGISTRY_IMAGE"/mividas-core-base:"${CI_COMMIT_BRANCH:-$CI_COMMIT_TAG}" ; ( docker tag mividas-core-base:$CI_JOB_ID "$IMG" && docker push "$IMG" ) || true
+    - export IMG="$CI_REGISTRY_IMAGE"/mividas-core-js-base:"${CI_COMMIT_BRANCH:-$CI_COMMIT_TAG}" ; ( docker tag mividas-core-js-base:$CI_JOB_ID "$IMG" && docker push "$IMG" ) || true
+
+deploy-prod:
+  <<: *docker-base
+  stage: build
+  environment: PROD
+  only:
+    - /^___DISABLE___v[0-9]+\.[0-9]+\.[0-9]+/
+  except:
+    - branches
+
+  script:
+          - if [ -z "$REPOSITORY_BASE" ] ; then echo 'Set REPOSITORY_{BASE,USER,PASSWORD}'; exit 1; fi
+          - sh deploy/build_docker.sh
+          - docker run --rm -e DATABASE_URL=sqlite:////tmp/test.db mividas-core:$CI_JOB_ID python manage.py upgrade_installation -v0
+          - sh deploy/sentry_tag.sh || true
+          - sh deploy/push_docker.sh "$REPOSITORY_BASE" "$REPOSITORY_PASSWORD" "${CI_COMMIT_TAG#v}" "$REPOSITORY_USER"
+
+
+cleanup_job:
+  image: docker:latest
+  stage: cleanup
+  script:
+    - docker rm -f mividas-core-test-$CI_JOB_ID || true
+    - docker image rm -f \
+      mividas-core-test:$CI_JOB_ID mividas-core-ui-test:$CI_JOB_ID mividas-core-js-all:$CI_JOB_ID \
+      || true
+  when: always

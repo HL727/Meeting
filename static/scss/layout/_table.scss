@@ -1,0 +1,29 @@
+.table-no-top-border {
+    tbody > tr:first-child > td {
+        border: none;
+        padding-top: 0;
+    }
+}
+
+.table-text-edge {
+    tr > td, tr > th {
+        &:first-child {
+            padding-left: 0;
+        }
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+}
+
+.table-no-bottom-padding {
+    tr:last-child > td {
+        padding-bottom: 0;
+    }
+}
+
+.table-top-border {
+    tr:first-child td {
+        border-top: 1px solid $gray-300;
+    }
+}

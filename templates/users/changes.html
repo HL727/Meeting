@@ -1,0 +1,153 @@
+{% extends "base_vuetifyed.html" %}
+
+{% load bootstrap3 static i18n %}
+
+{% block extra_head %}
+   {{ block.super }}
+   <link rel="stylesheet" href="{% static "css/datatables.min.css" %}" />
+{% endblock extra_head %}
+
+{% block title %}Spåra ändringar{% endblock %}
+
+{% block page_icon %}mdi-account-multiple{% endblock %}
+{% block page_title %}{% trans "Användare" %}{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'users' %}">{% trans "Användare" %}</a> /
+    <strong>{% trans "Spåra ändringar" %}</strong>
+{% endblock %}
+
+{% block page_content %}
+    <script src="{% static "js/datatables.min.js" %}"></script>
+
+    <div data-vue="UserTabs"></div>
+    <hr role="separator" aria-orientation="horizontal" class="my-0 v-divider theme--light">
+
+    <div class="row mt-4">
+        <div class="col-12 col-lg-4 order-lg-1">
+            <div class="mb-4">
+                <div class="card card-toggle card-shadow">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <span class="h5"><span class="fa fa-fw fa-filter"></span> {% trans "Filtera ändringar" %}</span>
+                            <div class="float-right d-lg-none">
+                                <a href="#" class="btn btn-primary-outline btn-sm toggle-form">{% trans "Stäng" %} <span class="fa fa-fw fa-times"></span></a>
+                            </div>
+                        </div>
+
+                        <form onsubmit="jQuery(this).addClass('loading')">
+                            {% bootstrap_form form %}
+                            <button class="btn btn-primary w-100">{% trans "Filtrera" %} <span class="fa fa-circle-notch fa-spin fa-fw only-loading" /></button>
+                        </form>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline-primary toggle-form" id="toggleForm">
+                    <span class="fa fa-fw fa-filter"></span>
+                    {% trans "Filtera" %}
+                </a>
+                <script>
+                    jQuery(function($) {
+
+                        var $filterButton = $('#toggleForm');
+
+                        $('.toggle-form').on('click', function(e) {
+                            e.preventDefault();
+                            $filterButton.toggle().parent().find('.card').toggle();
+                        });
+                    });
+                </script>
+
+                {% if form.is_valid %}
+                <div class="card card-toggle card-shadow">
+                    <div class="card-body">
+                        <p><a class="btn btn-secondary w-100" href="?{{ request.META.QUERY_STRING }}&amp;excel_export=1" target="_blank">{% trans "Ladda ner Excel-rapport" %}</a></p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs my-4" role="tablist">
+                    <li role="presentation" class="nav-item">
+                        <a href="#tab-additions" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">{% trans "Nya användare" %}</a>
+                    </li>
+
+                    <li role="presentation" class="nav-item">
+                        <a href="#tab-removals" aria-controls="home" role="tab" data-toggle="tab" class="nav-link">{% trans "Borttagna användare" %}</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="tab-additions">
+                        {% if additions %}
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Användarnamn" %}</th>
+                                    <th>{% trans "LDAP-användarnamn" %}</th>
+                                    <th>{% trans "Skapades" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for object in additions %}
+                                    <tr>
+                                        <td>
+                                            {{ object.username }}
+                                        </td>
+                                        <td>{{ object.ldap_username }}</td>
+                                        <td>{{ object.ts_created|date:"Y-m-d" }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>{{ additions|length }} st</th>
+                                    <th></th>
+                                    <th></th>
+                                </tfoot>
+                            </table>
+                        {% else %}
+                            {% trans "Hittade inga resultat" %}
+                        {% endif %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tab-removals">
+                        {% if removals %}
+                            <table class="table ">
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Användarnamn" %}</th>
+                                    <th>{% trans "LDAP-användarnamn" %}</th>
+                                    <th>{% trans "Senaste synk" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for object in removals %}
+                                    <tr>
+                                        <td>
+                                            {{ object.username }}
+                                        </td>
+                                        <td>{{ object.ldap_username }}</td>
+                                        <td>{{ object.last_synced|date:"Y-m-d" }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>{{ removals|length }} st</th>
+                                    <th></th>
+                                    <th></th>
+                                </tfoot>
+                            </table>
+                        {% else %}
+                            {% trans "Hittade inga resultat" %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
+

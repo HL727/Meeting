@@ -1,0 +1,243 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{% trans "Hantera tenants" %}{% endblock %}
+
+{% block page_icon %}mdi-domain{% endblock %}
+{% block page_title %}
+    {% trans "Hantera tenants" %}
+{% endblock %}
+{% block page_search_filter %}{% endblock %}
+
+{% block breadcrumb %}<strong>{% trans "Tenants" %}</strong>{% endblock %}
+
+{% block page_content %}
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        {% if customer %}
+        <form method="post">
+            <h4 class="mb-4">{% trans "Skapa tenant" %}</h4>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary">{% trans "Lägg till" %}</button>
+        </form>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-4">{% trans "Tenant synk" %}</h4>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form sync_form %}
+                    <button type="submit" name="post_action" value="sync" class="btn btn-outline-primary">
+                        {% trans "Synka befintliga tenants" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="post"> <!-- global form -->
+
+    {% csrf_token %}
+{% if tenants %}
+
+<h2>{% trans "Tenants" %}</h2>
+
+<div style="overflow: scroll; width: 100%;">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "Namn" %}</th>
+            <th>{% trans "ID" %}</th>
+            <th>{% trans "Grupp" %}</th>
+            <th>{% trans "Call branding" %}</th>
+            <th>{% trans "IVR branding" %}</th>
+            <th>{% trans "Kunder" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for tenant, customers, ad_query, ldapsource in tenants %}
+        <tr>
+            <td><input type="checkbox" name="tenant" value="{{ tenant.id }}" /></td>
+            <td>{{ tenant.name }}</td>
+            <td>{{ tenant.id }}</td>
+            <td>{{ tenant.tenant_group }}</td>
+            <td><a href="#call{{ tenant.call_branding_profile }}">{{ tenant.call_branding_profile }}</a></td>
+            <td><a href="#ivr{{ tenant.ivr_branding_profile }}">{{ tenant.ivr_branding_profile }}</a></td>
+            <td>{% for customer in customers %}
+                {{ customer }}
+            {% endfor %}</td>
+            <td>
+                {% if perms.provider.api_client %}
+                <a href="{% url 'rest_client' %}?url=tenants/{{ tenant.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h2>{% trans "Call brandings" %}</h2>
+
+<div style="overflow: scroll; width: 100%;">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "ID" %}</th>
+            <th>{% trans "URL" %}</th>
+            <th>{% trans "Invite" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for profile in callbrandings %}
+        <tr id="call{{profile.id}}">
+            <td><input type="checkbox" name="callbranding" value="{{ profile.id }}" /></td>
+            <td>{{ profile.id }}</td>
+            <td>{{ profile.location }}</td>
+            <td>{{ profile.invite }}</td>
+            <td>
+                {% if perms.provider.api_client %}
+                <a href="{% url 'rest_client' %}?url=callBrandingProfiles/{{ profile.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h2>{% trans "IVR brandings" %}</h2>
+<div style="overflow: scroll; width: 100%;">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "ID" %}</th>
+            <th>{% trans "URL" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for profile in ivrbrandings %}
+        <tr id="ivr{{profile.id}}">
+            <td><input type="checkbox" name="ivrbranding" value="{{ profile.id }}" /></td>
+            <td>{{ profile.id }}</td>
+            <td>{{ profile.location }}</td>
+            <td>
+                {% if perms.provider.api_client %}
+                <a href="{% url 'rest_client' %}?url=ivrBrandingProfiles/{{ profile.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<h2>{% trans "System profiles" %}</h2>
+<div style="overflow: scroll; width: 100%;">
+<table class="table table-striped">
+    <tbody>
+        {% for k, v in systemprofiles.items %}
+        <tr>
+            <td>{{ k }}</td>
+            <td>{{ v }}</td>
+            <td>
+                {% if perms.provider.api_client %}
+                <a href="{% url 'rest_client' %}?url={{ k }}/{{ profile.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+
+
+<h2>{% trans "LDAP Sources" %}</h2>
+<div style="overflow: scroll; width: 100%;">
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "tenant" %}</th>
+            <th>{% trans "base dn" %}</th>
+            <th>{% trans "filter nuvarande" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for tenant, customers, ad_query, ldapsource in tenants %}
+        <tr>
+            <td><input type="checkbox" name="ldapsource" value="{{ tenant.id }}" /></td>
+            <td>{{ tenant.name }}<br />{{ tenant.id }}</td>
+            <td>{{ ldapsource.base_dn }}</td>
+            {% if ad_query != current and request.GET.old %}
+            <td><pre class="bg-danger">{{ ldapsource.filter }}</pre><pre>{{ ad_query }}</pre></td>
+            {% else %}
+            <td><pre>{{ ldapsource.filter }}</pre>
+            {% endif %}
+            <td>
+                {% if perms.provider.api_client and ldapsource %}
+                <a href="{% url 'rest_client' %}?url=ldapSources/{{ ldapsource.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% if ldapsources %}
+        <tr>
+            <td colspan="4"><strong>{% trans "Övriga nuvarande värden" %}:</strong></td>
+        </tr>
+        {% for source in ldapsources %}
+        <tr id="source{{source.id}}">
+            <td><input type="checkbox" name="ldapsource" value="{{ source.id }}" /></td>
+            <td>{{ source.tenant }}</td>
+            <td>{{ source.base_dn }}</td>
+            <td><pre>{{ source.filter }}</pre></td>
+            <td>
+                {% if perms.provider.api_client %}
+                <a href="{% url 'rest_client' %}?url=ldapSources/{{ source.id }}&amp;customer={{ customer.pk }}" class="btn btn-outline-secondary">{% trans "API" %}</a>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+        {% endif %}
+
+    </tbody>
+</table>
+</div>
+
+    {% if request.GET.old %}
+<h2>{% trans "Default AD-query" %}</h2>
+<i>{% trans "Måste ändras manuellt i webbgränssnitt" %}</i>
+<pre>{{ default_ad }}</pre>
+    {% endif %}
+
+
+<button class="btn btn-danger" onclick="return confirm('Säker? Detta går inte att ångra')" name="post_action" value="remove">{% trans "Ta bort markerade" %}</button>
+</form>
+
+
+{% endif %}
+
+{% endblock page_content %}

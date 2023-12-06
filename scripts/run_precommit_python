@@ -1,0 +1,73 @@
+#!/bin/env python3
+import re
+import sys
+from os import environ, path
+from subprocess import call, check_output
+
+
+def get_precommit_install_python_path():
+    """Get python interpreter set when installing pre-commit hook"""
+    git_dir = check_output(["git", "rev-parse", "--git-dir"], encoding='utf-8').strip()
+
+    with open(path.join(git_dir, "hooks", "pre-commit"), 'rt') as fd:
+        pre_commit_script = fd.read()
+
+    installpython_path = re.search(r'INSTALL_PYTHON ?= ?(.*)', pre_commit_script)
+    return installpython_path.group(1).strip(' \'"')
+
+
+def parse_env(args):
+    """Allow passing environment variables to script by using -e VAR=123 or -e VAR=123"""
+
+    env = {**environ}
+
+    def _set(env_arg):
+        if "=" in env_arg:
+            key, value = env_arg.split("=", 1)
+        else:
+            key = env_arg
+            value = ""
+        env[key] = value
+
+    result_args = [*args]
+    split_arg = None
+
+    while result_args:
+        arg = result_args.pop(0)
+
+        if split_arg:
+            _set(arg)
+            split_arg = False
+        elif arg == "-e":
+            split_arg = True
+        elif arg.startswith("-e"):
+            _set(arg[2:].lstrip())
+        else:
+            result_args.insert(0, arg)
+            break
+
+    return result_args, env
+
+
+def run(args):
+    """Run script in virtualenv"""
+
+    try:
+        python = get_precommit_install_python_path()
+    except (AttributeError, OSError):
+        print(
+            "Could not parse pre-commit script to determinate python interpreter"
+            ", using global python shell",
+            file=sys.stderr,
+        )
+        python = 'python'
+
+    args, env = parse_env(args)
+    if not args:
+        print('No script arguments. Exiting', file=sys.stderr)
+        sys.exit(1)
+    return call([python, *args], env=env)
+
+
+if __name__ == "__main__":
+    run(sys.argv[1:])

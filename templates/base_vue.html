@@ -1,0 +1,8 @@
+{% extends "base_real.html" %}
+
+{% block outer_content %}
+
+    <div id="app" data-url="{{ request.get_full_path }}" data-csrftoken="{{ csrf_token }}">
+    </div>
+
+{% endblock outer_content %}

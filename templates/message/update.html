@@ -1,0 +1,247 @@
+{% extends "base_vuetifyed.html" %}
+
+
+
+{% load bootstrap3 static i18n %}
+
+{% block title %}Redigera standardmeddelanden{% endblock %}
+
+{% block page_icon %}mdi-email-box{% endblock %}
+{% block page_title %}{% if customer %}{{ customer }}{% else %}Standard-meddelanden{% endif %}{% endblock %}
+
+{% block page_search_filter %}{% endblock %}
+
+{% block page_content %}
+
+    <script src="{% static "js/tinymce/tinymce.min.js" %}?4.9.6"></script>
+
+<div class="row mt-4">
+  <div class="col-md-8">
+    {% if error %}
+        <div class="alert alert-danger mt-4">{{ error }}</div>
+    {% elif updated %}
+        <div class="alert alert-success mt-4">{% trans "Ändringarna är uppdaterade!" %}</div>
+    {% elif customer %}
+        <div class="alert alert-info mt-4">
+            {% trans "Lämna ett meddelande tomt för att återställa till standardmeddelandet" %}
+        </div>
+    {% endif %}
+
+    <form action="{{ request.path }}" method="post" role="form" enctype="multipart/form-data" >
+      {% csrf_token %}
+      {% for message in messages %}
+      <div class="message-container">
+        <h2>{{ message.type_title }}</h2>
+        <p class="desc">{{ message.type_description }}</p>
+
+        {% if customer %}
+        <input type="checkbox" name="default_message{{ message.pk }}" id="active_message{{ message.pk }}" {% if not message.active %}checked="checked"{% endif %}
+        onchange="
+        jQuery(this.parentNode).find('.toggle').toggle(!this.checked)
+        "
+        /> <label for="active_message{{ message.pk }}" >{% trans "Använd standardmeddelande" %}</label>
+
+        <div {% if not message.active %}style="display: none;" {% endif %} class="toggle">
+        {% endif %}
+
+            <div class="form-group"
+            >
+            <label for="title{{ forloop.counter }}">{% trans "Rubrik" %}</label>
+
+            <input name="message_title" id="title{{ forloop.counter }}" class="form-control"  value="{{ message.title }}" />
+        </div>
+        <input type="hidden" name="message_id" value="{{ message.pk }}" />
+        <div class="form-group">
+            {# alternatives #}
+            {% if message.get_default_alternatives %}
+            <strong>{% trans "Fördefinerade alternativ" %}:</strong>
+            <div>
+              {% for alt in message.get_default_alternatives %}
+              <a class="btn btn-outline-secondary default-msg" data-url="{{ alt.get_absolute_url }}">{{ alt.title }}</a >
+              {% endfor %}
+          </div>
+          {% endif %}
+
+          {# editor #}
+          <label for="message{{ forloop.counter }}">{% trans "Meddelande" %}</label>
+          <textarea id="message{{ forloop.counter }}" class="form-control {% if not message.is_plain_text %}wysiwyg{% endif %}"  rows="20" name="message_content">{{ message.content }}</textarea>
+
+          {% if message.has_url %}
+          URL: <a href="{{ base_url }}{{ message.get_absolute_url }}">{{ base_url }}{{ message.get_absolute_url }}</a>
+          {% endif %}
+      </div>
+      {% if message.has_attachment and message.attachment %}
+      <div class="form-group">
+        <label for="attachment{{ forloop.counter }}">{% trans "Bilaga, ex. manual eller instruktioner" %}</label>
+        {% if message.attachment %}
+        <p>{% trans "Nuvarande" %}: {{ message.attachment }}</p>
+        <p><label>{% trans "Ta bort" %} <input type="checkbox" name="delete_attachment_{{ message.pk }}" value="1"/></label>
+        <b>Note: This will permanently remove access to the attachment function due to depreciation</b></p>
+        {% trans "Ladda upp ny" %}:
+        {% endif %}
+        <input type="file" name="attachment_{{ message.pk }}" id="attachment{{ forloop.counter }}" />
+        <div>{% trans "Max 5 MB, filformat:" %} pdf, doc, docx, html, odt, odp, ppt</div>
+    </div>
+    {% endif %}
+</div>
+
+{% if customer %}
+</div>
+{% endif %}
+
+{% endfor %}
+
+{% if user.is_staff %}
+<hr />
+
+{% if strings %}
+<h2>{% trans "Textsträngar i gränssnitt" %}</h2>
+{% endif %}
+{% for string in strings %}
+<div>
+    <h3>{{ string.type_title }}</h3>
+
+    {% if customer %}
+    <input type="checkbox" name="default_string{{ string.pk }}" id="active_string{{ string.pk }}" {% if not string.active %}checked="checked"{% endif %}
+    onchange="
+    jQuery(this.parentNode).find('.toggle').toggle(!this.checked)
+    "
+    /> <label for="active_string{{ string.pk }}" >{% trans "Använd standardmeddelande" %}</label>
+    <div {% if not string.active %}style="display: none;" {% endif %} class="toggle">
+
+        {% endif %}
+
+        <div class="form-group">
+          <input name="string_title" id="str_title{{ forloop.counter }}" class="form-control"  value="{{ string.title }}" />
+          <label for="string_title{{ forloop.counter }}">{{ string.type_description }}</label>
+      </div>
+      <input type="hidden" name="string_id" value="{{ string.pk }}" />
+
+      {% if customer %}
+  </div>
+  {% endif %}
+</div>
+
+{% endfor %}
+
+{% endif %} {# /is_staff #}
+
+{% buttons %}
+<button class="btn btn-primary">{% trans "Spara" %}</button>
+{% endbuttons %}
+</form>
+
+</div>
+<div class="col-md-4">{% comment %}Documentation{% endcomment %}
+
+    {% if not single_message or single_message.type_key != "acano_client" %}
+    <h2 class="overline">{% trans "Ersättningskoder" %}</h2>
+
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <p>{% trans "Dessa kommer ersättas med rätt värden i meddelandetexter" %}:</p>
+<pre>
+    {% for p in placeholders %}{{ p }}
+    {% endfor %}
+</pre>
+        </div>
+    </div>
+
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <p>{% trans "Man kan även använda den speciella strukturen" %}</p>
+<pre>
+    {if &lt;variabel&gt;}
+    &lt;villkorligt innehåll&gt;
+    {endif}
+</pre>
+        </div>
+    </div>
+
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <p>{% trans "och motsvarande" %}</p>
+<pre>
+    {if not &lt;variabel&gt;}
+    &lt;villkorligt innehåll&gt;
+    {endif}
+</pre>
+        </div>
+    </div>
+    <div class="mb-4 v-card v-sheet theme--light">
+        <div class="v-card__text">
+            <p>{% trans "Till exempel, för att enbart visa information om lösenordet i de fall det finns ett lösenord" %}:</p>
+<pre>
+    {if password}
+    Här är lösenordet: {password}
+    {endif}
+</pre>
+        </div>
+    </div>
+{% endif %}
+
+
+{% if not single_message or single_message.type_key == "acano_client" %}
+
+{% if single_message and single_message.type_key == "acano_client" %}
+
+<h2>{% trans "Ersättningskoder" %}</h2>
+
+{% else %}
+
+<p><strong>{% trans "För Acano-klienten gäller följande koder" %}:</strong></p>
+
+{% endif %}
+
+<pre>
+    %name%
+    %numeric_id%
+    %passcode%
+    %uri%
+    %hyperlink%
+	%launch_link%
+</pre>
+
+{% endif %}
+
+
+</div>
+</div>
+</form>
+</div>
+</div>
+
+<script>
+tinymce.baseURL = "{% static 'js/tinymce/tinymce.min.js' %}".replace(/^(.*)\/[^\/]+/, '$1');
+tinymce.suffix = ".min";
+
+tinymce.init({
+  selector: "textarea.wysiwyg",
+  height: 300,
+  cache_suffix: "?v=4.9.6",
+  plugins: [
+  "advlist autolink lists link image charmap print preview anchor",
+  "searchreplace visualblocks code fullscreen",
+  "insertdatetime media table contextmenu paste "
+  ],
+  entity_encoding: "raw",
+  toolbar: "formatselect | undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code"
+});</script>
+
+<script>
+jQuery(function($) {
+  $('a.default-msg').click(function() {
+    var a = this;
+    var tiny;
+    $.getJSON($(this).attr('data-url'), function(data) {
+      var textarea = $(a).closest('.message-container').find('textarea');
+      textarea.val(data.content);
+      if (tiny = tinymce.get(textarea.attr('id'))) {
+        tiny.setContent(data.content);
+    }
+})
+    return false;
+});
+});
+</script>
+{% endblock page_content %}

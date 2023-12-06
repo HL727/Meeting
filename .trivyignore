@@ -1,0 +1,3 @@
+# False positives, pip arrow is identified as apache arrow
+CVE-2019-12408
+CVE-2019-12410

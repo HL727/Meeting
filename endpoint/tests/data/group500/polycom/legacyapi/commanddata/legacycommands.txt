@@ -1,0 +1,1594 @@
+_echonotinacall,getstatus,True,False,False,0,error: $* cannot be performed while in a call,nop
+_echo,getstatus,True,False,False,0,$*,nop
+_importdirectory,abkcmds,False,False,False,1/1,nop,import
+_importprofile,importprofile,False,False,False,1/1,nop,importprofile
+_polyif,apiif,False,False,False,1,False,nop
+_internalsetconfig,setconfig,False,True,True,1/2,$*,{0}={1}
+_maxtimeincall set,setconfig,True,False,False,1/1,$^ {0},comm.callsetting.callfeatures.maxtimeincall={0}
+addrbook,abkcmds,False,False,False,1,nop,nop
+advnetstats,callstats,False,False,False,0/1,nop,advnetstats
+amxdd get,getconfig,False,False,True,0/0,$^ {0},$system.discovery.broadcastbeacon
+amxdd,setconfig,False,True,True,1/1,$^ {0},system.discovery.broadcastbeacon={0}
+amx,amxcmd,False,False,False,0,nop,nop
+answer phone,callcmds,False,False,False,0/1,nop,nop
+answer video,callcmds,False,False,False,0/1,nop,nop
+apiport get,getconfig,False,False,True,0/0,$^ {0},$security.remoteaccess.telnet.apiport
+apiport,setconfig,False,True,True,1/1,$^ {0},security.remoteaccess.telnet.apiport={0}
+audiometer,audio,False,False,False,0/1,nop,nop
+all register,allregister,False,False,False,0/0,nop,register
+all unregister,allregister,False,False,False,0/0,nop,unregister
+audio3p5inputfaronly get,audio,False,False,False,0/0,nop,nop
+audio3p5inputfaronly,audio,False,False,False,1/1,nop,nop
+audiotransmitlevel,audio,False,False,True,0/1,nop,nop
+audiotransmitlevel set,audio,False,False,False,1/1,nop,nop
+audiotransmitlevel register,registration,False,False,False,0/0,nop,register $^
+audiotransmitlevel unregister,registration,False,False,False,0/0,nop,unregister $^
+autoanswer get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.autoanswer.answersinglecall
+autoanswer,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.autoanswer.answersinglecall={0}
+autoshowcontent get,getconfig,False,False,True,0/0,$^ {0},$pm.autoplaycontent
+autoshowcontent,setconfig,False,True,True,1/1,$^ {0},pm.autoplaycontent={0}
+basicmode get,getconfig,False,True,True,0/0,$^ {0},$comm.callpreference.diagnosticmode
+basicmode,setconfig,False,True,True,1/1,$^ {0},comm.callpreference.diagnosticmode={0}
+button,buttoncmd,False,False,False,1/99,nop,nop
+bootvideoskip get,getconfig,False,False,True,0/0,$^ {0},$system.uboot.skipvideo
+bootvideoskip,setconfig,False,True,True,1/1,$^ {0},system.uboot.skipvideo={0}
+calendardiscovery,calendar, False, False, False,2/2,nop,nop
+calendardomain get,getconfig,False,False,False,0/0,$^ {0},$cal.ews.domain
+calendardomain set,setconfig,False,False,False,1/1,$^ {0},cal.ews.domain={0}
+calendarmeetings list,calendar,False,False,False,1/2,nop,list
+calendarmeetings info,calendar,False,False,False,1/1,nop,details
+calendarpassword,setconfig,False,False,False,1/1,$^ {0},cal.ews.password={0}
+calendarplaytone get,getconfig,False,False,True,0/0,$^ {0},$cal.playremindertone
+calendarplaytone,setconfig,False,True,True,1/1,$^ {0},cal.playremindertone={0}
+calendarprotocol get,getconfig,False,False,True,0/0,$^ {0},$cal.ews.secureconnectionprotocol
+calendarprotocol, setconfig, False,True,True,1/1,$^ {0},cal.ews.secureconnectionprotocol={0}
+calendarregisterwithserver get,getconfig,False,False,True,0/0,$^ {0},$cal.enabled
+calendarregisterwithserver,setconfig,False,True,True,1/1,$^ {0},cal.enabled={0}
+calendarremindertime get,getconfig,False,False,True,0/0,$^ {0},$cal.remindertime
+calendarremindertime,setconfig,False,True,True,1/1,$^ {0},cal.remindertime={0}
+calendarresource get,getconfig,False,False,False,0/0,$^ {0},$cal.ews.mailbox
+calendarresource,setconfig,False,False,False,1/1,$^ {0},cal.ews.mailbox={0}
+calendarserver get,getconfig,False,False,False,0/0,$^ {0},$cal.ews.server
+calendarserver,setconfig,False,False,False,1/1,$^ {0},cal.ews.server={0}
+calendarshowpvtmeetings get,getconfig,False,False,True,0/0,$^ {0},$cal.showprivatemeeting
+calendarshowpvtmeetings,setconfig,False,True,True,1/1,$^ {0},cal.showprivatemeeting={0}
+calendarstatus get,calendar,False,False, False,0/0,nop,nop
+calendaruser get,getconfig,False,False,False,0/0,$^ {0},$cal.ews.username
+calendaruser,setconfig,False,False,False,1/1,$^ {0},cal.ews.username={0}
+callinfo all,callinfoall,False,False,False,0/0,nop,nop
+callinfo callid,callinfoofcallid,False,False,False,1/1,nop,nop
+callstate get,registration,False,False,False,0/0,nop,register-query $^
+callstate register get,registration,False,False,False,0/0,nop,register-query $^
+callstate register,registration,False,False,False,0/0,nop,register $^
+callstate unregister,registration,False,False,False,0/0,nop,unregister $^
+camera far,camera,False,False,False,1/1,$@,selectfarsource
+camera far move,camera,False,False,False,1/1,$@,farmove
+camera far source,camera,False,False,False,0/0,$@,getfarsource
+camera far stop,camera,False,False,False,0/0,$@,farstop
+camera for-people,cameraconfig,False,False,False,1/1,nop,sourceman.primarypeople={0}
+camera for-content,cameraconfig,False,False,False,1/1,nop,sourceman.primarycontent={0}
+camera list-content,camera,False,False,False,0/0,nop,contentop list
+camera near [ppcip|6],camera,False,False,False,0/0,nop,contentop ppcip
+camera near,camera,False,False,False,1/1,$@,selectnearsource
+camera near getposition,camera,False,False,False,0/0,$^ near position,neargetposition
+camera near move,camera,False,False,False,1/1,event: $@,nearmove
+camera near setposition,camera,False,False,False,3/3,$@,nearsetposition
+camera near source,camera,False,False,False,0/0,$@,getnearsource
+camera near stop,camera,False,False,False,0/0,event: $@,nearstop
+camera near tracking statistics,camera,False,False,False,0/0,nop,camerastatistics
+#camera near tracking crossfade,camera,False,False,False,1/1,$@ $*,sourceman.rabbiteye.crossfade
+camera register,registration,False,False,False,0/0,nop,register $^
+camera register get,registration,False,False,False,0/0,nop,register-query $^
+camera unregister,registration,False,False,False,0/0,nop,unregister $^
+cameraautohanguptimer get,getconfig,False,True,True,0/0,$^ {0},$sourceman.camera.autohanguptime
+cameraautohanguptimer,setconfig,False,True,True,1/1,$@ {0},sourceman.camera.autohanguptime={0}
+camerainvert near get,getconfig,False,True,True,0/0,$^ near {0},$sourceman.camera1.orientation
+camerainvert near,setconfig,False,True,True,1/1,$@ {0},sourceman.camera1.orientation={0}
+cameratracking near calibrate get,getconfig,False,True,True,0/0,$^ near calibrate {0},$sourceman.camera1.alwaysautoimage
+cameratracking near calibrate,setconfig,False,True,True,1/1,$@ {0},sourceman.camera1.alwaysautoimage={0}
+cameratracking near framing get,getconfig,False,True,True,0/0,$^ near framing {0},$sourceman.camera1.groupviewsize
+cameratracking near framing,setconfig,False,True,True,1/1,$@ {0},sourceman.camera1.groupviewsize={0}
+cameratracking near mode get,camera,False,False,False,0/0,nop,cameratrackingmode
+cameratracking near mode,camera,False,False,False,1/1,nop,cameratrackingmodeset
+cameratracking near pip get,camera,False,False,False,0/0,nop,cameratrackingnearpipget
+cameratracking near pip,camera,False,False,False,1/1,nop,cameratrackingnearpipset
+cameratracking near participant get,getconfig,False,True,True,0/0,$^ near participant {0},$sourceman.camera1.participantcount
+cameratracking near participant,setconfig,False,True,True,1/1,$^ near participant {0},sourceman.camera1.participantcount={0}
+cameratracking near speed get,getconfig,False,True,True,0/0,$^ near speed {0},$sourceman.camera1.trackingspeed
+cameratracking near speed,setconfig,False,True,True,1/1,$@ {0},sourceman.camera1.trackingspeed={0}
+cameratracking near wake get,getconfig,False,True,True,0/0,$^ near wake {0},$sourceman.autowakeup
+cameratracking near wake,setconfig,False,True,True,1/1,$@ {0},sourceman.autowakeup={0}
+camerainput,cameraconfig,False,False,False,2/2,$^ 1 {0},$camerainput
+configdisplay monitor1,monitorconfig,False,False,True,1/2,nop,nop
+configdisplay monitor2,monitorconfig,False,False,True,1/2,nop,nop
+configdisplay monitor3,monitorconfig,False,False,True,1/2,nop,nop
+configdisplay get,monitorconfig,False,False,True,0/0,nop,nop
+configparam [camera_video_quality 1 get|camera1_video_quality get],getconfig,False,False,True,0/0,camera1_video_quality {0},$sourceman.camera1.videoquality
+configparam [camera_video_quality 1 set|camera1_video_quality set],setconfig,False,True,True,1/1,camera1_video_quality {0},sourceman.camera1.videoquality={0}
+configparam [camera_video_quality 2 get|camera2_video_quality get],getconfig,False,False,True,0/0,camera2_video_quality {0},$sourceman.camera2.videoquality
+configparam [camera_video_quality 2 set|camera2_video_quality set],setconfig,False,True,True,1/1,camera2_video_quality {0},sourceman.camera2.videoquality={0}
+configparam [camera_video_quality 3 get|camera3_video_quality get],getconfig,False,False,True,0/0,camera3_video_quality {0},$sourceman.camera3.videoquality
+configparam [camera_video_quality 3 set|camera3_video_quality set],setconfig,False,True,True,1/1,camera3_video_quality {0},sourceman.camera3.videoquality={0}
+configparam [camera_video_quality 4 get|camera4_video_quality get],getconfig,False,False,True,0/0,camera4_video_quality {0},$sourceman.camera4.videoquality
+configparam [camera_video_quality 4 set|camera4_video_quality set],setconfig,False,True,True,1/1,camera4_video_quality {0},sourceman.camera4.videoquality={0}
+configpresentation,configpres,False,True,True,1/6,nop,nop
+contentauto get,getconfig,False,False,True,0/0,$^ {0},$comm.conference.content.contentauto
+contentauto,setconfig,False,True,True,1/1,$^ {0},comm.conference.content.contentauto={0}
+#contentsplash get,getconfig,False,False,True,0/0,$^ {0},$contentsplash
+#contentsplash,setconfig,False,True,True,1/1,$^ {0},contentsplash={0}
+#contentvideoadjustment get,getconfig,False,False,True,0/0,$^ {0},$video.monitor.vidcfgmonitorcontentadjust
+#contentvideoadjustment,setconfig,False,True,True,1/1,$^ {0},video.monitor.vidcfgmonitorcontentadjust={0}
+daylightsavings get,getconfig,False,False,True,0/0,$^ {0},$time.autoadjustdlst
+daylightsavings,setconfig,False,True,True,1/1,$^ {0},time.autoadjustdlst={0}
+defaultgateway get,getconfig,False,False,False,0/0,$^ {0},$system.network.wired.ipv4nic.defaultgateway
+defaultgateway set,apiforward,False,False,False,1/1,$^ {0},-_polyif %[strmatch.$[system.network.wired.ipv4nic.mode].Off] -_internalsetconfig system.network.wired.ipv4nic.defaultgateway {0} else _echo error: can't set defaultgateway when dhcp is client.
+dhcp get,getconfig,False,False,True,0/0,$^ {0},$system.network.wired.ipv4nic.mode
+dhcp,setconfig,False,True,True,1/1,$^ {0},system.network.wired.ipv4nic.mode={0}
+disablestaticciphers get,getconfig,False,False,True,0/0,$^ {0},$security.disableStaticCiphers
+disablestaticciphers,setconfig,False,True,True,1/1,$^ {0},security.disableStaticCiphers={0}
+disabletlsv1 get,getconfig,False,False,True,0/0,$^ {0},$security.disabletlsversionone
+disabletlsv1,setconfig,False,True,True,1/1,$^ {0},security.disabletlsversionone={0}
+disabletlsv1_1 get,getconfig,False,False,True,0/0,$^ {0},$security.disabletlsversionone_one
+disabletlsv1_1,setconfig,False,True,True,1/1,$^ {0},security.disabletlsversionone_one={0}
+dial [abk|addressbook|addressbook_entry],callcmds,False,False,False,1/1,nop,$@ $*
+dial auto,callcmds,False,False,False,1/2,nop,dial any $*
+dial man[ual],callcmds,False,False,False,0/4,nop,dial dialmanual $*
+dial phone,callcmds,False,False,False,0/2,nop,$@ {0} {1}
+dialplannormalization get,getconfig,False,False,True,0/0,$^ {0},$comm.Callpreference.sipdialplannormalization
+dialplannormalization,setconfig,False,True,True,1/1,$^ {0},comm.Callpreference.sipdialplannormalization={0}
+dns get 1,getconfig,False,False,False,0/0,$^ 1 {0},$system.network.dnsserver0
+dns get 2,getconfig,False,False,False,0/0,$^ 2 {0},$system.network.dnsserver1
+dns get 3,getconfig,False,False,False,0/0,$^ 3 {0},$system.network.dnsserver2
+dns get 4,getconfig,False,False,False,0/0,$^ 4 {0},$system.network.dnsserver3
+dns set 1,apiforward,False,False,False,1/1,$^ 1 {0},-_polyif %[strmatch.$[system.network.wired.ipv4nic.mode].Off] -_internalsetconfig system.network.dnsserver0 {0} else _echo error: can't set dns server when dhcp is client.
+dns set 2,apiforward,False,False,False,1/1,$^ 2 {0},-_polyif %[strmatch.$[system.network.wired.ipv4nic.mode].Off] -_internalsetconfig system.network.dnsserver1 {0} else _echo error: can't set dns server when dhcp is client.
+dns set 3,apiforward,False,False,False,1/1,$^ 3 {0},-_polyif %[strmatch.$[system.network.wired.ipv4nic.mode].Off] -_internalsetconfig system.network.dnsserver2 {0} else _echo error: can't set dns server when dhcp is client.
+dns set 4,apiforward,False,False,False,1/1,$^ 4 {0},-_polyif %[strmatch.$[system.network.wired.ipv4nic.mode].Off] -_internalsetconfig system.network.dnsserver3 {0} else _echo error: can't set dns server when dhcp is client.
+dualmonitor get,getconfig,False,False,True,0/0,$^ {0},$pm.dualmonitor
+dualmonitor,setconfig,False,True,True,1/1,$^ {0},pm.dualmonitor={0}
+dynamicbandwidth get,getconfig,False,False,True,0/0,$^ {0},$comm.qos.dynamicbandwidth
+dynamicbandwidth,setconfig,False,True,True,1/1,$^ {0},comm.qos.dynamicbandwidth={0}
+e164ext get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.h323extension
+e164ext set,setconfig,False,False,False,1/1,$^ {0},comm.nics.h323nic.h323extension={0}
+echo,getstatus,False,False,False,0,$*,nop
+echocanceller get,getconfig,False,False,True,0/0,$^ {0},$audio.in2.enableechocancellation
+echocanceller,setconfig,False,True,True,1/1,$^ {0},audio.in2.enableechocancellation={0}
+echoreply get,getconfig,False,False,True,0/0,$^ {0},$system.network.enableecho
+echoreply,setconfig,False,True,True,1/1,$^ {0},system.network.enableecho={0}
+enableacousticfence get,getconfig,False,False,True,0/0,$^ {0},$audio.qualityprocess.enableacousticfence
+enableacousticfence,setconfig,False,True,True,1/1,$^ {0},audio.qualityprocess.enableacousticfence={0}
+enableaes128cbc get,getconfig,False,False,True,0/0,$^ {0},$security.enablecipheraescbc
+enableaes128cbc,setconfig,False,True,True,1/1,$^ {0},security.enablecipheraescbc={0}
+enableaudioadd get,getconfig,False,False,True,0/0,$^ {0},$comm.callpreference.audioaddinenable
+enableaudioadd,setconfig,False,True,True,1/1,$^ {0},comm.callpreference.audioaddinenable={0}
+enableescalatevideo get,getconfig,False,False,False,0/0,$^ {0},$comm.Callsetting.callFeatures.escalateVideo.Enabled
+enableescalatevideo,setconfig,False,False,False,1/1,$^ {0},comm.Callsetting.callFeatures.escalateVideo.Enabled={0}
+enablemp1080ptx get,getconfig,False,False,True,0/0,$^ {0},$comm.MP1080pTx.UserPref
+enablemp1080ptx,setconfig,False,True,True,1/1,$^ {0},comm.MP1080pTx.UserPref={0}
+enablefirewalltraversal get,getconfig,False,False,True,0/0,$^ {0},$comm.firewall.enablefirewalltraversal
+enablefirewalltraversal,setconfig,False,True,True,1/1,$^ {0},comm.firewall.enablefirewalltraversal={0}
+enablekeyboardnoisereduction get,knrget,False,False,False,0/0,nop,nop
+enablekeyboardnoisereduction yes,knryes,False,False,False,0/0,nop,nop
+enablekeyboardnoisereduction no,knrno,False,False,False,0/0,nop,nop
+enablepvec get,getconfig,False,False,True,0/0,$^ {0},$comm.qos.errorconcealment.dba.pvecenable
+enablepvec,setconfig,False,True,True,1/1,$^ {0},comm.qos.errorconcealment.dba.pvecenable={0}
+enablersvp get,getconfig,False,False,True,0/0,$^ {0},$comm.qos.rsvpenabled
+enablersvp,setconfig,False,True,True,1/1,$^ {0},comm.qos.rsvpenabled={0}
+enablelivemusicmode get,lmcget,False,False,False,0/0,nop,nop
+enablelivemusicmode yes,lmcyes,False,False,False,0/0,nop,nop
+enablelivemusicmode no,lmcno,False,False,False,0/0,nop,nop
+o365authtype get,getconfig,False,True,True,0/0,$^ {0},$comm.callsetting.security.o365authtype
+o365authtype,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.security.o365authtype={0}
+enablesipka get,getconfig,False,True,True,0/0,$^ {0},$comm.nics.sipnic.sipsbckeepaliveenable
+enablesipka,setconfig,False,True,True,1/1,$^ {0},comm.nics.sipnic.sipsbckeepaliveenable={0}
+enablesecurityclassification get,getconfig,False,False,True,0/0,$^ {0},$comm.securityclassification.enabled
+enablesecurityclassification,setconfig,False,True,True,1/1,$^ {0},comm.securityclassification.enabled={0}
+enablesnmp get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.enabled
+enablesnmp,setconfig,False,True,True,1/1,$^ {0},management.snmp.enabled={0}
+enablevisualsecurity get,getconfig,False,False,True,0/0,$^ {0},$comm.SecurityClassification.enabled
+enablevisualsecurity,setconfig,False,True,True,1/1,$^ {0},comm.SecurityClassification.enabled={0}
+encryption get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.encryptionenable
+encryption,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.encryptionenable={0}
+exit,session,False,False,False,0/0,nop,quit
+session name,session,False,False,False,1/1,$^ {0},name session
+session find,session,False,False,False,1/1,$^ {0},session find
+exportdirectory,abkcmds,False,False,False,0/0,nop,export
+exportprofile,exportprofile,False,False,False,0/0,nop,exportprofile
+farcontrolnearcamera get,getconfig,False,False,True,0/0,$^ {0},$sourceman.farcontrolnearcamera
+farcontrolnearcamera,setconfig,False,True,True,1/1,$^ {0},sourceman.farcontrolnearcamera={0}
+farnametimedisplay get,getconfig,False,False,True,0/0,$^ {0},$video.setting.sitenameenable
+farnametimedisplay,setconfig,False,True,True,1/1,$^ {0},video.setting.sitenameenable={0}
+gaddrbook,abkcmds,False,False,False,1,nop,nop
+gatekeeperip get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.gatekeeper.gkipaddress
+gatekeeperip set,setconfig,False,False,False,1/1,$^ {0},comm.nics.h323nic.gatekeeper.gkipaddress={0}
+gdsdirectory get,getconfig,False,True,True,0/0,$^ {0},$dir.globalserver
+gdsdirectory,setconfig,False,True,True,1/1,$^ {0},dir.globalserver={0}
+gdsserverip get,getconfig,False,False,True,0/0,$^ {0},$dir.gds.serveraddress
+gdsserverip set,setconfig,False,False,False,1/1,$^ {0},dir.gds.serveraddress={0}
+gdspassword set,setpassword,False,False,False,0/1,nop,dir.gds.password
+gdsdirectory status,system,False,False,False,0/0,nop,nop
+gendial,gendial,False,False,False,1/1,nop,nop
+gendialset,gendialset,False,False,False,1/1,nop,nop
+gendialset get,gendialset,False,False,False,0/0,nop,nop
+generatetone,gentone,False,True,False,1/1,$^ $*,$*
+getcallstate,callinfoall,False,False,False,0/0,nop,nop
+getconfiguredipaddress,getconfig,False,False,False,0/0,$^ {0},$system.network.wired.ipv4nic.address
+globaldir,abkcmds,False,False,False,1,nop,nop
+h239enable get,getconfig,False,False,True,0/0,$^ {0},$comm.callpreference.h239enable
+h239enable,apiforward,False,True,True,1/1,$^ {0},-_polyif !%[isinacall] -_internalsetconfig comm.callpreference.h239enable {0} else _echonotinacall $@
+h323authenticate enable get,getconfig,False,False,True,0/0,$^ enable {0},$comm.nics.h323nic.gatekeeper.authentication.enabled
+h323authenticate enable,setconfig,False,True,True,0/1,$^ enable {0},comm.nics.h323nic.gatekeeper.authentication.enabled={0}
+h323authenticate name get,getconfig,False,False,True,0/0,$^ name {0},$comm.nics.h323nic.gatekeeper.authentication.username
+h323authenticate name,setconfig,False,True,True,0/1,$^ name {0},comm.nics.h323nic.gatekeeper.authentication.username={0}
+h323authenticate password set,setpassword,False,False,False,0/1,nop,comm.nics.h323nic.gatekeeper.authentication.password
+h323name get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.h323name
+h323name set,setconfig,False,False,False,1/1,$^ {0},comm.nics.h323nic.h323name={0}
+hangup [audio|all|phone|voice|video|connection],callcmds,False,False,False,0/1,nop,$@ $*
+hostname get,getconfig,False,False,False,0/0,$^ {0},$system.network.hostname
+hostname set,setconfig,False,False,False,1/1,$^ {0},system.network.hostname={0}
+ipaddress get,getconfig,False,False,True,0/0,$^ {0},$system.network.wired.ipv4nic.address
+ipaddress set,setconfig,False,False,False,1/1,$^ {0},system.network.wired.ipv4nic.address={0}
+ipdialspeed,ipdialspeed,False,False,False,0/3,nop,nop
+lanport get,lanport,False,False,False,0/0,$^ {0},$lan.lanport
+lanport[| set],lanport,False,False,False,0/1,$^ {0},nop
+configlayout,vidlayout,False,False,False,2/2,$^ {0},nop
+ldapauthenticationtype get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.authtype
+ldapauthenticationtype set,setconfig,False,False,True,1/1,$^ {0},dir.ldap.authtype={0}
+ldapbasedn get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.basedn
+ldapbasedn set,setconfig,False,False,False,1/1,$^ {0},dir.ldap.basedn={0}
+ldapbinddn get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.binddn
+ldapbinddn set,setconfig,False,False,False,1/1,$^ {0},dir.ldap.binddn={0}
+ldapdirectory get,getconfig,False,True,True,0/0,$^ {0},$dir.globalserver
+ldapdirectory,setconfig,False,True,True,1/1,$^ {0},dir.globalserver={0}
+ldapntlmdomain get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.domain
+ldapntlmdomain set,setconfig,False,True,True,1/1,$^ {0},dir.ldap.domain={0}
+ldappassword set,setconfig,False,True,True,2/2,$^ {0} {1},dir.ldap.authtype={0}|dir.ldap.password={1}
+ldapserveraddress get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.serveraddress
+ldapserveraddress set,setconfig,False,False,False,1/1,$^ {0},dir.ldap.serveraddress={0}
+ldapserverport get,getconfig,False,False,True,0/0,$^ {0},$dir.ldap.serverport
+ldapserverport set,setconfig,False,False,False,1/1,$^ {0},dir.ldap.serverport={0}
+ldapsslenabled get,getconfig,False,True,True,0/0,$^ {0},$dir.ldap.enablessl
+ldapsslenabled set,setconfig,False,True,True,1/1,$^ {0},dir.ldap.enablessl={0}
+ldapusername get,getconfig,False,False,False,0/0,$^ {0},$dir.ldap.userid
+ldapusername set,setconfig,False,False,False,1/1,$^ {0},dir.ldap.userid={0}
+linestate [get|register get],registration,False,False,False,0/0,nop,register-query $^
+linestate register,registration,False,False,False,0/0,nop,register $^
+linestate unregister,registration,False,False,False,0/0,nop,unregister $^
+listen phone,registration,False,False,False,0/0,nop,register phonestate
+listen sleep,registration,False,False,False,0/0,nop,register-async sleep APIAsyncSleepEvent
+listen video,registration,False,False,False,0/0,nop,register videostate
+localdir,abkcmds,False,False,False,1,nop,nop
+loglevel get,get,getconfig,False,True,True,0/0,$^ {0},$system.log.level
+loglevel set,setconfig,False,True,True,1/1,$^ {0},system.log.level={0}
+lyncdirectory get,getconfig,False,True,True,0/0,$^ {0},$dir.globalserver
+lyncdirectory,setconfig,False,True,True,1/1,$^ {0},dir.globalserver={0}
+lyncdirectory status,system,False,False,False,0/0,nop,nop
+maxtimeincall get,maxtimeconfig,False,False,False,0/0,$^ {0},$comm.callsetting.callfeatures.maxtimeincall
+maxtimeincall set,maxtimeconfig,False,False,False,1/1,$^ {0},comm.callsetting.callfeatures.maxtimeincall={0}
+monitor1screensaveroutput get,getconfig,False,False,True,0/0,$^ {0},$system.screensavermode
+monitor1screensaveroutput, setconfig,False,True,True,1/1,$^ {0},system.screensavermode={0}
+monitor2screensaveroutput get,getconfig,False,False,True,0/0,$^ {0},$system.screensavermode
+monitor2screensaveroutput,setconfig,False,True,True,1/1,$^ {0},system.screensavermode={0}
+mon2cecpa get,getconfig,False,False,False,0/0,$^ {0},$video.cec.mon2cecpa
+mon2cecpa,setconfig,False,False,False,1/1,$^ {0},video.cec.mon2cecpa={0}
+mpautoanswer get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.autoanswer.answermultipointcall
+mpautoanswer,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.autoanswer.answermultipointcall={0}
+mpdtmfsupported get,getconfig,False,False,True,0/0,$^ {0},$comm.conference.cascadedDTMFEnabled
+mpdtmfsupported,setconfig,False,True,True,1/1,$^ {0},comm.conference.cascadedDTMFEnabled={0}
+mpmode get,getconfig,False,False,True,0/0,$^ {0},$pm.mpmode
+mpmode,setconfig,False,True,True,1/1,$^ {0},pm.mpmode={0}
+mute far,mute,False,False,True,1/1,nop,nop
+mute near get,mute,False,False,True,0/0,$^ near {0},audio.near.ismuted
+mute near toggle,mute,False,False,False,0/0,$^ near !%audio.near.ismuted,audio.near.ismuted|!%audio.near.ismuted
+mute near,mute,False,True,False,1/1,$@ {0},audio.near.ismuted|{0}
+mute register,registration,False,False,False,0/0,nop,register-async $^ APIAsyncMuteEvent
+mute register get,registration,False,False,False,0/0,nop,register-query $^
+mute unregister,registration,False,False,False,0/0,nop,unregister-async $^
+muteautoanswer get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.autoanswer.muteautoanswer
+muteautoanswer,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.autoanswer.muteautoanswer={0}
+muteincomingoutgoing get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.muteincomingoutgoing
+muteincomingoutgoing,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.muteincomingoutgoing={0}
+emptykeepalive get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.emptykeepalive
+emptykeepalive,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.emptykeepalive={0}
+natconfig get,getconfig,False,False,True,0/0,$^ {0},$comm.firewall.nat.usenataddress
+natconfig,setconfig,False,True,True,1/1,$^ {0},comm.firewall.nat.usenataddress={0}
+nath323compatible get,getconfig,False,False,True,0/0,$^ {0},$comm.firewall.nat.h323compatiblenat
+nath323compatible,setconfig,False,True,True,1/1,$^ {0},comm.firewall.nat.h323compatiblenat={0}
+nearloop,nearloop,False,True,False,1/1,$^ $*,$*
+netstats,callstats,False,False,False,0/1,nop,netstats
+nonotify callstatus,registration,False,False,False,0/0,nop,nonotify callstatus
+nonotify calendarmeetings,registration,False,False,False,0/0,nop,nonotify calendarmeetings
+nonotify linestatus,registration,False,False,False,0/0,nop,nonotify linestatus
+nonotify mutestatus,registration,False,False,False,0/0,nop,nonotify mutestatus
+nonotify screenchanges,registration,False,False,False,0/0,nop,nonotify screenchanges
+nonotify sysalerts,registration,False,False,False,0/0,nop,nonotify sysalerts
+nonotify sysstatus,registration,False,False,False,0/0,nop,nonotify sysstatus
+nonotify vidsourcechanges,registration,False,False,False,0/0,nop,nonotify vidsourcechanges
+nonotify captions,registration,False,False,False,0/0,nop,nonotify captions
+notify calendarmeetings,registration,False,False,False,0/0,nop,notify calendarmeetings
+notify callstatus,registration,False,False,False,0/0,nop,notify callstatus
+notify linestatus,registration,False,False,False,0/0,nop,notify linestatus
+notify mutestatus,registration,False,False,False,0/0,nop,notify mutestatus
+notify screenchanges,registration,False,False,False,0/0,nop,notify screenchanges
+notify sysalerts,registration,False,False,False,0/0,nop,notify sysalerts
+notify sysstatus,registration,False,False,False,0/0,nop,notify sysstatus
+notify vidsourcechanges,registration,False,False,False,0/0,nop,notify vidsourcechanges
+notify captions,registration,False,False,False,0/0,nop,notify captions
+notify,getregistrations,False,False,False,0/0,registered for {0} notifications{1},nop
+ntpmode get,getconfig,False,False,True,0/0,$^ {0},$time.timeserver.mode
+ntpmode,setconfig,False,True,True,1/1,$^ {0},time.timeserver.mode={0}
+ntpserver get,getconfig,False,False,True,0/0,$^ {0},$time.timeserver.address0
+ntpserver set,setconfig,False,True,True,0/1,$^ {0},time.timeserver.address0={0}
+ntpsecondaryserver get,getconfig,False,False,True,0/0,$^ {0},$time.timeserver.address1
+ntpsecondaryserver set,setconfig,False,True,True,0/1,$^ {0},time.timeserver.address1={0}
+oobcomplete,resetsystem,False,False,False,0/0,$^ {0},oobcomplete
+#peoplevideoadjustment get,getconfig,False,False,True,0/0,$^ {0},$video.monitor.vidcfgmonitorpeopleadjust
+#peoplevideoadjustment,setconfig,False,True,True,1/1,$^ {0},vidoe.monitor.vidcfgmonitorpeopleadjust={0}
+#pip,apiagent,False,True,True,1/1,$@ {0},$*
+#pip camera,apiagent,False,False,False,0/0,$@,piptimer=Camera
+#pip get,apiagent,False,False,True,0/0,$^ is {0},$piptimer
+#pip location get,apiagent,False,False,False,0/0,$@ {0},$piplocation
+#pip location,apiagent,False,True,False,1/1,$@ {0},piplocation={0}
+#pip register get,registration,False,False,False,0/0,nop,register-query $^
+#pip register,registration,False,False,False,0/0,nop,register-async $^ APIAsyncPIPEvent
+#pip swap,apiagent,False,False,False,0/0,$@ed,pipswapped=!$pipswapped
+#pip unregister,registration,False,False,False,0/0,nop,unregister-async $^
+popupinfo [get|register get],registration,False,False,False,0/0,nop,register-query $^
+popupinfo register,registration,False,False,False,0/0,nop,register $^
+popupinfo unregister,registration,False,False,False,0/0,nop,unregister $^
+powerdown,system,False,False,False,0/0,nop,nop
+preset far go,camera,False,False,False,1/1,$@,presetfargo
+preset far set,camera,False,False,False,1/1,$@,presetfarset
+preset near go,camera,False,False,False,1/1,$@,presetneargo
+preset near set,camera,False,False,False,1/1,$@,presetnearset
+preset register get,registration,False,False,False,0/0,nop,register-query $^
+preset register,registration,False,False,False,0/0,nop,register $^
+preset unregister,registration,False,False,False,0/0,nop,unregister $^
+provisionserveraddress get,getconfig,False,False,False,0/0,$^ {0},$management.provisioning.server
+provisionserveraddress set,setconfig,False,False,False,1/1,$^ {0},management.provisioning.server={0}
+provisionserverdomain get,getconfig,False,False,False,0/0,$^ {0},$management.provisioning.domain
+provisionserverdomain set,setconfig,False,False,False,0/1,$^ {0},management.provisioning.domain={0}
+provisionserverenable get,getconfig,False,True,True,0/0,$^ {0},$management.provisioning.enabled
+provisionserverenable,setconfig,False,True,True,1/1,$^ {0},management.provisioning.enabled={0}
+provisionserverpassword set,setpassword,False,False,False,0/1,$@ {0},management.provisioning.password
+provisionserverstatus get,system,False,False,False,0/0,nop,nop
+provisionservertype get,getconfig,False,True,True,0/0,$^ {0},$management.provisioning.servertype
+provisionservertype,setconfig,False,True,True,0/1,$^ {0},management.provisioning.servertype={0}
+provisionserverupdate,provisionserverupdate,False,False,False,0/0,$^ {0},management.provisioning.update={0}
+provisionserveruser get,getconfig,False,False,False,0/0,$^ {0},$management.provisioning.user
+provisionserveruser set,setconfig,False,False,False,0/1,$^ {0},management.provisioning.user={0}
+rdpenhancement get,getconfig,False,False,False,0/0,$^ {0},$uicontrol.apps.rdp.rdpenhancement
+rdpenhancement,setconfig,False,False,False,1/1,$^ {0},uicontrol.apps.rdp.rdpenhancement={0}
+reboot [now|y],resetsystem,False,False,False,0/0,$^ {0},resetsystem
+recentcalls,recentcallsretrieve,False,True,False,0/0,nop,nop
+recordingaudio rcaleft get,getconfig,False,False,True,0/0,$^ {0},$audio.recordingoutdevices.rcaleftenable
+recordingaudio rcaright get,getconfig,False,False,True,0/0,$^ {0},$audio.recordingoutdevices.rcarighenable
+recordingaudio mon1 get,getconfig,False,False,True,0/0,$^ {0},$audio.recordingoutdevices.mon1enable
+recordingaudio mon2 get,getconfig,False,False,True,0/0,$^ {0},$audio.recordingoutdevices.mon2enable
+recordingaudio mon3 get,getconfig,False,False,True,0/0,$^ {0},$audio.recordingoutdevices.mon3enable
+recordingaudio rcaleft set,setconfig,False,True,True,1/1,$^ {0},audio.recordingoutdevices.rcaleftenable={0}
+recordingaudio rcaright set,setconfig,False,True,True,1/1,$^ {0},audio.recordingoutdevices.rcarighenable={0}
+recordingaudio mon1 set,setconfig,False,True,True,1/1,$^ {0},audio.recordingoutdevices.mon1enable={0}
+recordingaudio mon2 set,setconfig,False,True,True,1/1,$^ {0},audio.recordingoutdevices.mon2enable={0}
+recordingaudio mon3 set,setconfig,False,True,True,1/1,$^ {0},audio.recordingoutdevices.mon3enable={0}
+remotemonenable,setpassword,False,False,False,1/1,nop,remotemonenable
+resetsystem,resetsystem,False,False,False,0/5,$^ {0},resetsystem
+rs232 baud get,getconfig,False,False,False,0/0,$^ baud {0},$system.ports.serial.baud
+rs232 baud,apiforward,False,False,False,1/1,rs232 baud {0},-_polyif %[strmatch.$[system.ports.serial.mode].Off] _echo error:command has illegal parameters else -_internalsetconfig system.ports.serial.baud {0}
+rs232login get,getconfig,False,True,True,0/0,$^ {0},$security.remoteaccess.serialport.loginmode
+rs232login,setconfig,False,True,True,1/1,rs232login {0},security.remoteaccess.serialport.loginmode={0}
+rs232 mode,system,False,False,False,1/1,rs232 mode {0},system.ports.serial.mode={0}
+#rs232port1 baud get,getconfig,False,False,False,0/0,$^ baud {0},$system.ports.serial2.baud
+#rs232port1 baud,setconfig,False,False,False,1/1,$^ baud {0},system.ports.serial2.baud={0}
+#rs232port1 mode get,getconfig,False,False,False,0/0,$^ mode {0},$rsystem.ports.serial2.mode
+#rs232port1 mode,setconfig,False,False,False,1/1,$^ mode {0},system.ports.serial2.mode={0}
+setpassword admin room,setpassword,False,False,False,2/2,nop,security.local.admin.password
+screen register,registration,False,False,False,0/0,nop,register $^
+screen register get,registration,False,False,False,0/0,nop,register-query $^
+screen sleep,system,False,False,False,0/0,nop,sleep
+screen wake,system,False,False,False,0/0,nop,nop
+screen unregister,registration,False,False,False,0/0,nop,unregister $^
+screen,screen,False,False,False,0/1,nop,nop
+securityclassification default,securityclassification,False,False,False,0/0,nop,nop
+securityclassification list,securityclassification,False,False,False,0/0,nop,nop
+securityclassification get,securityclassification,False,False,False,0/1,nop,nop
+securityclassification set,securityclassification,False,False,False,1/2,nop,nop
+serialnum,getconfig,False,False,False,0/0,$^ {0},$system.info.serialnumber
+#sessionsenabled get,getconfig,False,False,True,0/0,$^ {0},$security.session.enabled
+#sessionsenabled,setconfig,False,True,True,1/1,$^ {0},security.session.enabled={0}
+sshdelaystart get,getconfig,False,False,True,0/0,$^ {0},$security.remoteaccess.telnet.delaystart
+sshdelaystart,setconfig,False,True,True,1/1,$^ {0},security.remoteaccess.telnet.delaystart={0}
+sleep,apiforward,False,False,False,0/0,nop,screen sleep
+sleep mute get,getconfig,False,False,True,0/0,$^ mute {0},$audio.micsleepmute
+sleep mute,setconfig,False,True,True,1/1,sleep mute {0},audio.micsleepmute={0}
+sleep register,registration,False,False,False,0/0,nop,register-async $^ APIAsyncSleepEvent
+sleep register get,registration,False,False,False,0/0,nop,register-query $^
+sleep unregister,registration,False,False,False,0/0,nop,unregister-async $^
+sleeptime get,getconfig,False,False,False,0/0,$^ {0},$system.sleeptimeout
+sleeptime,setconfig,False,True,False,1/1,$^ {0},system.sleeptimeout={0}
+snmpadmin get,getconfig,False,False,False,0/0,$^ {0},$management.snmp.admin
+snmpadmin set,setconfig,False,False,False,1/1,$^ {0},management.snmp.admin={0}
+snmpcommunity get,getconfig,False,False,False,0/0,$^ {0},$management.snmp.community
+snmpcommunity set,setconfig,False,False,False,1/1,$^ {0},management.snmp.community={0}
+snmpconsoleip get,getconfig,False,False,False,0/0,$^ {0},$management.snmp.traptarget.targetaddress
+snmpconsoleip set,setconfig,False,False,False,1/1,$^ {0},management.snmp.traptarget.targetaddress={0}
+snmplocation get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.location
+snmplocation set,setconfig,False,False,False,1/1,$^ {0},management.snmp.location={0}
+snmpnotification legacy get,getconfig,False,False,True,0/0,$^ legacy {0},$management.snmp.legacynotification.enabled
+snmpnotification legacy,setconfig,False,False,False,1/1,$^ legacy {0},management.snmp.legacynotification.enabled={0}
+snmpnotification new get,getconfig,False,False,True,0/0,$^ new {0},$management.snmp.newnotification.enabled
+snmpnotification new,setconfig,False,False,False,1/1,$^ new {0},management.snmp.newnotification.enabled={0}
+snmpsystemdescription get,getconfig,False,False,False,0/0,$^ {0},$management.snmp.systemdesc
+snmpsystemdescription set,setconfig,False,False,False,1/1,$^ {0},management.snmp.systemdesc={0}
+snmptrapversion get,getconfig,False,False,False,0/0,$^ {0},$management.snmp.traptarget.protocolversion
+snmptrapversion set,setconfig,False,False,False,1/1,$^ {0},management.snmp.traptarget.protocolversion={0}
+sourcemandebugger get,getconfig,False,False,True,0/0,$^ {0},$sourceman.sourcemandebug
+sourcemandebugger,setconfig,False,True,True,1/1,$^ {0},sourceman.sourcemandebug={0}
+speeddial,abkcmds,False,False,False,1,nop,nop
+sshenable,setconfig,False,False,False,1/1,$^ {0},security.remoteaccess.ssh.enabled={0}
+sshservice get,getconfig,False,False,True,0/0,$^ {0},$security.remoteaccess.sshservice.enabled
+sshservice,setconfig,False,True,True,1/1,$^ {0},security.remoteaccess.sshservice.enabled={0}
+status,system,False,False,False,0/0,nop,nop
+subnetmask get,getconfig,False,False,False,0/0,$^ {0},$system.network.wired.ipv4nic.subnetmask
+subnetmask set,setconfig,False,False,False,1/1,$^ {0},system.network.wired.ipv4nic.subnetmask={0}
+systemname get,getconfig,False,False,False,0/0,$^ {0},$system.info.systemname
+systemname set,setconfig,False,False,False,1/1,$^ {0},system.info.systemname={0}
+#systemsetting get 320gatewayenable,getconfig,False,False,False,0/0,$^ 320gatewayenable {0},$320gatewayenable
+#systemsetting 320gatewayenable,setconfig,False,False,False,1/1,$^ 320gatewayenable {0},320gatewayenable={0}
+systemsetting get 323gatewayenable,getconfig,False,False,False,0/0,$^ 323gatewayenable {0},$comm.nics.h323nic.gatekeeper.gateway.enabled
+systemsetting 323gatewayenable,setconfig,False,False,False,1/1,$^ 323gatewayenable {0},comm.nics.h323nic.gatekeeper.gateway.enabled={0}
+systemsetting get gatewayenable,getconfig,False,False,False,0/0,$^ gatewayenable {0},$comm.Callpreference.gatewayenable
+systemsetting gatewayenable,setconfig,False,False,False,1/1,$^ gatewayenable {0},comm.Callpreference.gatewayenable={0}
+systemsetting get gatewaynumbertype,getconfig,False,False,False,0/0,$^ gatewaynumbertype {0},$comm.Callpreference.gatewaynumbertype
+systemsetting gatewaynumbertype,setconfig,False,False,False,1/1,$^ gatewaynumbertype {0},comm.Callpreference.gatewaynumbertype={0}
+systemsetting get gatewayipaddress,getconfig,False,False,False,0/0,$^ gatewayipaddress {0},$comm.Callpreference.gatewayipaddress
+systemsetting gatewayipaddress,setconfig,False,False,False,1/1,$^ gatewayipaddress {0},comm.Callpreference.gatewayipaddress={0}
+systemsetting get gatewayh323extension,getconfig,False,False,False,0/0,$^ gatewayh323extension {0},$comm.Callpreference.gatewayh323extension
+systemsetting gatewayh323extension,setconfig,False,False,False,1/1,$^ gatewayh323extension {0},comm.Callpreference.gatewayh323extension={0}
+systemsetting get answerincomingcallflash,getconfig,False,False,False,0/0,$^ answerincomingcallflash {0},$uicontrol.apps.inacalllayout.answerincomingcallflash
+systemsetting answerincomingcallflash,setconfig,False,False,False,1/1,$^ answerincomingcallflash {0},uicontrol.apps.inacalllayout.answerincomingcallflash={0}
+systemsetting get apiportswitch,getconfig,False,False,False,0/0,$^ apiportswitch {0},$security.remoteaccess.telnet.switchport
+systemsetting apiportswitch,setconfig,False,False,False,1/1,$^ apiportswitch {0},security.remoteaccess.telnet.switchport={0}
+systemsetting get bfcptransportprotocol,getconfig,False,False,False,0/0,$^ bfcptransportprotocol {0},$comm.nics.sipnic.bfcptransportprotocol
+systemsetting bfcptransportprotocol,setconfig,False,False,False,1/1,$^ bfcptransportprotocol {0},comm.nics.sipnic.bfcptransportprotocol={0}
+systemsetting get cameracontent,getconfig,False,False,False,0/0,$^ cameracontent {0},$sourceman.camera1.role
+systemsetting cameracontent,camera,False,False,False,1/1,$^ cameracontent {0},cameracontent
+systemsetting get cameracontent1,getconfig,False,False,False,0/0,$^ cameracontent1 {0},$sourceman.camera2.role
+systemsetting cameracontent1,camera,False,False,False,1/1,$^ cameracontent1 {0},cameracontent
+systemsetting get cameracontent2,camera,False,False,False,0/0,$^ cameracontent2 {0},getcameracontent
+systemsetting cameracontent2,camera,False,False,False,1/1,$^ cameracontent2 {0},cameracontent
+systemsetting get cameracontent3,camera,False,False,False,0/0,$^ cameracontent3 {0},getcameracontent
+systemsetting cameracontent3,camera,False,False,False,1/1,$^ cameracontent3 {0},cameracontent
+systemsetting get cameracontent4,camera,False,False,False,0/0,$^ cameracontent4 {0},getcameracontent
+systemsetting cameracontent4,camera,False,False,False,1/1,$^ cameracontent4 {0},cameracontent
+systemsetting get cameratype,getconfig,False,False,False,0/0,$^ cameratype {0},$system.videostandard
+systemsetting get crldownloadhours,getconfig,False,False,False,0/0,$^ crldownloadhours {0},$system.pki.revocation.crldownloadhours
+systemsetting crldownloadhours,setconfig,False,False,False,1/1,$^ crldownloadhours {0},system.pki.revocation.crldownloadhours={0}
+systemsetting enablesnapshot,setconfig,False,False,False,1/1,$^ enablesnapshot {0},sourceman.preset.enablesnapshot={0}
+systemsetting get enablesnapshot,getconfig,False,False,False,0/0,$^ enablesnapshot {0},$sourceman.preset.enablesnapshot
+systemsetting get modelcamera1,camera,False,False,True,0/0,$@,cameramodel1
+systemsetting get modelcamera2,camera,False,False,True,0/0,$@,cameramodel2
+systemsetting get modelcamera3,camera,False,False,True,0/0,$@,cameramodel3
+systemsetting get modelcamera4,camera,False,False,True,0/0,$@,cameramodel4
+systemsetting get modelcamera5,camera,False,False,True,0/0,$@,cameramodel5
+systemsetting get maxrosterparticipants,getconfig,False,False,False,0/0,$^ maxrosterparticipants {0},$comm.callsetting.callfeatures.maxrosterparticipants
+systemsetting maxrosterparticipants,setconfig,False,False,False,1/1,$^ maxrosterparticipants {0},comm.callsetting.callfeatures.maxrosterparticipants={0}
+systemsetting get connectionpreference,getconfig,False,False,False,0/0,$^ connectionpreference {0},$comm.callpreference.networkdialing.connectionpreference
+systemsetting connectionpreference,setconfig,False,False,False,1/1,$^ connectionpreference {0},comm.callpreference.networkdialing.connectionpreference={0}
+systemsetting get dialingmethod,getconfig,False,False,False,0/0,$^ dialingmethod {0},$comm.callpreference.networkdialing.dialingmethod
+systemsetting dialingmethod,setconfig,False,False,False,1/1,$^ dialingmethod {0},comm.callpreference.networkdialing.dialingmethod={0}
+systemsetting get displayiconsincall,getconfig,False,False,False,0/0,$^ displayiconsincall {0},$comm.callsetting.callfeatures.displayiconsincall
+systemsetting displayiconsincall,setconfig,False,False,False,1/1,$^ displayiconsincall {0},comm.callsetting.callfeatures.displayiconsincall={0}
+systemsetting get enablepolycommics,getconfig,False,False,False,0/0,$^ enablepolycommics {0},$audio.microphone.enablepolycommics
+systemsetting enablepolycommics,setconfig,False,False,False,1/1,$^ enablepolycommics {0},audio.microphone.enablepolycommics={0}
+systemsetting get iph323enable,getconfig,False,False,False,0/0,$^ iph323enable {0},$comm.callpreference.iph323enable
+systemsetting iph323enable,setconfig,False,False,False,1/1,$^ iph323enable {0},comm.callpreference.iph323enable={0}
+systemsetting get ipmaxincoming,getconfig,False,False,False,0/0,$^ ipmaxincoming {0},$comm.callpreference.preferredspeed.ipmaxincoming
+systemsetting ipmaxincoming,setconfig,False,False,False,1/1,$^ ipmaxincoming {0},comm.callpreference.preferredspeed.ipmaxincoming={0}
+systemsetting get lineinlevel,getconfig,False,False,False,0/0,$^ lineinlevel {0},$audio.in2.level
+systemsetting lineinlevel,setconfig,False,False,False,1/1,$^ lineinlevel {0},audio.in2.level={0}
+#systemsetting get lineintype,getconfig,False,False,False,0/0,$^ lineintype {0},$audio.lineIO.lineintype
+#systemsetting lineintype,setconfig,False,False,False,1/1,$^ lineintype {0},audio.lineIO.lineintype={0}
+systemsetting get lineoutmode,audio,False,False,False,0/0,nop,nop
+systemsetting lineoutmode,audio,False,False,False,1/1,nop,nop
+systemsetting get o365agentstring,getconfig,False,False,False,0/0,$^ o365agentstring {0},$comm.callsetting.callfeatures.o365agentstring
+systemsetting o365agentstring,setconfig,False,False,False,1/1,$^ o365agentstring {0},comm.callsetting.callfeatures.o365agentstring={0}
+systemsetting get maxrxbandwidth,getconfig,False,False,False,0/0,$^ maxrxbandwidth {0},$comm.qos.maxrxbandwidth
+systemsetting maxrxbandwidth,setconfig,False,False,False,1/1,$^ maxrxbandwidth {0},comm.qos.maxrxbandwidth={0}
+systemsetting get maxtxbandwidth,getconfig,False,False,False,0/0,$^ maxtxbandwidth {0},$comm.qos.maxtxbandwidth
+systemsetting maxtxbandwidth,setconfig,False,False,False,1/1,$^ maxtxbandwidth {0},comm.qos.maxtxbandwidth={0}
+systemsetting get mediainlevel,getconfig,False,False,False,0/0,$^ mediainlevel {0},$audio.in3.level
+systemsetting mediainlevel,setconfig,False,False,False,1/1,$^ mediainlevel {0},audio.in3.level={0}
+systemsetting get model,getconfig,False,False,True,0/0,$^ model {0},$system.info.humanreadablemodel
+systemsetting get monitor3display,getconfig,False,False,False,0/0,$^ monitor3display {0},$video.monitor3.monitordisplay
+systemsetting monitor3display,setconfig,False,False,False,1/1,$^ monitor3display {0},video.monitor3.monitordisplay={0}
+#systemsetting get monitor3screensaveroutput,getconfig,False,False,False,0/0,$^ monitor3screensaveroutput {0},$uicontrol.current.image.screensaver3
+#systemsetting monitor3screensaveroutput,setconfig,False,False,False,1/1,$^ monitor3screensaveroutput {0},uicontrol.current.image.screensaver3={0}
+systemsetting get monitor4display,getconfig,False,False,False,0/0,$^ monitor4display {0},$video.monitor4.monitordisplay
+systemsetting monitor4display,setconfig,False,False,False,1/1,$^ monitor4display {0},video.monitor4.monitordisplay={0}
+#systemsetting get monitor4screensaveroutput,getconfig,False,False,False,0/0,$^ monitor4screensaveroutput {0},$uicontrol.current.image.screensaver4
+#systemsetting monitor4screensaveroutput,setconfig,False,False,False,1/1,$^ monitor4screensaveroutput {0},uicontrol.current.image.screensaver4={0}
+systemsetting get primarycamera,getconfig,False,False,False,0/0,$^ primarycamera {0},$sourceman.primarypeople
+systemsetting primarycamera,setconfig,False,False,False,1/1,$^ primarycamera {0},sourceman.primarypeople={0}
+systemsetting get remotechannelid,getconfig,False,False,False,0/0,$^ remotechannelid {0},$system.remote.channelid
+systemsetting remotechannelid,setconfig,False,False,False,1/1,$^ remotechannelid {0},system.remote.channelid={0}
+systemsetting get securemode,getconfig,False,False,False,0/0,$^ securemode {0},comm.capability.securemode
+systemsetting get selfview,cameraconfig,False,False,False,0/0,$^ sipaccountname {0},nop
+systemsetting selfview,cameraconfig,False,False,False,0/1,$^ sipaccountname {0},nop
+systemsetting get sipaccountname,getconfig,False,False,False,0/0,$^ sipaccountname {0},$comm.nics.sipnic.sipaccountname
+systemsetting sipaccountname,setconfig,False,False,False,0/1,$^ sipaccountname {0},comm.nics.sipnic.sipaccountname={0}
+systemsetting get sipdebug,getconfig,False,False,False,0/0,$^ sipdebug {0},$comm.callsetting.debug.sipdebug
+systemsetting sipdebug,setconfig,False,False,False,1/1,$^ sipdebug {0},comm.callsetting.debug.sipdebug={0}
+systemsetting get largeconfdebug,getconfig,False,False,False,0/0,$^ largeconfdebug {0},$comm.callsetting.debug.largeconfdebug
+systemsetting largeconfdebug,setconfig,False,False,False,1/1,$^ largeconfdebug {0},comm.callsetting.debug.largeconfdebug={0}
+systemsetting get sipenable,getconfig,False,False,False,0/0,$^ sipenable {0},$comm.callpreference.sipenable
+systemsetting sipenable,setconfig,False,False,False,1/1,$^ sipenable {0},comm.callpreference.sipenable={0}
+systemsetting get sipforcereuse,getconfig,False,False,False,0/0,$^ sipforcereuse {0},$comm.nics.sipnic.forceconnectionreuse
+systemsetting sipforcereuse,setconfig,False,False,False,1/1,$^ sipforcereuse {0},comm.nics.sipnic.forceconnectionreuse={0}
+systemsetting sippassword,setconfig,False,False,False,1/1,$^ sippassword {0},comm.nics.sipnic.sippassword={0}
+systemsetting get sipproxyserver,getconfig,False,False,False,0/0,$^ sipproxyserver {0},$comm.nics.sipnic.sipproxyserver
+systemsetting sipproxyserver,setconfig,False,False,False,0/1,$^ sipproxyserver {0},comm.nics.sipnic.sipproxyserver={0}
+systemsetting get sipregistrarserver,getconfig,False,False,False,0/0,$^ sipregistrarserver {0},$comm.nics.sipnic.sipregistrarserver
+systemsetting sipregistrarserver,setconfig,False,False,False,0/1,$^ sipregistrarserver {0},comm.nics.sipnic.sipregistrarserver={0}
+systemsetting get sipconfigtype,getconfig,False,False,False,0/0,$^ sipconfigtype {0},$comm.nics.sipnic.sipconfigtype
+systemsetting sipconfigtype,setconfig,False,False,False,0/1,$^ sipconfigtype {0},comm.nics.sipnic.sipconfigtype={0}
+systemsetting get siptransportprotocol,getconfig,False,False,False,0/0,$^ siptransportprotocol {0},$comm.nics.sipnic.siptransportprotocol
+systemsetting siptransportprotocol,setconfig,False,False,False,1/1,$^ siptransportprotocol {0},comm.nics.sipnic.siptransportprotocol={0}
+systemsetting get sipusername,getconfig,False,False,False,0/0,$^ sipusername {0},$comm.nics.sipnic.sipusername
+systemsetting sipusername,setconfig,False,False,False,0/1,$^ sipusername {0},comm.nics.sipnic.sipusername={0}
+systemsetting get stereoenable,getconfig,False,False,False,0/0,$^ stereoenable {0},$audio.qualityprocess.stereoenable
+systemsetting stereoenable,setconfig,False,False,False,1/1,$^ stereoenable {0},audio.qualityprocess.stereoenable={0}
+systemsetting get telnetenabled,getconfig,False,True,Ture,0/0,$^ telnetenabled {0},$security.remoteaccess.telnet.enabled
+systemsetting telnetenabled,setconfig,False,True,True,1/1,$^ telnetenabled {0},security.remoteaccess.telnet.enabled={0}
+systemsetting get transcodingenabled,getconfig,False,False,False,0/0,$^ transcodingenabled {0},$comm.callpreference.transcodingenabled
+systemsetting transcodingenabled,setconfig,False,False,False,1/1,$^ transcodingenabled {0},comm.callpreference.transcodingenabled={0}
+systemsetting get uspairingenabled,getconfig,False,False,True,0/0,$^ uspairingenabled {0},$security.authentication.uspairing.enabled
+systemsetting uspairingenabled,setconfig,False,False,False,1/1,$^ uspairingenabled {0},security.authentication.uspairing.enabled={0}
+systemsetting get vcrdvdinlevel,getconfig,False,False,False,0/0,%[transresult._notsupportedcmd],$audio.in4.level
+#systemsetting vcrdvdinlevel,setconfig,False,False,False,1/1,$^ vcrdvdinlevel {0},audio.in4.level={0}
+systemsetting get vcrdvdoutlevel,getconfig,False,False,False,0/0,%[transresult._notsupportedcmd],$audio.in4.level
+#systemsetting vcrdvdoutlevel,setconfig,False,False,False,1/1,$^ vcrdvdoutlevel {0},audio.in4.level={0}
+systemsetting get webenabled,getconfig,False,False,False,0/0,$^ webenabled {0},$security.remoteaccess.web.enabled
+systemsetting webenabled,setconfig,False,False,False,1/1,$^ webenabled {0},security.remoteaccess.web.enabled={0}
+systemsetting get whitebalancemode,getconfig,False,False,True,0/0,$^ whitebalancemode {0},$sourceman.camera1.whitebalancemode
+systemsetting whitebalancemode,setconfig,False,True,True,1/1,$^ whitebalancemode {0},sourceman.camera1.whitebalancemode={0}
+systemsetting get whitebalancemode1,getconfig,False,False,True,0/0,$^ whitebalancemode1 {0},$sourceman.camera2.whitebalancemode
+systemsetting whitebalancemode1,setconfig,False,True,True,1/1,$^ whitebalancemode1 {0},sourceman.camera2.whitebalancemode={0}
+systemsetting get monitoroutputsignal1,getstatus,False,False,False,0,%[transresult._notsupportedcmd],nop
+#telnetechoeol,setconfig,False,True,True,1/1,$^ {0},eol={0}
+#telnetechoeol get,getconfig,False,True,True,0/0,$^ {0},$eol
+uptime get,system,False,False,False,0/0,$^ {0},get
+ususerkeepaliveh,keepalive,False,False,False,1/1,nop,nop
+usegatekeeper get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.gatekeeper.gatekeeperenable
+usegatekeeper,setconfig,False,True,True,1/1,$^ {0},comm.nics.h323nic.gatekeeper.gatekeeperenable={0}
+usepathnavigator get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.gatekeeper.usepathnavigator
+usepathnavigator,setconfig,False,True,True,1/1,$^ {0},comm.nics.h323nic.gatekeeper.usepathnavigator={0}
+vcbutton get,camera,False,False,False,0/0,nop,contentop get
+vcbutton play,camera,False,False,False,0/1,$@ succeeded,contentop play
+vcbutton register get,registration,False,False,False,0/0,nop,register-query $^
+vcbutton register,registration,False,False,False,0/0,nop,register-async $^ APIAsyncVCButtonEvent
+vcbutton source get,camera,False,False,False,0/0,nop,contentop source
+vcbutton stop,camera,False,False,False,0/0,$@ succeeded,contentop stop
+vcbutton unregister,registration,False,False,False,0/0,nop,unregister-async $^
+vcbutton map,camera,False,True,False,1/1,nop,contentop map
+vcraudioout get,getconfig,False,False,True,0/0,$^ {0},$audio.vcr.vcrdvdouton
+vcraudioout,setconfig,False,True,True,1/1,$^ {0},audio.vcr.vcrdvdouton={0}
+#vcrrecordsource,configpres,False,True,True,1/1,nop,nop
+ver[|sion],getconfig,False,False,False,0/0,$^ {0},$system.info.version
+vgaqualitypreference get,getconfig,False,False,True,0/0,$^ {0},$comm.conference.content.contentqualitypreference
+vgaqualitypreference,setconfig,False,True,True,1/1,$^ {0},comm.conference.content.contentqualitypreference={0}
+videocallorder,callorder,False,False,False,0/2,$@,nop
+videomute near,mute,False,True,False,1/1,$@ {0},nop
+visualboard get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.apps.visualboard.enabled
+visualboard,setconfig,False,True,True,1/1,$^ {0},uicontrol.apps.visualboard.enabled={0}
+visualboardzoom get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.apps.visualboard.enablezoom
+visualboardzoom,setconfig,False,True,True,1/1,$^ {0},uicontrol.apps.visualboard.enablezoom={0}
+visualboardppt get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.apps.visualboard.enablepowerpoint
+visualboardppt,setconfig,False,True,True,1/1,$^ {0},uicontrol.apps.visualboard.enablepowerpoint={0}
+visualboardswipe get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.apps.visualboard.enableswipe
+visualboardswipe,setconfig,False,True,True,1/1,$^ {0},uicontrol.apps.visualboard.enableswipe={0}
+volume down,volume,False,True,False,0/0,nop,down
+volume get,volume,False,False,False,0/0,$^ {0},get
+volume range,volume,False,True,False,0/0,$@ 0..50,range
+volume register,registration,False,False,False,0/0,nop,register $^
+volume register get,registration,False,False,False,0/0,nop,register-query $^
+volume set,volume,False,False,False,1/1,$^ {0},set
+volume unregister,registration,False,False,False,0/0,nop,unregister $^
+volume up,volume,False,True,False,0/0,nop,up
+wake,system,False,False,False,0/0,nop,nop
+wanipaddress get,getconfig,False,False,True,0/0,$^ {0},$comm.firewall.nat.natoutside
+wanipaddress set,setconfig,False,False,False,1/1,$^ {0},comm.firewall.nat.natoutside={0}
+webmonitoring,setpassword,False,False,False,2/2,nop,webmonitoring
+whoami,whoami,False,False,False,0/0,nop,nop
+whitelistenabled get,getconfig,False,False,True,0/0,$^ {0},$security.remoteaccess.web.whitelist.enabled
+whitelistenabled,setconfig,False,True,True,1/1,$^ {0},security.remoteaccess.web.whitelist.enabled={0}
+allowlistenabled get,getconfig,False,False,True,0/0,$^ {0},$security.remoteaccess.web.whitelist.enabled
+allowlistenabled,setconfig,False,True,True,1/1,$^ {0},security.remoteaccess.web.whitelist.enabled={0}
+snmpversionone get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.versionone
+snmpversionone,setconfig,False,True,True,1/1,$^ {0},management.snmp.versionone={0}
+snmpversiontwo get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.versiontwo
+snmpversiontwo,setconfig,False,True,True,1/1,$^ {0},management.snmp.versiontwo={0}
+snmpversionthree get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.versionthree
+snmpversionthree,setconfig,False,True,True,1/1,$^ {0},management.snmp.versionthree={0}
+snmpprivacyalgorithm get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.privacyalgorithm
+snmpprivacyalgorithm,setconfig,False,True,True,1/1,$^ {0},management.snmp.privacyalgorithm={0}
+snmpprivacypassword,setconfig,False,False,False,1/1,$^ {0},management.snmp.privacypassword={0}
+snmpusername get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.id
+snmpusername,setconfig,False,True,True,1/1,$^ {0},management.snmp.id={0}
+snmpauthenticationalgorithm get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.authenticationalgorithm
+snmpauthenticationalgorithm,setconfig,False,True,True,1/1,$^ {0},management.snmp.authenticationalgorithm={0}
+snmpauthenticationpassword,setconfig,False,False,False,1/1,$^ {0},management.snmp.authenticationpassword={0}
+snmpengineid get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.engineid
+snmpengineid,setconfig,False,True,True,1/1,$^ {0},management.snmp.engineid={0}
+snmplisteningport get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.listeningport
+snmplisteningport,setconfig,False,True,True,1/1,$^ {0},management.snmp.listeningport={0}
+snmptransportprotocol get,getconfig,False,False,True,0/0,$^ {0},$management.snmp.transportprotocol
+snmptransportprotocol,setconfig,False,True,True,1/1,$^ {0},management.snmp.transportprotocol={0}
+snmptargetaddress set 1,setconfig,False,False,False,1/1,$^ 1 {0},management.snmp.traptarget0.targetaddress={0}
+snmptargetaddress set 2,setconfig,False,False,False,1/1,$^ 2 {0},management.snmp.traptarget1.targetaddress={0}
+snmptargetaddress set 3,setconfig,False,False,False,1/1,$^ 3 {0},management.snmp.traptarget2.targetaddress={0}
+snmptargetaddress get 1,getconfig,False,False,False,0/0,$^ 1 {0},$management.snmp.traptarget0.targetaddress
+snmptargetaddress get 2,getconfig,False,False,False,0/0,$^ 2 {0},$management.snmp.traptarget1.targetaddress
+snmptargetaddress get 3,getconfig,False,False,False,0/0,$^ 3 {0},$management.snmp.traptarget2.targetaddress
+snmptargetport set 1,setconfig,False,False,False,1/1,$^ 1 {0},management.snmp.traptarget0.targetport={0}
+snmptargetport set 2,setconfig,False,False,False,1/1,$^ 2 {0},management.snmp.traptarget1.targetport={0}
+snmptargetport set 3,setconfig,False,False,False,1/1,$^ 3 {0},management.snmp.traptarget2.targetport={0}
+snmptargetport get 1,getconfig,False,False,False,0/0,$^ 1 {0},$management.snmp.traptarget0.targetport
+snmptargetport get 2,getconfig,False,False,False,0/0,$^ 2 {0},$management.snmp.traptarget1.targetport
+snmptargetport get 3,getconfig,False,False,False,0/0,$^ 3 {0},$management.snmp.traptarget2.targetport
+snmpprotocolversion set 1,setconfig,False,False,False,1/1,$^ 1 {0},management.snmp.traptarget0.protocolversion={0}
+snmpprotocolversion set 2,setconfig,False,False,False,1/1,$^ 2 {0},management.snmp.traptarget1.protocolversion={0}
+snmpprotocolversion set 3,setconfig,False,False,False,1/1,$^ 3 {0},management.snmp.traptarget2.protocolversion={0}
+snmpprotocolversion get 1,getconfig,False,False,False,0/0,$^ 1 {0},$management.snmp.traptarget0.protocolversion
+snmpprotocolversion get 2,getconfig,False,False,False,0/0,$^ 2 {0},$management.snmp.traptarget1.protocolversion
+snmpprotocolversion get 3,getconfig,False,False,False,0/0,$^ 3 {0},$management.snmp.traptarget2.protocolversion
+snmpmessagetype set 1,setconfig,False,False,False,1/1,$^ 1 {0},management.snmp.traptarget0.messagetype={0}
+snmpmessagetype set 2,setconfig,False,False,False,1/1,$^ 2 {0},management.snmp.traptarget1.messagetype={0}
+snmpmessagetype set 3,setconfig,False,False,False,1/1,$^ 3 {0},management.snmp.traptarget2.messagetype={0}
+snmpmessagetype get 1,getconfig,False,False,False,0/0,$^ 1 {0},$management.snmp.traptarget0.messagetype
+snmpmessagetype get 2,getconfig,False,False,False,0/0,$^ 2 {0},$management.snmp.traptarget1.messagetype
+snmpmessagetype get 3,getconfig,False,False,False,0/0,$^ 3 {0},$management.snmp.traptarget2.messagetype
+snmptraptargetenable set 1,setconfig,False,False,False,1/1,$^ 1 {0},management.snmp.traptarget0.traptargetenable={0}
+snmptraptargetenable set 2,setconfig,False,False,False,1/1,$^ 2 {0},management.snmp.traptarget1.traptargetenable={0}
+snmptraptargetenable set 3,setconfig,False,False,False,1/1,$^ 3 {0},management.snmp.traptarget2.traptargetenable={0}
+snmptraptargetenable get 1,getconfig,False,False,False,0/0,$^ 1 {0},$management.snmp.traptarget0.traptargetenable
+snmptraptargetenable get 2,getconfig,False,False,False,0/0,$^ 2 {0},$management.snmp.traptarget1.traptargetenable
+snmptraptargetenable get 3,getconfig,False,False,False,0/0,$^ 3 {0},$management.snmp.traptarget2.traptargetenable
+snapshot,snapshot,False,False,False,1/3,nop,nop
+
+########################################################################################################################################
+# The bottom part is the API command which will not be supported in this Draco release, there is possibility some of them need to be   .
+# supported in release afterwards, person need carefully pick them up, and move them to upper portion of the file.
+#######################################################################################################################################
+
+
+
+#private command start
+#_restorecamera,sendcommand,False,True,True,1/1,$^ $* success,!camera near restorecameradefault {0}
+#_camera near timer,camera,False,False,False,1/1,nop,timer
+#_chaircontrol register,registration,True,False,False,0/0,nop,register chaircontrol
+#_chaircontrol unregister,registration,True,False,False,0/0,nop,unregister chaircontrol
+#_dumpfile,dump,True,False,False,1,nop,nop
+#_dumpscreen,apiforward,False,False,False,1,nop,dumpfile /ui/resource/screendef/{0}.txt
+#_echobadcfg,getstatus,True,False,False,0,error: $* not supported for this configuration,nop
+#_echonotonthismodel,getstatus,True,False,False,0,error: this command is not supported on this model,nop
+#_encryption get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.encryptionenable
+#_encryption,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.encryptionenable={0}
+#_execwithoutecho,execwithoutecho,True,False,False,1,nop,$*
+#_notcmd,getstatus,True,False,False,0,error: command not found
+#_translate parameter,translateparam,False,False,False,1,{0},
+#_translate result,translateresult,False,False,False,1,{0},nop
+#_showpopuphelper,senduimsg,True,False,False,1,nop,!Screen request showpopup $*
+#_control login,control,False,False,False,3/3,nop,login
+#_control logout,control,False,False,False,1/1,nop,
+#_control isAllowed,control,False,False,False,1/10,nop,isallowed
+#_control lastlogininfo,control,False,False,False,0/0,nop,lastlogininfo
+#private command end
+#abk,abkcmds,False,False,False,1,nop,nop
+#addressdisplayedingab get,getconfig,False,False,True,0/0,$^ {0},$dir.gds.publishingab
+#addressdisplayedingab,setconfig,False,False,False,1/1,$^ {0},dir.gds.publishingab={0}
+#alertusertone get,getconfig,False,False,True,0/0,$^ {0},$audio.alerttone
+#alertusertone,setconfig,False,True,True,1/1,$^ {0},audio.alerttone={0}
+#alertvideotone get,getconfig,False,False,True,0/0,$^ {0},$audio.audiotone.alertvideotone
+#alertvideotone,setconfig,False,True,True,1/1,$^ {0},audio.audiotone.alertvideotone={0}
+#allowabkchanges get,getconfig,False,True,True,0/0,$^ {0},$dir.allowdirchange
+#allowabkchanges,setconfig,False,True,True,1/1,$^ {0},dir.allowdirchange={0}
+#allowcamerapresetssetup get,getconfig,False,True,True,0/0,$^ {0},$allowcamerapresetssetup
+#allowcamerapresetssetup,setconfig,False,True,True,1/1,$^ {0},allowcamerapresetssetup={0}
+#allowdialing get,getconfig,False,False,True,0/0,$^ {0},$allowdialing
+#allowdialing,setconfig,False,True,True,1/1,$^ {0},allowdialing={0}
+#allowmixedcalls get,getconfig,False,False,True,0/0,$^ {0},$allowmixedcalls
+#allowmixedcalls,setconfig,False,True,True,1/1,$^ {0},allowmixedcalls={0}
+#allowstreaming get,getconfig,False,False,True,0/0,$^ {0},$allowstreaming
+#allowstreaming,setconfig,False,True,True,1/1,$^ {0},allowstreaming={0}
+#allowusersetup get,getconfig,False,False,True,0/0,$^ {0},$security.allowusersetup
+#allowusersetup,setconfig,False,True,True,1/1,$^ {0},security.allowusersetup={0}
+#areacode get,getconfig,False,False,True,0/0,$^ {0},$comm.callsetting.callfeatures.dialplan.areacode
+#areacode set,setconfig,False,True,True,1/1,$^ {0},comm.callsetting.callfeatures.dialplan.areacode={0}
+#audiotransmitlevel register get,registration,False,False,False,0/0,nop,register-query $^
+#autodiscovernat get,getconfig,False,False,True,0/0,$^ {0},$sys.ip.firewall.natconfigmode
+#autodiscovernat,setconfig,False,True,True,1/1,$^ {0},sys.ip.firewall.natconfigmode={0}
+#autoh323dialing get,getconfig,False,False,True,0/0,$^ {0},$autoh323dialing
+#autoh323dialing,setconfig,False,True,True,1/1,$^ {0},autoh323dialing={0}
+#backlightcompensation get,getconfig,False,False,True,0/0,$^ {0},$camerasys.backlightcompensation
+#backlightcompensation set,setconfig,False,True,True,1/1,$^ {0},camerasys.backlightcompensation={0}
+#bri1enable get,apiforward,False,False,True,0/0,nop,-_polyif %[hasbri] _echo $^ $[brilineenable0_0] else _echobadcfg $@
+#bri1enable,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasbri] -systemsetting brilineenable0_0 {0} else _echobadcfg $^ $*
+#bri2enable get,apiforward,False,False,True,0/0,nop,-_polyif %[hasbri] _echo $^ $[brilineenable0_1] else _echobadcfg $@
+#bri2enable,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasbri] -systemsetting brilineenable0_1 {0} else _echobadcfg $^ $*
+#bri3enable get,apiforward,False,False,True,0/0,nop,-_polyif %[hasbri] _echo $^ $[brilineenable0_2] else _echobadcfg $@
+#bri3enable,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasbri] -systemsetting brilineenable0_2 {0} else _echobadcfg $^ $*
+#bri4enable get,apiforward,False,False,True,0/0,nop,-_polyif %[hasbri] _echo $^ $[brilineenable0_3] else _echobadcfg $@
+#bri4enable,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasbri] -systemsetting brilineenable0_3 {0} else _echobadcfg $^ $*
+#button,buttonhandler,False,False,False,1/99,nop,normal
+#calendarpollinginterval get,getconfig,False,False,False,0/0,$^ {0},$calendarpollinginterval
+#calendarpollinginterval,setconfig,False,False,False,1/1,$^ {0},calendarpollinginterval={0}
+#calldetail,calldetailretrieve,False,True,False,1/1,nop,nop
+#calldetail range,calldetailrange,False,True,False,0/0,nop,nop
+#calldetailreport get,getconfig,False,False,True,0/0,$^ {0},$usecalllog
+#calldetailreport,setconfig,False,True,True,1/1,$^ {0},usecalllog={0}
+#callstats,callstats,False,False,False,0/1,nop,callstats
+#camera far tracking,camera,False,False,False,1/1,$^ far tracking,fartracking
+#camera near listcontent,camera,False,False,False,0/0,nop,cameralistcontent
+#camera near onetouch,sendcommand,False,True,True,1/1,$^ $* success,!camera near onepushawb {0}
+camera near tracking get,camera,False,False,False,0/0,$@,cameratrackingmode
+camera near tracking,camera,False,True,True,1/1,$^ near tracking {0},cameratrackingmodeset
+#camera near setgencmd,camera,False,False,False,3/20,$@ $*,nearsetgencmd
+#camera near getgencmd,camera,False,False,False,3/20,$@ {0},neargetgencmd
+## This command is added to support debug Rabbit Eye
+## They shouldn't be documented.
+#camera near redebug,sendcommand,False,False,False,1/20,$@ $*,!camera near rabbiteye redebug $*
+#enablepresettracking,setconfig,False,True,True,1/1,$^ {0},enablepresettracking={0}
+#enablepresettracking get,getconfig,False,False,True,0/0,$^ {0},$enablepresettracking
+## These commands are added to support preview of LBJ/Reagan sources from Venus
+## They shouldn't be documented.
+#camera start-preview,camera,False,False,False,1/1,$@ $*,startpreview
+#camera stop-preview,camera,False,False,False,1/1,$@ $*,stoppreview
+#camera send-content,camera,False,False,False,1/1,$@ $*,sendcontent
+#camera stop-content,camera,False,False,False,1/1,$@ $*,stopcontent
+#camera1input get,getconfig,False,False,True,0/0,$^ {0},$camerainputsignal
+#camera1input,setconfig,False,True,True,1/1,$^ {0},camerainputsignal={0}
+#camera1ptz get,getconfig,False,False,True,0/0,$^ {0},$camera1ptz
+#camera1ptz,setconfig,False,True,True,1/1,$^ {0},camera1ptz={0}
+#camera2input get,getconfig,False,False,True,0/0,$^ {0},$camerainputsignal1
+#camera2input,setconfig,False,True,True,1/1,$^ {0},camerainputsignal1={0}
+#camera3input get,getconfig,False,False,True,0/0,$^ {0},$camerainputsignal2
+#camera3input,setconfig,False,True,True,1/1,$^ {0},camerainputsignal2={0}
+#camera4ptz get,getconfig,False,False,True,0/0,$^ {0},$camera4ptz
+#camera4ptz,setconfig,False,True,True,1/1,$^ {0},camera4ptz={0}
+#cameradirection get,getconfig,False,False,True,0/0,$^ {0},$sourceman.pandirection
+#cameradirection,setconfig,False,True,True,1/1,$^ {0},sourceman.pandirection={0}
+#camerainput,caminput,False,False,True,1/2,nop,nop
+#cameraname1 get,getconfig,False,False,False,0/0,$^ {0},$cameraname
+#cameraname1 set,setconfig,False,False,False,0/1,$^ {0},cameraname={0}
+#cameraname2 get,getconfig,False,False,False,0/0,$^ {0},$cameraname1
+#cameraname2 set,setconfig,False,False,False,0/1,$^ {0},cameraname1={0}
+#cameraname3 get,getconfig,False,False,False,0/0,$^ {0},$cameraname2
+#cameraname3 set,setconfig,False,False,False,0/1,$^ {0},cameraname2={0}
+#chaircontrol register,chaircontrol,False,False,False,0/0,nop,register
+#chaircontrol unregister,chaircontrol,False,False,False,0/0,nop,unregister
+#chaircontrol get,registration,False,False,False,0/0,nop,register-query $^
+#chaircontrol end_conf,chaircontrol,False,False,False,0/0,$^,end_conf
+#chaircontrol hangup_term,chaircontrol,False,False,False,1/1,$^,hangup_term
+#chaircontrol list,chaircontrol,False,False,False,0/0,$^,list
+#chaircontrol register[| get],chaircontrol,False,False,False,0/0,nop,register
+#chaircontrol rel_chair,chaircontrol,False,False,False,0/0,$^,rel_chair
+#chaircontrol req_chair,chaircontrol,False,False,False,0/0,$^,req_chair
+#chaircontrol req_floor,chaircontrol,False,False,False,0/0,$^,req_floor
+#chaircontrol req_term_name,chaircontrol,False,False,False,1/1,$^,req_term_name
+#chaircontrol req_vas,chaircontrol,False,False,False,0/0,$^,req_vas
+#chaircontrol set_broadcaster,chaircontrol,False,False,False,1/1,$^,set_broadcaster
+#chaircontrol set_password,#chaircontrol,False,False,False,1/1,$^,set_password     <"string">
+#chaircontrol set_term_name,chaircontrol,False,False,False,2/2,$^,set_term_name
+#chaircontrol stop_view,chaircontrol,False,False,False,0/0,$^,stop_view
+#chaircontrol view,chaircontrol,False,False,False,1/1,$^,view
+#chaircontrol view_broadcaster,chaircontrol,False,False,False,0/0,$^,view_broadcaster
+#clientvalidatepeercert get,getconfig,False,True,True,0/0,$^ {0},$security.cert.validateclients
+#clientvalidatepeercert,setconfig,False,True,True,1/1,$^ {0},security.cert.validateclients={0}
+#colorbar,apiagent,False,True,False,1/1,$^ $*,$*
+#colorscheme get,getconfig,False,False,True,0/0,$^ {0},$screentheme
+#colorscheme,setconfig,False,True,True,1/1,$^ {0},screentheme={0}
+#configchange get,registration,False,False,False,0/0,nop,register-query $^
+#configchange register,registration,False,False,False,0/0,nop,register $^
+#configchange unregister,registration,False,False,False,0/0,nop,unregister $^
+#configdisplay monitor1 get,getconfig,False,False,True,0/0,$^ monitor1 {0} {1},$video.monitor1.signaltype|$video.monitor1.monitordisplay
+#configdisplay monitor1,setconfig,False,True,True,2/2,$^ monitor1 {0} {1},video.monitor1.signaltype={0}|video.monitor1.monitordisplay={1}
+#configdisplay monitor1 component 16:9 720p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=component|video.monitor1.cabletype.component.resolution=1280x720p 60Hz
+#configdisplay monitor1 component 16:9 1080i,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=component|video.monitor1.cabletype.component.resolution=1920x1080i 60Hz
+#configdisplay monitor1 component 16:9 1080p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=component|video.monitor1.cabletype.component.resolution=1920x1080p 50Hz
+#configdisplay monitor1 dvi 4:3,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1024x768p 60Hz
+#configdisplay monitor1 dvi 16:9,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1280x720p 60H
+#configdisplay monitor1 dvi 16:9 60hz1080p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1920x1080p 60Hz
+#configdisplay monitor1 dvi 16:9 50hz1080p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1920x1080p 50Hz
+#configdisplay monitor1 dvi 16:9 60hz1080i,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1920x1080i 60Hz
+#configdisplay monitor1 dvi 16:9 50hz1080i,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1920x1080i 50Hz
+#configdisplay monitor1 dvi 16:9 60hz720p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1280x720p 60Hz
+#configdisplay monitor1 dvi 16:9 50hz720p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=dvia|video.monitor1.cabletype.dvia.resolution=1280x720p 50Hz
+#configdisplay monitor1 vga 4:3,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=60HZ1024x768
+#configdisplay monitor1 vga 16:9,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=60HZ1280x720
+#configdisplay monitor1 vga 16:9 50hz720p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=50HZ1280x720
+#configdisplay monitor1 vga 16:9 60hz720p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=60HZ1280x720
+#configdisplay monitor1 vga 16:9 60hz1080p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=60HZ1920x1080P
+#configdisplay monitor1 vga 16:9 50hz1080p,setconfig,False,False,False,0/0,$@,video.monitor1.signaltype=vga|vgaresolution=50HZ1920x1080P
+#configdisplay monitor2 get,getconfig,False,False,True,0/0,$^ monitor2 {0} {1},video.monitor2.signaltype|$video.monitor2.monitordisplay
+#configdisplay monitor2 off,setconfig,False,False,False,0/0,$@,video.monitor2.monitordisplay=Off
+#configdisplay monitor2,setconfig,False,True,True,2/2,$^ monitor2 {0} {1},video.monitor2.signaltype={0}|video.monitor2.monitordisplay={1}
+#configdisplay monitor2 component 16:9 720p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=component|video.monitor2.cabletype.component.resolution=1280x720p 60Hz
+#configdisplay monitor2 component 16:9 1080i,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=component|video.monitor2.cabletype.component.resolution=1920x1080i 60Hz
+#configdisplay monitor2 component 16:9 1080p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=component|video.monitor2.cabletype.component.resolution=1920x1080p 50Hz
+#configdisplay monitor2 dvi 4:3,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.Resolution=1024x768p 60Hz|monitor2display=4:3
+#configdisplay monitor2 dvi 16:9,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.Resolution=1280x720p 60Hz0|monitor2display=16:9
+#configdisplay monitor2 dvi 16:9 60hz1080p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1920x1080p 60Hz
+#configdisplay monitor2 dvi 16:9 50hz1080p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1920x1080p 50Hz
+#configdisplay monitor2 dvi 16:9 60hz1080i,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1920x1080i 60Hz
+#configdisplay monitor2 dvi 16:9 50hz1080i,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1920x1080i 50Hz
+#configdisplay monitor2 dvi 16:9 60hz720p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1280x720p 60Hz
+#configdisplay monitor2 dvi 16:9 50hz720p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=dvia|video.monitor2.cabletype.dvia.resolution=1280x720p 50Hz
+#configdisplay monitor2 vga 4:3,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=60HZ1024x768|monitor2display=4:3
+#configdisplay monitor2 vga 16:9,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=60HZ1280x720|monitor2display=16:9
+#configdisplay monitor2 vga 16:9 50hz720p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=50HZ1280x720
+#configdisplay monitor2 vga 16:9 60hz720p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=60HZ1280x720
+#configdisplay monitor2 vga 16:9 60hz1080p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=60HZ1920x1080P
+#configdisplay monitor2 vga 16:9 50hz1080p,setconfig,False,False,False,0/0,$@,video.monitor2.signaltype=vga|vgaresolution1=50HZ1920x1080P
+#configdisplay,getconfig,False,False,True,1/1,$^ monitor1 {0} {1}%[chcomma] monitor2 {2} {3},video.monitor1.signalType|video.monitor1.monitordisplay|video.monitor2.signalType|video.monitor2.monitordisplay
+#configdisplay get,getconfig,False,False,True,0/0,$^ monitor1 {0} {1}%[chcomma] monitor2 {2} {3},$monitoroutputsignal|$monitor1display|$monitoroutputsignal1|$monitor2display
+#confirmdiradd get,getconfig,False,False,True,0/0,$^ {0},$uicontrol.callapp.confirmdiradd
+#confirmdiradd,setconfig,False,True,True,1/1,$^ {0},uicontrol.callapp.confirmdiradd={0}
+#confirmdirdel get,getconfig,False,False,True,0/0,$^ {0},$uicontrol.dirapp.confirmdirdel
+#confirmdirdel,setconfig,False,True,True,1/1,$^ {0},uicontrol.dirapp.confirmdirdel={0}
+#country get,getconfig,False,False,False,0/0,$^ {0},$location.country
+#country set,setconfig,False,False,False,1/1,$^ {0},location.country={0}
+#country list,dump,False,False,False,0/0,nop,$@ begin|$@ end|country.choice
+#cts get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[cts] else _echobadcfg $@
+#cts,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#data register,registration,False,False,False,0/0,nop,register $^
+#data register get,registration,False,False,False,0/0,nop,register-query $^
+#data send,sendcommand,False,False,False,3/3,command sent conference data send 0 {0} {1} {2},!conference data send 0 {0} {1} {2}
+#data unregister,registration,False,False,False,0/0,nop,unregister $^
+#dcd,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#dcdfilter get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[dcdfilter] else _echobadcfg $@
+#dcdfilter,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#destunreachabletx get,getconfig,False,False,True,0/0,$^ {0},$lan.gendestunreachable
+#destunreachabletx,setconfig,False,True,True,1/1,$^ {0},lan.gendestunreachable={0}
+#dial any,callcmds,False,False,False,1/2,nop,$@ $*
+#dial disable auto-mode,setconfig,False,False,False,0/0,$^ auto-mode disabled,api-autodial=False
+#dial enable auto-mode,setconfig,False,False,False,0/0,$^ auto-mode enabled,api-autodial=True
+#dial query auto-mode,getconfig,False,False,True,0/0,$^ auto-mode {0},$api-autodial
+#dialchannels get,getconfig,False,False,True,0/0,$^ {0},$dialparallel
+#dialchannels set,setconfig,False,True,True,1/1,$^ {0},dialparallel={0}
+#dialingdisplay get,homescreenhandler,False,False,False,0,nop,get
+#dialingdisplay dialingentry,homescreenhandler,False,False,False,0,nop,dialingentry
+#dialingdisplay displaymarquee,homescreenhandler,False,False,False,0,nop,displaymarquee
+#dialingdisplay none,homescreenhandler,False,False,False,0,nop,none
+#dialingentry get,getconfig,False,False,True,0/0,$^ {0},$dialingentryfield
+#dialingentry,setconfig,False,True,True,1/1,$^ {0},dialingentryfield={0}
+#diffservaudio get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.diffservaudio
+#diffservaudio set,setconfig,False,False,False,1/1,$^ {0},comm.qos.diffservaudio={0}
+#diffservfecc get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.diffservfecc
+#diffservfecc set,setconfig,False,False,False,1/1,$^ {0},comm.qos.diffservfecc={0}
+#diffservvideo get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.diffservvideo
+#diffservvideo set,setconfig,False,False,False,1/1,$^ {0},comm.qos.diffservvideo={0}
+#directory yes,homescreenhandler,False,False,False,0,nop,yes
+#directory no,homescreenhandler,False,False,False,0,nop,no
+#directory get,homescreenhandler,False,False,False,0,nop,get
+#display call,callinfoall,False,False,False,0/0,nop,nop
+#display whoami,whoami,False,False,False,0/0,nop,nop
+#displayglobaladdresses get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.dirapp.globaladdrdisplay
+#displayglobaladdresses,setconfig,False,True,True,1/1,$^ {0},uicontrol.dirapp.globaladdrdisplay={0}
+#displaygraphics get,getconfig,False,False,True,0/0,$^ {0},$displayiconsincall
+#displaygraphics,setconfig,False,True,True,1/1,$^ {0},displayiconsincall={0}
+#displayipext get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.displayh323extension
+#displayipext,setconfig,False,True,True,1/1,$^ {0},comm.nics.h323nic.displayh323extension={0}
+#displayipisdninfo yes,homescreenhandler,False,False,False,0,nop,yes
+#displayipisdninfo no,homescreenhandler,False,False,False,0,nop,no
+#displayipisdninfo both,homescreenhandler,False,False,False,0,nop,both
+#displayipisdninfo ip-only,homescreenhandler,False,False,False,0,nop,ip-only
+#displayipisdninfo isdn-only,homescreenhandler,False,False,False,0,nop,isdn-only
+#displayipisdninfo none,homescreenhandler,False,False,False,0,nop,none
+#displayipisdninfo get,homescreenhandler,False,False,False,0,nop,get
+#displayparams,displayparams,False,False,False,0/1,nop,nop
+#dme3wayenable get,getconfig,False,False,True,0/0,$^ {0},$dme3wayenable
+#dme3wayenable,setconfig,False,True,True,1/1,$^ {0},dme3wayenable={0}
+#dsr get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[dsr] else _echobadcfg $@
+#dsr,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#dsranswer get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[dsranswer] else _echobadcfg $@
+#dsranswer,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#dtr get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[dtr] else _echobadcfg $@
+#dtr,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#echo,getstatus,False,False,False,0,$*,nop
+#encryptionstate get,getconfig,False,False,True,0/0,$^ {0},$apiencryptionstateregister8
+#encryptionstate,setconfig,False,True,True,1/1,$^ {0},apiencryptionstateregister8={0}
+#execwithoutecho,execwithoutecho,False,False,False,1,nop,$*
+#farnametimedisplay get,getconfig,False,False,True,0/0,$^ {0},$farnamedisplaytime
+#farnametimedisplay,setconfig,False,True,True,1/1,$^ {0},farnamedisplaytime={0}
+#flash,callcmds,False,False,False,1/2,nop,nop
+#forcecertverify get,getconfig,False,False,True,0/0,$^ {0},$forcecertverify
+#forcecertverify,setconfig,False,True,True,1/1,$^ {0},forcecertverify={0}
+#gabk,abkcmds,False,False,False,1,nop,nop
+#gabpassword set,apiforward,False,False,False,0/1,$^ {0},-_polyif %[varnonnull.sw] -_internalsetconfig globaldirectoryurlsp "{0}" else _translate result $^.setInvalid
+#gabserverip get,getconfig,False,False,True,0/0,$^ {0},$dir.gds.url
+#gabserverip set,setconfig,False,False,False,1/1,$^ {0},dir.gds.url={0}
+#gatewayareacode get,getconfig,False,False,True,0/0,$^ {0},$gatewaynumberareacode
+#gatewayareacode set,setconfig,False,False,False,1/1,$^ {0},gatewaynumberareacode={0}
+#gatewaycountrycode get,getconfig,False,False,True,0/0,$^ {0},$gatewaynumbercountrycode
+#gatewaycountrycode set,setconfig,False,False,False,1/1,$^ {0},gatewaynumbercountrycode={0}
+#gatewayext get,getconfig,False,False,True,0/0,$^ {0},$comm.nics.h323nic.h323extension
+#gatewayext set,setconfig,False,False,False,1/1,$^ {0},comm.nics.h323nic.h323extension={0}
+#gatewaynumber get,getconfig,False,False,True,0/0,$^ {0},$gatewaynumber
+#gatewaynumber set,setconfig,False,False,False,1/1,$^ {0},gatewaydirectorynumber={0}
+#gatewaynumbertype get,getconfig,False,False,True,0/0,$^ {0},$gatewaynumbertype
+#gatewaynumbertype,setconfig,False,True,True,1/1,$^ {0},gatewaynumbertype={0}
+#gatewayprefix get,gatewayaffix,False,False,False,1/1,nop,gatewayprefixget
+#gatewayprefix set,gatewayaffix,False,False,False,2/2,nop,gatewayprefixset
+#gatewaysetup,gatewayaffix,False,False,False,0/0,nop,gatewaysetup
+#gatewaysuffix get,gatewayaffix,False,False,False,1/1,nop,gatewaysuffixget
+#gatewaysuffix set,gatewayaffix,False,False,False,2/2,nop,gatewaysuffixset
+#gdsdirectory get,getconfig,False,True,True,0/0,$^ {0},$dir.gds.enabled
+#gdsdirectory,setconfig,False,True,True,1/1,$^ {0},dir.gds.enabled={0}
+#gendialtonepots,gendial,False,False,False,1/1,nop,nop
+#get screen,apiforward,False,False,False,0/0,nop,screen
+#globaldir,abkcmds,False,False,False,1,nop,nop
+#gmscity get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecity
+#gmscity set,setconfig,False,False,False,1/1,$^ {0},globalmanagecity={0}
+#gmscontactemail get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecontactemail
+#gmscontactemail set,setconfig,False,False,False,1/1,$^ {0},globalmanageemail={0}
+#gmscontactfax get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecontactfax
+#gmscontactfax set,setconfig,False,False,False,1/1,$^ {0},globalmanagecontactfax={0}
+#gmscontactnumber get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecontactnumber
+#gmscontactnumber set,setconfig,False,False,False,1/1,$^ {0},globalmanagecontactnumber={0}
+#gmscontactperson get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecontactperson
+#gmscontactperson set,setconfig,False,False,False,1/1,$^ {0},globalmanagecontactperson={0}
+#gmscountry get,getconfig,False,False,True,0/0,$^ {0},$globalmanagecountry
+#gmscountry set,setconfig,False,False,False,1/1,$^ {0},globalmanagecountry={0}
+#gmsstate get,getconfig,False,False,True,0/0,$^ {0},$globalmanagestate
+#gmsstate set,setconfig,False,False,False,1/1,$^ {0},globalmanagestate={0}
+#gmstechsupport get,getconfig,False,False,True,0/0,$^ {0},$globalmanagetechsupport
+#gmstechsupport set,setconfig,False,False,False,1/1,$^ {0},globalmanagetechsupport={0}
+#graphicsmonitor get,getconfig,False,False,True,0/0,$^ {0},$graphicsmonitor
+#graphicsmonitor,setconfig,False,True,True,1/1,$^ {0},graphicsmonitor={0}
+#groupenter,grouphandler,False,False,False,1/1,$^ {0},groupenter
+#groupleave,grouphandler,False,False,False,1/1,$^ {0},groupleave
+#groupnamegds get,getconfig,False,False,True,0/0,$^ {0},$grouppolycomgds
+#groupnamegds set,setconfig,False,True,True,1/1,$^ {0},grouppolycomgds={0}
+#groupnameldap get,getconfig,False,False,True,0/0,$^ {0},$groupldap
+#groupnameldap set,setconfig,False,True,True,1/1,$^ {0},groupldap={0}
+#groupnamenortel get,getconfig,False,False,True,0/0,$^ {0},$groupnortel
+#groupnamenortel set,setconfig,False,True,True,1/1,$^ {0},groupnortel={0}
+#groupnameocs get,getconfig,False,False,True,0/0,$^ {0},$grouplcs
+#groupnameocs set,setconfig,False,True,True,1/1,$^ {0},grouplcs={0}
+#h331audiomode get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[h331audioprotocol] else _echobadcfg $@
+#h331audiomode,h331handler,False,True,True,1/1,$^ {0},h331audiomodeset
+#h331dualstream get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[h331dualstream] else _echobadcfg $@
+#h331dualstream,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig h331dualstream {0} else _echobadcfg $^ $*
+#h331framerate get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[h331framerate] else _echobadcfg $@
+#h331framerate,apiforward,False,False,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#h331videoformat get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[h331videoformat] else _echobadcfg $@
+#h331videoformat,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#h331videoprotocol get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[h331videoprotocol] else _echobadcfg $@
+#h331videoprotocol,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#homecallquality get,getconfig,False,False,True,0/0,$^ {0},$mainscreencallquality
+#homecallquality,setconfig,False,True,True,1/1,$^ {0},mainscreencallquality={0}
+#homemultipoint get,getconfig,False,False,True,0/0,$^ {0},$mainscreenmultipoint
+#homemultipoint,setconfig,False,True,True,1/1,$^ {0},mainscreenmultipoint={0}
+#homerecentcalls get,getconfig,False,True,True,0/0,$^ {0},$uicontrol.homeapp.showrecentcalls
+#homerecentcalls,setconfig,False,True,True,1/1,$^ {0},uicontrol.homeapp.showrecentcalls={0}
+#homesystem get,getconfig,False,False,True,0/0,$^ {0},$uicontrol.menuapp.showsysconfig
+#homesystem,setconfig,False,True,True,1/1,$^ {0},uicontrol.menuapp.showsysconfig={0}
+#homesystemname get,getconfig,False,False,True,0/0,$^ {0},$uicontrol.menuapp.showsysinfo
+#homesystemname,setconfig,False,True,True,1/1,$^ {0},uicontrol.menuapp.showsysinfo={0}
+#icmpoutpacketrate get,getconfig,False,False,False,0/0,$^ {0},$system.network.icmptransratelimit
+#icmpoutpacketrate set,setconfig,False,False,False,1/1,$^ {0},system.network.icmptransratelimit={0}
+#idletimeoutapi get,getconfig,False,False,True,0/0,$^ {0},$idletimeoutapi
+#idletimeoutapi,setconfig,False,True,True,1/1,$^ {0},idletimeoutapi={0}
+#ignoreredirect get,getconfig,False,False,True,0/0,$^ {0},$lan.ignoreredirect
+#ignoreredirect,setconfig,False,True,True,1/1,$^ {0},lan.ignoreredirect={0}
+#incompleterevocationcheck get,getconfig,False,False,True,0/0,$^ {0},$security.revocation.incomplete
+#incompleterevocationcheck,setconfig,False,True,True,1/1,$^ {0},security.revocation.incomplete={0}
+#ipisdninfo both,homescreenhandler,False,False,False,0,nop,both
+#ipisdninfo ip-only,homescreenhandler,False,False,False,0,nop,ip-only
+#ipisdninfo isdn-only,homescreenhandler,False,False,False,0,nop,isdn-only
+#ipisdninfo none,homescreenhandler,False,False,False,0,nop,none
+#ipisdninfo get,homescreenhandler,False,False,False,0,nop,get
+#ipprecaudio get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.intservqos.ipprecaudio
+#ipprecaudio set,setconfig,False,False,False,1/1,$^ {0},comm.qos.intservqos.ipprecaudio={0}
+#ipprecfecc get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.intservqos.ipprecfecc
+#ipprecfecc set,setconfig,False,False,False,1/1,$^ {0},comm.qos.intservqos.ipprecfecc={0}
+#ipprecvideo get,getconfig,False,False,False,0/0,$^ {0},$comm.qos.intservqos.ipprecvideo
+#ipprecvideo set,setconfig,False,False,False,1/1,$^ {0},comm.qos.intservqos..ipprecvideo={0}
+#ipstat,ipstat,False,False,False,0/1,nop,nop
+#ipv6addrmode get,getconfig,False,True,True,0/0,$^ {0},$lan.ipv6.dhcpmode
+#ipv6addrmode,setconfig,False,True,True,1/1,$^ {0},lan.ipv6.dhcpmode={0}
+#ipv6linklocal get,getconfig,False,False,False,0/0,$^ {0},$lan.ipv6.linklocaladdress
+#ipv6linklocal set,setconfig,False,False,False,1/1,$^ {0},lan.ipv6.linklocaladdress={0}
+#ipv6sitelocal get,getconfig,False,False,False,0/0,$^ {0},$lan.ipv6.sitelocaladdress
+#ipv6sitelocal set,setconfig,False,False,False,1/1,$^ {0},lan.ipv6.sitelocaladdress={0}
+#ipv6globaladdress get,getconfig,False,False,False,0/0,$^ {0},$lan.ipv6.globaladdress
+#ipv6globaladdress set,setconfig,False,False,False,1/1,$^ {0},lan.ipv6.globaladdress={0}
+#ipv6defaultgateway get,getconfig,False,False,False,0/0,$^ {0},$lan.ipv6.defaultgateway
+#ipv6defaultgateway set,setconfig,False,False,False,1/1,$^ {0},lan.ipv6.defaultgateway={0}
+#isdnareacode get,getconfig,False,False,True,0/0,$^ {0},$areacode0_0
+#isdnareacode set,setconfig,False,True,True,1/1,$^ {0},areacode0_0={0}
+#isdncountrycode get,getconfig,False,False,True,0/0,$^ {0},$isdncountrycode
+#isdncountrycode,setconfig,False,False,False,1/1,$^ {0},isdncountrycode={0}
+#isdndialingprefix get,getconfig,False,False,True,0/0,$^ {0},$isdndialingprefix
+#isdndialingprefix,setconfig,False,False,False,1/1,$^ {0},isdndialingprefix={0}
+#isdndialspeed,isdndialspeed,False,False,False,0/3,nop,nop
+#isdnprefix get,getconfig,False,False,True,0/0,$^ {0},$pbxprefix
+#isdnprefix set,setconfig,False,True,True,1/1,$^ {0},pbxprefix={0}
+#isdnswitch get,apiforward,False,False,True,0/0,nop,_polyif %[hasbri] _echo $@ $[switchprotocol] else _echobadcfg $@
+#isdnswitch,apiforward,False,False,True,1/1,$^ {0},-_polyif !%[isinacall] -_internalsetconfig switchprotocol %[transparam.{0}] else _echonotinacall $@
+#ismcu callid,ismcuofcallid,False,False,False,1/1,nop,nop
+#itpmodel get,getconfig,False,False,False,0/0,$^ {0},$itpmodel
+#itpmodel,setconfig,False,False,False,1/1,$^ {0},itpmodel={0}
+#jvmtask,jvmdebug,False,False,False,0/0,nop,jvmtask
+#imageutil,jvmdebug,False,False,False,1/100,nop,imageutil
+#jvmheapdumps,jvmdebug,False,False,False,1/2,nop,heapdump
+#keypadaudioconf get,getconfig,False,False,True,0/0,$^ {0},keypadaudioconf
+#keypadaudioconf,setconfig,False,True,False,1/1,$^ {0},keypadaudioconf={0}
+#language get,getconfig,False,False,True,0/0,$^ {0},$location.language
+#language set,setconfig,False,True,True,1/1,$^ {0},location.language={0}
+#languagetool,languagetoolcmd,False,False,False,0/0,nop,nop
+#lineoutputslevel get,getconfig,False,False,True,0/0,$^ {0},$lineoutputlevelredandwhite
+#lineoutputslevel,setconfig,False,False,False,1/1,$^ {0},lineoutputlevelredandwhite={0}
+#localdatetime get,getconfig,False,False,True,0/0,$^ {0},$displaylocaltime
+#localdatetime,setconfig,False,True,True,1/1,$^ {0},displaylocaltime={0}
+#lockoutattemptsadmin get,getconfig,False,False,True,0/0,$^ {0},$security.acctmgmt.lockoutattemptadmin
+#lockoutattemptsadmin,setconfig,False,True,True,1/1,$^ {0},security.acctmgmt.lockoutattemptadmin={0}
+#lockoutattemptsport get,getconfig,False,False,True,0/0,$^ {0},$lockoutattemptsport
+#lockoutattemptsport,setconfig,False,True,True,1/1,$^ {0},lockoutattemptsport={0}
+#lockoutattemptsuser0 get,getconfig,False,False,True,0/0,$^ {0},$security.acctmgmt.lockoutattemptuser
+#lockoutattemptsuser0,setconfig,False,True,True,1/1,$^ {0},security.acctmgmt.lockoutattemptuser={0}
+#lockouttimeadmin get,getconfig,False,False,True,0/0,$^ {0},$security.acctmgmt.lockouttimeadmin
+#lockouttimeadmin,setconfig,False,True,True,1/1,$^ {0},security.acctmgmt.lockouttimeadmin={0}
+#lockouttimeport get,getconfig,False,False,True,0/0,$^ {0},$lockouttimeport
+#lockouttimeport,setconfig,False,True,True,1/1,$^ {0},lockouttimeport={0}
+#lockouttimeuser0 get,getconfig,False,False,True,0/0,$^ {0},$security.acctmgmt.lockoutattimeuser
+#lockouttimeuser0,setconfig,False,True,True,1/1,$^ {0},security.acctmgmt.lockoutattimeuser={0}
+#loginwindowduration get,getconfig,False,False,False,0/0,$^ {0},$failedloginwindow
+#loginwindowduration set,setconfig,False,False,False,1/1,$^ {0},failedloginwindow={0}
+#marqueedisplaytext get,getconfig,False,False,False,0/0,$^ {0},$marqueedisplaytext
+#marqueedisplaytext set,setconfig,False,False,False,1/1,$^ {0},marqueedisplaytext={0}
+#maxgabinternationalcallspeed get,getconfig,False,False,True,0/0,$^ {0},$globaladdrmaxh320intl
+#maxgabinternationalcallspeed,setconfig,False,False,False,1/1,$^ {0},globaladdrmaxh320intl={0}
+#maxgabinternetcallspeed get,getconfig,False,False,True,0/0,$^ {0},$comm.callpreference.preferredspeed.globaladdrmaxh323
+#maxgabinternetcallspeed,setconfig,False,False,False,1/1,$^ {0},comm.callpreference.preferredspeed.globaladdrmaxh323={0}
+#maxgabisdncallspeed get,getconfig,False,False,True,0/0,$^ {0},$globaladdrmaxh320
+#maxgabisdncallspeed,setconfig,False,False,False,1/1,$^ {0},globaladdrmaxh320
+#maxtimeincall range,getstatus,False,False,False,0/0,$@ 0..999,nop
+#meetingpassword get,getconfig,False,False,False,0/0,$^ {0},$comm.meetingpassword
+#meetingpassword set,setconfig,False,False,False,0/1,$^,comm.meetingpassword={0}
+#midrangespeaker get,getconfig,False,False,False,0/0,$^ {0},$midrangeenable
+#midrangespeaker,setconfig,False,True,False,1/1,$^ {0},midrangeenable={0}
+#monitor1 get,getconfig,False,False,True,0/0,$^ {0},$monitor1display
+#monitor1 vga,setconfig,False,True,False,0/0,$^ {0} vga,monitor1display=$[monitor1display]|monitoroutputsignal=VGA
+#monitor1,setconfig,False,True,False,1/1,$^ {0},monitor1display={0}
+#monitor2 get,getconfig,False,False,True,0/0,$^ {0},$monitor2display
+#monitor2 vga,setconfig,False,False,False,0/0,$^ 4:3 vga,monitor2display=4:3|monitoroutputsignal1=VGA
+#monitor2,setconfig,False,True,True,1/1,$^ {0},monitor2display={0}
+#mouse down,mouse,False,False,False,2/2,nop,down
+#mouse move,mouse,False,False,False,2/2,nop,move
+#mouse up,mouse,False,False,False,2/2,nop,up
+#mouseonscreenwidgetsenabled get,getconfig,False,False,True,0/0,$^ {0},$apimouseonscreenwidgetsenable
+#mouseonscreenwidgetsenabled,setconfig,False,True,True,1/1,$^ {0},apimouseonscreenwidgetsenable={0}
+#mtumode get,getconfig,False,False,True,0/0,$^ {0},$comm.Qos.mtumode
+#mtumode,setconfig,False,True,True,1/1,$^ {0},comm.Qos.mtumode={0}
+#mtusize get,getconfig,False,False,False,0/0,$^ {0},$comm.Qos.mtusize
+#mtusize,setconfig,False,False,False,1/1,$^ {0},comm.Qos..mtusize={0}
+#multisite conference,mpcmds,False,False,False,0/0,nop,conference
+#multisite dial,mpcmds,False,False,False,1/4,nop,dial
+#multisite drop,mpcmds,False,False,False,1/2,nop,drop
+#multisite enabled,mpcmds,False,False,False,0/0,nop,enabled
+#multisite hangup,mpcmds,False,False,False,0/0,nop,hangup
+#multisite list,mpcmds,False,False,False,0/3,nop,list
+#mute far,apiforward,False,False,False,1/1,nop,_polyif %[strmatch.{0}.] _echo %[transresult._notenoughparams] else _echo %[transresult._illegalparams]
+#nidsenabled get,getconfig,False,True,True,0/0,$^ {0},$comm.firewall.nidsenabled
+#nidsenabled,setconfig,False,True,True,1/1,$^ {0},comm.firewall.nidsenabled={0}
+#nidsdynamic get,getconfig,False,True,True,0/0,$^ {0},$comm.firewall.nidsdynamic
+#nidsdynamic,setconfig,False,True,True,1/1,$^ {0},comm.firewall.nidsdynamic={0}
+#nonotify captions,registration,False,False,False,0/0,nop,nonotify captions
+#nonotify multisitestatus,registration,False,False,False,0/0,nop,nonotify multisitestatus
+#nonotify tpevents,registration,False,False,False,0/0,nop,nonotify tpevents
+#notify captions,registration,False,False,False,0/0,nop,nonotify captions
+#notify multisitestatus,registration,False,False,False,0/0,nop,notify multisitestatus
+#notify tpevents,registration,False,False,False,0/0,nop,notify tpevents
+#notify,getregistrations,False,False,False,0/0,registered for {0} notifications{1},nop
+#numberofmonitors get,apiforward,False,False,False,0/0,$^ {0},_echo numberofmonitors %[nummonitors]
+#numberofrouterhops get,getconfig,False,False,False,0/0,$^ {0},$numberofrouterhops
+#numberofrouterhops set,setconfig,False,False,False,1/1,$^ {0},numberofrouterhops={0}
+#numdigitsdid get,getconfig,False,False,True,0/0,$^ {0},$numdigitsindid
+#numdigitsdid set,setconfig,False,False,False,1/1,$^ {0},numdigitsindid={0}
+#numdigitsext get,getconfig,False,False,True,0/0,$^ {0},$numdigitsinext
+#numdigitsext set,setconfig,False,False,False,1/1,$^ {0},numdigitsinext={0}
+#ocsdirectory get,getconfig,False,True,True,0/0,$^ {0},$dir.ocs.enabled
+#ocsdirectory,setconfig,False,True,True,1/1,$^ {0},dir.ocs.enabled={0}
+#outboundcallroute get,getconfig,False,False,True,0/0,$^ {0},$outboundcallroute
+#outboundcallroute,setconfig,False,True,True,1/1,$^ {0},outboundcallroute={0}
+#pancamread,sendcommand,False,False,False,2/3,$^ {0},pancamread $*
+#pancamwrite,sendcommand,False,False,False,3/3,$^ {0},pancamwrite $*
+#pause,pauseapi,False,False,False,1,pausing for {0} seconds,nop
+#people_on_content,camera,False,False,False,1/1,$^ {0},people_on_content $*
+#phone clear,callcmds,False,False,False,0/0,nop,nop
+#phone flash,callcmds,False,False,False,0/0,nop,nop
+#ping,ping,False,False,False,1/1,nop,nop
+#poc_background get,getconfig,False,True,True,0/0,$^ camera {0},$weathermanmediasource
+#poc_background camera,setconfig,False,True,True,1/1,$@ {0},weathermanmediasource={0}
+#popup [get|register get],registration,False,False,False,0/0,nop,register-query popupstate
+#popup register,registration,False,False,False,0/0,nop,register $^
+#popup unregister,registration,False,False,False,0/0,nop,unregister $^
+#primarycamera get,getconfig,False,False,False,0/0,$^ {0}$primarycamera
+#primarycamera,setconfig,False,False,False,1/1,$^ {0},primarycamera={0}
+#pricallbycall get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.callbycalenabled
+#pricallbycall set,setconfig,False,False,False,1/1,$^ {0},sys.pri.callbycalenabled={0}
+#prichannel get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.channel
+#prichannel set,setconfig,False,False,False,1/1,$^ {0},sys.pri.channel={0}
+#pricsu get,getconfig,False,False,True,0/0,$^ {0},$sys.pri.csumode
+#pricsu,setconfig,False,True,True,1/1,$^ {0},sys.pri.csumode={0}
+#pridialchannels get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.dialchannel
+#pridialchannels set,setconfig,False,False,False,1/1,$^ {0},sys.pri.dialchannel={0}
+#priintlprefix get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.intldialprefix
+#priintlprefix set,setconfig,False,False,False,1/1,$^ {0},sys.pri.intldialprefix={0}
+#prilinebuildout get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.linebuildout
+#prilinebuildout set,setconfig,False,False,False,1/1,$^ {0},sys.pri.linebuildout={0}
+#prilinesignal get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.linesignal
+#prilinesignal set,setconfig,False,False,False,1/1,$^ {0},sys.pri.linesignal={0}
+#prinumberingplan get,getconfig,False,False,True,0/0,$^ {0},$sys.pri.numberingplan
+#prinumberingplan,setconfig,False,True,True,1/1,$^ {0},sys.pri.numberingplan={0}
+#priswitch get,getconfig,False,False,False,0/0,$^ {0},$sys.pri.switch
+#priswitch set,setconfig,False,False,False,1/1,$^ {0},sys.pri.switch={0}
+#prinumber get,apiforward,False,False,True,0/0,nop,_polyif %[haspri] _echo $@ $[directorynum0_0_0] else _echobadcfg $@ {0}
+#prinumber set,apiforward,False,True,True,1/1,$@,-_polyif %[haspri] -systemsetting directorynum0_0_0 {0} else _echobadcfg $@ {0}
+#priswitch get,apiforward,False,False,True,0/0,nop,_polyif %[haspri] _echo $@ $[switchprotocol] else _echobadcfg $@ {0}
+#priswitch set,apiforward,False,True,True,1/1,priswitch {0},-_polyif %[haspri] -_internalsetconfig switchprotocol {0} else _echobadcfg $^ $*
+#priswitch set,setconfig,False,True,True,1/1,priswitch {0},switchprotocol={0}
+#quit,quitsession,False,False,False,0/0,nop,quit
+#reboot n,getstatus,False,False,False,0,info: enter 'reboot y' or 'reboot now' to initiate system reboot,nop
+#redlinelevel get,getconfig,False,False,True,0/0,$^ {0},$lineinlevelred
+#redlinelevel,setconfig,False,True,True,1/1,$^ {0},lineinlevelred={0}
+#register phone,registration,False,False,False,0/0,nop,register phone
+#register sleep,registration,False,False,False,0/0,nop,register-async sleep APIAsyncSleepEvent
+#register video,registration,False,False,False,0/0,nop,register video
+#registerthissystem get,getconfig,False,False,True,0/0,$^ {0},$registersystemonpowerup
+#registerthissystem,setconfig,False,True,False,1/1,$^ {0},registersystemonpowerup={0}
+#remotecontrol disable all,ircommand,False,False,False,0/0,$@ success,irdisableall
+#remotecontrol disable get,ircommand,False,False,False,0/0,disabled {0} buttons,irdisablestatus
+#remotecontrol disable none,ircommand,False,False,False,0/0,$@ success,irenableall
+#remotecontrol disable,ircommand,False,False,False,1/1,$@ $* success,irdisablebtn
+#remotecontrol dontintercept,ircommand,False,False,False,1,remotecontrol dontintercept $* success,irdontinterceptbtn
+#remotecontrol enable,ircommand,False,False,False,1/1,$@ $* success,irenablebtn
+#remotecontrol enable all,ircommand,False,False,False,0/0,$@ success,irenableall
+#remotecontrol enable none,ircommand,False,False,False,0/0,$@ success,irdisableall
+#requireacctnumtodial get,getconfig,False,False,True,0/0,$^ {0},$requireaccountnumber
+#requireacctnumtodial,setconfig,False,True,True,1/1,$^ {0},requireaccountnumber={0}
+#roomphonenumber get,getconfig,False,False,True,0/0,$^ {0},$phoneinroom
+#roomphonenumber set,roomphonenumber,False,True,False,0/1,nop,nop
+#rs232 flowcontrol get,getconfig,False,False,True,0/0,$^ flowcontrol {0},$rs232.flowcontrol
+#rs232 flowcontrol,setconfig,False,True,True,1/1,rs232 flowcontrol {0},rs232.flowcontrol={0}
+#rs232 parity get,getconfig,False,False,False,0/0,$^ parity {0},$rs232.parity
+#rs232 parity,setconfig,False,False,False,1/1,rs232 parity {0},rs232.parity={0}
+#rs232 stopbit get,getconfig,False,False,False,0/0,$^ stopbit {0},$rs232.stopbits
+#rs232 stopbit,setconfig,False,False,False,1/1,rs232 stopbit {0},rs232.stopbits={0}
+#rs232monitor get,getconfig,False,False,True,0/0,$^ {0},$rs232apimonitor
+#rs232monitor,setconfig,False,True,True,1/1,$^ {0} succeeded,rs232apimonitor={0}
+#rs232port1 flowcontrol get,getconfig,False,False,True,0/0,$^ flowcontrol {0},$rs232.flowcontrol1
+#rs232port1 flowcontrol,setconfig,False,True,True,1/1,$^ flowcontrol {0},rs232.flowcontrol1={0}
+#rs232port1 parity get,getconfig,False,False,False,0/0,$^ parity {0},$rs232.parity1
+#rs232port1 parity,setconfig,False,False,False,1/1,$^ parity {0},rs232.parity1={0}
+#rs232port1 stopbit get,getconfig,False,False,False,0/0,$^ stopbit {0},$rs232.stopbits1
+#rs232port1 stopbit,setconfig,False,False,False,1/1,$^ stopbit {0},rs232.stopbits1={0}
+#rs366dialing get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[v35dialable] else _echobadcfg $@
+#rs366dialing,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig v35dialable {0} else _echobadcfg $^ $*
+#rt get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[rt] else _echobadcfg $@
+#rt,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#rts get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[rts] else _echobadcfg $@
+#rts,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#screen get,registration,False,False,False,0/0,nop,register-query $^
+#screencontrol disable all,screencontrol,False,False,False,0/0,$@,screendisableall
+#screencontrol disable get,screencontrol,False,False,False,0/0,disabled {0} screens,screencontrolstatus
+#screencontrol [disable none|enable all],screencontrol,False,False,False,0/0,$@,screendisablenone
+#screencontrol disable,screencontrol,False,False,False,1,$@ $*,disablescreen
+#screencontrol enable,screencontrol,False,False,False,1,$@ $*,enablescreen
+#servervalidatepeercert get,getconfig,False,True,True,0/0,$^ {0},$security.cert.validateservers
+#servervalidatepeercert,setconfig,False,True,True,1/1,$^ {0},security.cert.validateservers={0}
+#setaccountnumber,setconfig,False,False,False,1/1,$^ {0},dialaccountnumber={0}
+#showpopup,apiforward,False,False,False,0,$^ $*,-_polyif %[hasnoargs.$#] _echo $^: need popup text else -_showpopuphelper $*
+#sleep,apiforward,False,False,False,0/0,nop,screen $^
+#sleeptext get,getconfig,False,False,True,0/0,$^ {0},$sleepmarquee
+#sleeptext set,setconfig,False,False,True,0/1,$^ {0},sleepmarquee={0}
+#snapshottimeout get,getconfig,False,False,True,0/0,$^ {0},$snapshottimeout
+#snapshottimeout,setconfig,False,True,True,1/1,$^ {0},snapshottimeout={0}
+#soundeffectsvolume get,getconfig,False,False,False,0/0,$^ {0},$audio.volume.soundeffectsvolume
+#soundeffectsvolume set,setconfig,False,False,False,1/1,$^ {0},audio.volume.soundeffectsvolume={0}
+#soundeffectsvolume test,setconfig,False,False,False,0/0,$@,soundeffectsvolume=$[soundeffectsvolume]
+#sslverificationdepth get,getconfig,False,False,True,0/0,$^ {0},$sslverificationdepth
+#sslverificationdepth set,setconfig,False,True,True,1/1,$^ {0},sslverificationdepth={0}
+#st get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[st] else _echobadcfg $@
+#st,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig $^ {0} else _echobadcfg $^ $*
+#startnearcameratracking,apiagent,False,True,False,1/1,$^ $*,$*
+#stdout get,getconfig,False,False,True,0/0,$^ {0},$stdout
+#stdout,setconfig,False,True,True,1/1,$^ {0},stdout={0}
+#stream start,sendmessage,False,False,False,0/0,^@,!conference stream 0 start
+#stream stop,sendmessage,False,False,False,0/0,^@,!conference stream 0 stop
+#streamannounce get,getconfig,False,False,True,0/0,$^ {0},$streamannounce
+#streamannounce,setconfig,False,True,True,1/1,$^ {0},streamannounce={0}
+#streamenable get,getconfig,False,False,True,0/0,$^ {0},$allowstreaming
+#streamenable,setconfig,False,True,True,1/1,$^ {0},allowstreaming={0}
+#streammulticastip get,getconfig,False,False,True,0/0,$^ {0},$ipmulticastaddress
+#streammulticastip,setconfig,False,False,False,1/1,$^ {0},ipmulticastaddress={0}
+#streamrouterhops get,getconfig,False,False,True,0/0,$^ {0},$numberofrouterhops
+#streamrouterhops,setconfig,False,False,False,1/1,$^ {0},numberofrouterhops={0}
+#streamspeed get,getconfig,False,False,True,0/0,$^ {0},$streamspeedet
+#streamspeed,setconfig,False,True,True,1/1,$^ {0},streamspeed={0}
+#subwoofer get,apiforward,False,False,True,0/0,nop,_polyif %[hassubwoofer] _echo $^ $[subwooferenable] else _echobadcfg $@
+#subwoofer,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hassubwoofer] -_internalsetconfig $^ {0} else _echobadcfg $^ {0}
+#subwooferoffset get,apiforward,False,False,False,0/0,nop,_polyif %[hassubwoofer] _echo $^ $[subwoofervolume] else _echobadcfg $@
+#subwooferoffset,apiforward,False,True,False,1/1,$^ $*,-_polyif %[hassubwoofer] -_internalsetconfig subwoofervolume {0} else _echobadcfg $^ {0}
+#sysinfo [get|register get],registration,False,False,False,0/0,nop,register-query $^
+#sysinfo register,registration,False,False,False,0/0,nop,register $^
+#sysinfo unregister,registration,False,False,False,0/0,nop,unregister $^
+#ss get,apiforward,False,False,False,1/1,nop,_echo ss {0} %[quoteif.$[{0}]]
+#systemsetting list,apiforward,False,False,False,1/1,nop,dumpfile {0}.choice
+#ss,setconfig,False,False,False,1/2,$^ $*,{0}={1}
+#systemsetting get areacode0_0,getconfig,False,False,False,0/0,$^ areacode0_0 {0},$comm.nic.isdn.areacode0_0
+#systemsetting areacode0_0,setconfig,False,False,False,1/1,$^ areacode0_0 {0},comm.nic.isdn.areacode0_0={0}
+#systemsetting get bass,getconfig,False,False,False,0/0,$^ bass {0},$audio.qualityprocess.bass
+#systemsetting bass,setconfig,False,False,False,1/1,$^ bass {0},audio.qualityprocess.bass={0}
+#systemsetting get brilineenable0_0,getconfig,False,False,False,0/0,$^ brilineenable0_0 {0},$brilineenable0_0
+#systemsetting brilineenable0_0,setconfig,False,False,False,1/1,$^ brilineenable0_0 {0},brilineenable0_0={0}
+#systemsetting get brilineenable0_1,getconfig,False,False,False,0/0,$^ brilineenable0_1 {0},$brilineenable0_1
+#systemsetting brilineenable0_1,setconfig,False,False,False,1/1,$^ brilineenable0_1 {0},brilineenable0_1={0}
+#systemsetting get brilineenable0_2,getconfig,False,False,False,0/0,$^ brilineenable0_2 {0},$brilineenable0_2
+#systemsetting brilineenable0_2,setconfig,False,False,False,1/1,$^ brilineenable0_2 {0},brilineenable0_2={0}
+#systemsetting get brilineenable0_3,getconfig,False,False,False,0/0,$^ brilineenable0_3 {0},$brilineenable0_3
+#systemsetting brilineenable0_3,setconfig,False,False,False,1/1,$^ brilineenable0_3 {0},brilineenable0_3={0}
+#systemsetting get buddylistashomescreen,getconfig,False,False,False,0/0,$^ buddylistashomescreen {0},$buddylistashomescreen
+#systemsetting buddylistashomescreen,setconfig,False,False,False,1/1,$^ buddylistashomescreen {0},buddylistashomescreen={0}
+#systemsetting get cameraaspectratio,getconfig,False,False,False,0/0,$^ cameraaspectratio {0},$sourceman.cameravideo.cameraaspectratio
+#systemsetting cameraaspectratio,setconfig,False,False,False,1/1,$^ cameraaspectratio {0},sourceman.cameravideo.cameraaspectratio={0}
+#systemsetting get cameraaspectratio1,getconfig,False,False,False,0/0,$^ cameraaspectratio1 {0},$cameraaspectratio1
+#systemsetting cameraaspectratio1,setconfig,False,False,False,1/1,$^ cameraaspectratio1 {0},cameraaspectratio1={0}
+#systemsetting get cameraaspectratio2,getconfig,False,False,False,0/0,$^ cameraaspectratio2 {0},$cameraaspectratio2
+#systemsetting cameraaspectratio2,setconfig,False,False,False,1/1,$^ cameraaspectratio2 {0},cameraaspectratio2={0}
+#systemsetting get cameraaspectratio3,getconfig,False,False,False,0/0,$^ cameraaspectratio3 {0},$cameraaspectratio3
+#systemsetting cameraaspectratio3,setconfig,False,False,False,1/1,$^ cameraaspectratio3 {0},cameraaspectratio3={0}
+#systemsetting get cameraaspectratio4,getconfig,False,False,False,0/0,$^ cameraaspectratio4 {0},$cameraaspectratio4
+#systemsetting cameraaspectratio4,setconfig,False,False,False,1/1,$^ cameraaspectratio4 {0},cameraaspectratio4={0}
+#systemsetting get camerainputsignal,getconfig,False,False,False,0/0,$^ camerainputsignal {0},$camerainputsignal
+#systemsetting camerainputsignal,setconfig,False,False,False,1/1,$^ camerainputsignal {0},camerainputsignal={0}
+#systemsetting get camerainputsignal1,getconfig,False,False,False,0/0,$^ camerainputsignal1 {0},$camerainputsignal1
+#systemsetting camerainputsignal1,setconfig,False,False,False,1/1,$^ camerainputsignal1 {0},camerainputsignal1={0}
+#systemsetting get camerainputsignal2,getconfig,False,False,False,0/0,$^ camerainputsignal2 {0},$camerainputsignal2
+#systemsetting camerainputsignal2,setconfig,False,False,False,1/1,$^ camerainputsignal2 {0},camerainputsignal2={0}
+#systemsetting get camerainputsignal3,getconfig,False,False,False,0/0,$^ camerainputsignal3 {0},$camerainputsignal3
+#systemsetting camerainputsignal3,setconfig,False,False,False,1/1,$^ camerainputsignal3 {0},camerainputsignal3={0}
+#systemsetting get camerainputsignal4,getconfig,False,False,False,0/0,$^ camerainputsignal4 {0},$camerainputsignal4
+#systemsetting camerainputsignal4,setconfig,False,False,False,1/1,$^ camerainputsignal4 {0},camerainputsignal4={0}
+#systemsetting get cameraname,getconfig,False,False,False,0/0,$^ cameraname {0},$sourceman.cameraname
+#systemsetting cameraname,setconfig,False,False,False,1/1,$^ cameraname {0},sourceman.cameraname={0}
+#systemsetting cameraname1,setconfig,False,False,False,1/1,$^ cameraname1 {0},cameraname1={0}
+#systemsetting get cameraname2,getconfig,False,False,False,0/0,$^ cameraname2 {0},$cameraname2
+#systemsetting cameraname2,setconfig,False,False,False,1/1,$^ cameraname2 {0},cameraname2={0}
+#systemsetting get cameraname3,getconfig,False,False,False,0/0,$^ cameraname3 {0},$cameraname3
+#systemsetting cameraname3,setconfig,False,False,False,1/1,$^ cameraname3 {0},cameraname3={0}
+#systemsetting get cameraname4,getconfig,False,False,False,0/0,$^ cameraname4 {0},$cameraname4
+#systemsetting cameraname4,setconfig,False,False,False,1/1,$^ cameraname4 {0},cameraname4={0}
+#systemsetting cameratype,setconfig,False,False,False,1/1,$^ cameratype {0},sourceman.cameratype={0}
+#systemsetting get cameravideoquality,getconfig,False,False,False,0/0,$^ cameravideoquality {0},$sourceman.cameravideo.cameravideoquality
+#systemsetting cameravideoquality,setconfig,False,False,False,1/1,$^ cameravideoquality {0},sourceman.cameravideo.cameravideoquality={0}
+#systemsetting get cameravideoquality1,getconfig,False,False,False,0/0,$^ cameravideoquality1 {0},$cameravideoquality1
+#systemsetting cameravideoquality1,setconfig,False,False,False,1/1,$^ cameravideoquality1 {0},cameravideoquality1={0}
+#systemsetting get cameravideoquality2,getconfig,False,False,False,0/0,$^ cameravideoquality2 {0},$cameravideoquality2
+#systemsetting cameravideoquality2,setconfig,False,False,False,1/1,$^ cameravideoquality2 {0},cameravideoquality2={0}
+#systemsetting get cameravideoquality3,getconfig,False,False,False,0/0,$^ cameravideoquality3 {0},$cameravideoquality3
+#systemsetting cameravideoquality3,setconfig,False,False,False,1/1,$^ cameravideoquality3 {0},cameravideoquality3={0}
+#systemsetting get cameravideoquality4,getconfig,False,False,False,0/0,$^ cameravideoquality4 {0},$cameravideoquality4
+#systemsetting cameravideoquality4,setconfig,False,False,False,1/1,$^ cameravideoquality4 {0},cameravideoquality4={0}
+#systemsetting get componentresolution,getconfig,False,False,False,0/0,$^ componentresolution {0},$video.monitor1.cabletype.component.resolution
+#systemsetting componentresolution,setconfig,False,False,False,1/1,$^ componentresolution {0},video.monitor1.cabletype.component.resolution={0}
+#systemsetting get componentresolution1,getconfig,False,False,False,0/0,$^ componentresolution1 {0},$video.monitor2.cabletype.component.resolution
+#systemsetting componentresolution1,setconfig,False,False,False,1/1,$^ componentresolution1 {0},video.monitor2.cabletype.component.resolution={0}
+#systemsetting get cfs_keyresults,getconfig,False,False,False,0/0,$^ cfs_keyresults {0},$cfs_keyresults
+#systemsetting get contentpercent,getconfig,False,False,False,0/0,$^ contentpercent {0},$comm.conference.content.contentpercent
+#systemsetting contentpercent,setconfig,False,False,False,1/1,$^ contentpercent {0},comm.conference.content.contentpercent={0}
+#systemsetting get country,getconfig,False,False,False,0/0,$^ country {0},$sys.loc.country
+#systemsetting country,setconfig,False,False,False,1/1,$^ country {0},sys.loc.country={0}
+#systemsetting get customsecuritytext,getconfig,False,False,False,0/0,$^ customsecuritytext {0},$customsecuritytext
+#systemsetting customsecuritytext,setconfig,False,False,False,0/1,$^ customsecuritytext {0},customsecuritytext={0}
+#systemsetting get directorynum0_0_0,getconfig,False,False,False,0/0,$^ directorynum0_0_0 {0},$directorynum0_0_0
+#systemsetting directorynum0_0_0,setconfig,False,False,False,0/1,$^ directorynum0_0_0 {0},directorynum0_0_0={0}
+#systemsetting get directorynum0_0_1,getconfig,False,False,False,0/0,$^ directorynum0_0_1 {0},$directorynum0_0_1
+#systemsetting directorynum0_0_1,setconfig,False,False,False,0/1,$^ directorynum0_0_1 {0},directorynum0_0_1={0}
+#systemsetting get directorynum0_1_0,getconfig,False,False,False,0/0,$^ directorynum0_1_0 {0},$directorynum0_1_0
+#systemsetting directorynum0_1_0,setconfig,False,False,False,0/1,$^ directorynum0_1_0 {0},directorynum0_1_0={0}
+#systemsetting get directorynum0_1_1,getconfig,False,False,False,0/0,$^ directorynum0_1_1 {0},$directorynum0_1_1
+#systemsetting directorynum0_1_1,setconfig,False,False,False,0/1,$^ directorynum0_1_1 {0},directorynum0_1_1={0}
+#systemsetting get directorynum0_2_0,getconfig,False,False,False,0/0,$^ directorynum0_2_0 {0},$directorynum0_2_0
+#systemsetting directorynum0_2_0,setconfig,False,False,False,0/1,$^ directorynum0_2_0 {0},directorynum0_2_0={0}
+#systemsetting get directorynum0_2_1,getconfig,False,False,False,0/0,$^ directorynum0_2_1 {0},$directorynum0_2_1
+#systemsetting directorynum0_2_1,setconfig,False,False,False,0/1,$^ directorynum0_2_1 {0},directorynum0_2_1={0}
+#systemsetting get directorynum0_3_0,getconfig,False,False,False,0/0,$^ directorynum0_3_0 {0},$directorynum0_3_0
+#systemsetting directorynum0_3_0,setconfig,False,False,False,0/1,$^ directorynum0_3_0 {0},directorynum0_3_0={0}
+#systemsetting get directorynum0_3_1,getconfig,False,False,False,0/0,$^ directorynum0_3_1 {0},$directorynum0_3_1
+#systemsetting directorynum0_3_1,setconfig,False,False,False,0/1,$^ directorynum0_3_1 {0},directorynum0_3_1={0}
+#systemsetting get displaylastnumberdialed,getconfig,False,False,False,0/0,$^ displaylastnumberdialed {0},$comm.lastaddressdialed
+#systemsetting displaylastnumberdialed,setconfig,False,False,False,1/1,$^ displaylastnumberdialed {0},comm.lastaddressdialed={0}
+#systemsetting get dmeborder,getconfig,False,False,False,0/0,$^ dmeborder {0},$dmeborder
+#systemsetting dmeborder,setconfig,False,False,False,1/1,$^ dmeborder {0},dmeborder={0}
+#systemsetting get domainname,getconfig,False,False,False,0/0,$^ domainname {0},$system.network.domainname
+#systemsetting domainname,setconfig,False,False,False,0/1,$^ domainname {0},system.network.domainname={0}
+#systemsetting get dviresolution,getconfig,False,False,False,0/0,$^ dviresolution {0},$video.monitor1.cabletype.dvia.resolution
+#systemsetting dviresolution,setconfig,False,False,False,1/1,$^ dviresolution {0},video.monitor1.cabletype.dvia.resolution={0}
+#systemsetting get dviresolution1,getconfig,False,False,False,0/0,$^ dviresolution1 {0},$video.monitor2.cabletype.dvia.resolution
+#systemsetting dviresolution1,setconfig,False,False,False,1/1,$^ dviresolution1 {0},video.monitor2.cabletype.dvia.resolution={0}
+#systemsetting get dviresolution3,getconfig,False,False,False,0/0,$^ dviresolution3 {0},video.monitor3.cabletype.dvia.resolution
+#systemsetting dviresolution3,setconfig,False,False,False,1/1,$^ dviresolution3 {0},video.monitor3.cabletype.dvia.resolution={0}
+#systemsetting get enablegdsdirectory,getconfig,False,False,False,0/0,$^ enablegdsdirectory {0},$dir.gds.enabled
+#systemsetting enablegdsdirectory,setconfig,False,False,False,1/1,$^ enablegdsdirectory {0},dir.gds.enabled={0}
+#systemsetting get enablempdemo,getconfig,False,False,False,0/0,$^ enablempdemo {0},$comm.callsetting.callfeatures.multipoint.enablempdemo
+#systemsetting enablempdemo,setconfig,False,False,False,1/1,$^ enablempdemo {0},comm.callsetting.callfeatures.multipoint.enablempdemo={0}
+#systemsetting get enablesnmp,getconfig,False,False,False,0/0,$^ enablesnmp {0},$snmp.enabled
+#systemsetting enablesnmp,setconfig,False,False,False,1/1,$^ enablesnmp {0},snmp.enabled={0}
+#systemsetting get enablestereoautorotation,getconfig,False,False,False,0/0,$^ enablestereoautorotation {0},$audio.qualityprocess.stereoautorotation
+#systemsetting enablestereoautorotation,setconfig,False,False,False,1/1,$^ enablestereoautorotation {0},audio.qualityprocess.stereoautorotation={0}
+#systemsetting get farnamedisplaytime,getconfig,False,False,False,0/0,$^ farnamedisplaytime {0},$uicontrol.callapp.farnamedisplaytime
+#systemsetting farnamedisplaytime,setconfig,False,False,False,1/1,$^ farnamedisplaytime {0},uicontrol.callapp.farnamedisplaytime={0}
+#systemsetting get groupldap,getconfig,False,False,False,0/0,$^ groupldap {0},$groupldap
+#systemsetting get h350basedn,getconfig,False,False,False,0/0,$^ h350basedn {0},$h350basedn
+#systemsetting h350basedn,setconfig,False,False,False,1/1,$^ h350basedn {0},h350basedn={0}
+#systemsetting get isdnh320enable,getconfig,False,False,False,0/0,$^ isdnh320enable {0},$isdnh320enable
+#systemsetting isdnh320enable,setconfig,False,False,False,1/1,$^ isdnh320enable {0},isdnh320enable={0}
+#systemsetting get isdnmaxincoming,getconfig,False,False,False,0/0,$^ isdnmaxincoming {0},$isdnmaxincoming
+#systemsetting isdnmaxincoming,setconfig,False,False,False,1/1,$^ isdnmaxincoming {0},isdnmaxincoming={0}
+#systemsetting get language,getconfig,False,False,False,0/0,$^ language {0},$location.language
+#systemsetting language,setconfig,False,False,False,1/1,$^ language {0},location.language={0}
+#systemsetting get ldapuserid,getconfig,False,False,False,0/0,$^ ldapuserid {0},$dir.ldap.userid
+#systemsetting ldapuserid,setconfig,False,False,False,0/1,$^ ldapuserid {0},dir.ldap.userid={0}
+#systemsetting get mainscreencallquality,getconfig,False,False,False,0/0,$^ mainscreencallquality {0},$mainscreencallquality
+#systemsetting mainscreencallquality,setconfig,False,False,False,1/1,$^ mainscreencallquality {0},mainscreencallquality={0}
+#systemsetting get mainscreendnd,getconfig,False,False,False,0/0,$^ mainscreendnd {0},$mainscreendnd
+#systemsetting mainscreendnd,setconfig,False,False,False,1/1,$^ mainscreendnd {0},mainscreendnd={0}
+#systemsetting get mainscreensites,getconfig,False,False,False,0/0,$^ mainscreensites {0},$mainscreensites
+#systemsetting mainscreensites,setconfig,False,False,False,1/1,$^ mainscreensites {0},mainscreensites={0}
+#systemsetting get maxtimeincall,getconfig,False,False,False,0/0,$^ maxtimeincall {0},$comm.maxtimeincall
+#systemsetting maxtimeincall,setconfig,False,False,False,1/1,$^ maxtimeincall {0},comm.maxtimeincall={0}
+#systemsetting get micmode0,getconfig,False,False,False,0/0,$^ micmode0 {0},$micmode0
+#systemsetting micmode0,setconfig,False,False,False,1/1,$^ micmode0 {0},micmode0={0}
+#systemsetting get micmode1,getconfig,False,False,False,0/0,$^ micmode1 {0},$micmode1
+#systemsetting micmode1,setconfig,False,False,False,1/1,$^ micmode1 {0},micmode1={0}
+#systemsetting get micmode2,getconfig,False,False,False,0/0,$^ micmode2 {0},$micmode2
+#systemsetting micmode2,setconfig,False,False,False,1/1,$^ micmode2 {0},micmode2={0}
+#systemsetting get micmode3,getconfig,False,False,False,0/0,$^ micmode3 {0},$micmode3
+#systemsetting micmode3,setconfig,False,False,False,1/1,$^ micmode3 {0},micmode3={0}
+#systemsetting get micmode4,getconfig,False,False,False,0/0,$^ micmode4 {0},$micmode4
+#systemsetting micmode4,setconfig,False,False,False,1/1,$^ micmode4 {0},micmode4={0}
+#systemsetting get micswap,getconfig,False,False,False,0/0,$^ micswap {0},$audio.microphone.micswap
+#systemsetting micswap,setconfig,False,False,False,1/1,$^ micswap {0},audio.microphone.micswap={0}
+#systemsetting get monitor1display,getconfig,False,False,False,0/0,$^ monitor1display {0},$video.monitor.monitordisplay1
+#systemsetting monitor1display,setconfig,False,False,False,1/1,$^ monitor1display {0},video.monitor.monitordisplay1={0}
+#systemsetting get monitor1screensaveroutput,getconfig,False,False,False,0/0,$^ monitor1screensaveroutput {0},$uicontrol.current.image.screensaver1
+#systemsetting monitor1screensaveroutput,setconfig,False,False,False,1/1,$^ monitor1screensaveroutput {0},uicontrol.current.image.screensaver1={0}
+#systemsetting get monitor1videoout,getconfig,False,False,False,0/0,$^ monitor1videoout {0},$monitor1videoout
+#systemsetting monitor1videoout,setconfig,False,False,False,1/1,$^ monitor1videoout {0},monitor1videoout={0}
+#systemsetting get monitor2display,getconfig,False,False,False,0/0,$^ monitor2display {0},$video.monitor.monitordisplay2
+#systemsetting monitor2display,setconfig,False,False,False,1/1,$^ monitor2display {0},video.monitor.monitordisplay2={0}
+#systemsetting get monitor2screensaveroutput,getconfig,False,False,False,0/0,$^ monitor2screensaveroutput {0},$uicontrol.current.image.screensaver2
+#systemsetting monitor2screensaveroutput,setconfig,False,False,False,1/1,$^ monitor2screensaveroutput {0},uicontrol.current.image.screensaver2={0}
+#systemsetting get monitor2videoout,getconfig,False,False,False,0/0,$^ monitor2videoout {0},$monitor2videoout
+#systemsetting monitor2videoout,setconfig,False,False,False,1/1,$^ monitor2videoout {0},monitor2videoout={0}
+#systemsetting get monitor3videoout,getconfig,False,False,False,0/0,$^ monitor3videoout {0},$monitor3videoout
+#systemsetting monitor3videoout,setconfig,False,False,False,1/1,$^ monitor3videoout {0},monitor3videoout={0}
+#systemsetting get monitor4videoout,getconfig,False,False,False,0/0,$^ monitor4videoout {0},$monitor4videoout
+#systemsetting monitor4videoout,setconfig,False,False,False,1/1,$^ monitor4videoout {0},monitor4videoout={0}
+#systemsetting get monitoroutputsignal,getconfig,False,True,True,0/0,$^ monitoroutputsignal {0},$monitoroutputsignal
+#systemsetting monitoroutputsignal,setconfig,False,True,True,1/1,$^ monitoroutputsignal {0},monitoroutputsignal={0}
+#systemsetting get monitoroutputsignal1,getconfig,False,True,True,0/0,$^ monitoroutputsignal1 {0},$monitoroutputsignal1
+#systemsetting monitoroutputsignal1,setconfig,False,True,True,1/1,$^ monitoroutputsignal1 {0},monitoroutputsignal1={0}
+#systemsetting get monitoroutputsignal2,getconfig,False,True,True,0/0,$^ monitoroutputsignal2 {0},$video.monitor2.signaltypel
+#systemsetting monitoroutputsignal2,setconfig,False,True,True,1/1,$^ monitoroutputsignal2 {0},video.monitor2.signaltypel={0}
+#systemsetting get monitoroutputsignal3,getconfig,False,True,True,0/0,$^ monitoroutputsignal3 {0},$video.monitor3.signaltypel
+#systemsetting monitoroutputsignal3,setconfig,False,True,True,1/1,$^ monitoroutputsignal3 {0},video.monitor3.signaltypel={0}
+#systemsetting get mpenabled,getconfig,False,False,False,0/0,$^ mpenabled {0},$comm.nics.h323nic.h323capability.mpenabled
+#systemsetting mpenabled,setconfig,False,False,False,0/1,$^ mpenabled {0},comm.nics.h323nic.h323capability.mpenabled={0}
+#systemsetting get nejpegresolution,getconfig,False,False,False,0/0,$^ nejpegresolution {0},$nejpegresolution
+#systemsetting nejpegresolution,setconfig,False,False,False,1/1,$^ nejpegresolution {0},nejpegresolution={0}
+#systemsetting get ntlmversion,getconfig,False,False,False,0/0,$^ ntlmversion {0},$comm.nics.sipnic.ntlmversion
+#systemsetting ntlmversion,setconfig,False,False,False,1/1,$^ ntlmversion {0},comm.nics.sipnic.ntlmversion={0}
+#ystemsetting get overscanenabled1,getconfig,False,False,False,0/0,$^ overscanenabled1 {0},$video.overscanenabled1
+#ystemsetting overscanenabled1,setconfig,False,False,False,1/1,$^ overscanenabled1 {0},video.overscanenabled1={0}
+#ystemsetting get overscanenabled2,getconfig,False,False,False,0/0,$^ overscanenabled2 {0},$video.overscanenabled2
+#ystemsetting overscanenabled2,setconfig,False,False,False,1/1,$^ overscanenabled2 {0},video.overscanenabled2={0}
+#ystemsetting get overscanenabled3,getconfig,False,False,False,0/0,$^ overscanenabled3 {0},$video.overscanenabled3
+#ystemsetting overscanenabled3,setconfig,False,False,False,1/1,$^ overscanenabled3 {0},video.overscanenabled3={0}
+#ystemsetting get overscanenabled4,getconfig,False,False,False,0/0,$^ overscanenabled4 {0},$video.overscanenabled4
+#ystemsetting overscanenabled4,setconfig,False,False,False,1/1,$^ overscanenabled4 {0},video.overscanenabled4={0}
+#systemsetting get peopledisplaymode,getconfig,False,False,False,0/0,$^ peopledisplaymode {0},$peopledisplaymode
+#systemsetting peopledisplaymode,setconfig,False,False,False,1/1,$^ peopledisplaymode {0},peopledisplaymode={0}
+#systemsetting get piptimer,getconfig,False,False,False,0/0,$^ piptimer {0},$piptimer
+#systemsetting piptimer,setconfig,False,False,False,1/1,$^ piptimer {0},piptimer={0}
+#systemsetting get potsenable,getconfig,False,False,False,0/0,$^ potsenable {0},$comm.nic.pots.enable
+#systemsetting potsenable,setconfig,False,False,False,1/1,$^ potsenable {0},comm.nic.pots.enable={0}
+#systemsetting provisionserveraddress,setconfig,False,False,False,0/1,$^ provisionserveraddress {0},provisioning.server={0}
+#systemsetting get provisionserveraddress,getconfig,False,False,False,0/0,$^ provisionserveraddress {0},$provisioning.server
+#systemsetting get pvecenable,getconfig,False,False,False,0/0,$^ pvecenable {0},$comm.qos.errorconcealment.dba.pvecenable
+#systemsetting pvecenable,setconfig,False,False,False,1/1,$^ pvecenable {0},comm.qos.errorconcealment.dba.pvecenable={0}
+#systemsetting get registersystem,getconfig,False,False,False,0/0,$^ registersystem {0},$registersystem
+#systemsetting registersystem,setconfig,False,False,False,1/1,$^ registersystem {0},registersystem={0}
+#systemsetting get remotecontrolkeypad,getconfig,False,False,False,0/0,$^ remotecontrolkeypad {0},$remotecontrolkeypad
+#systemsetting remotecontrolkeypad,setconfig,False,False,False,1/1,$^ remotecontrolkeypad {0},remotecontrolkeypad={0}
+#systemsetting get rmxstatus,getconfig,False,False,False,0/0,$^ rmxstatus {0},$rmxstatus
+#systemsetting get rs232baudrate,getconfig,False,False,False,0/0,$^ rs232baudrate {0},$rs232.baudrate
+#systemsetting rs232baudrate,setconfig,False,False,False,1/1,$^ rs232baudrate {0},rs232.baudrate={0}
+#systemsetting get rs232baudrate1,getconfig,False,False,False,0/0,$^ rs232baudrate1 {0},$rs232.baudrate1
+#systemsetting rs232baudrate1,setconfig,False,False,False,1/1,$^ rs232baudrate1 {0},rs232.baudrate1={0}
+#systemsetting get rs232baudrate2,getconfig,False,False,False,0/0,$^ rs232baudrate2 {0},$rs232.baudrate2
+#systemsetting rs232baudrate2,setconfig,False,False,False,1/1,$^ rs232baudrate2 {0},rs232.baudrate2={0}
+#systemsetting get rs232baudrate3,getconfig,False,False,False,0/0,$^ rs232baudrate3 {0},$rs232.baudrate3
+#systemsetting rs232baudrate3,setconfig,False,False,False,1/1,$^ rs232baudrate3 {0},rs232.baudrate3={0}
+#systemsetting get rs232controlpass,getconfig,False,False,False,0/0,$^ rs232controlpass {0},$rs232.mode
+#systemsetting rs232controlpass,setconfig,False,False,False,1/1,$^ rs232controlpass {0},rs232.mode={0}
+#systemsetting get rs232controlpass1,getconfig,False,False,False,0/0,$^ rs232controlpass1 {0},$rs232.mode1
+#systemsetting rs232controlpass1,setconfig,False,False,False,1/1,$^ rs232controlpass1 {0},rs232.mode1={0}
+#systemsetting get rs232controlpass2,getconfig,False,False,False,0/0,$^ rs232controlpass2 {0},$rs232.mode2
+#systemsetting rs232controlpass2,setconfig,False,False,False,1/1,$^ rs232controlpass2 {0},rs232.mode2={0}
+#systemsetting get rs232controlpass3,getconfig,False,False,False,0/0,$^ rs232controlpass3 {0},$rs232.mode3
+#systemsetting rs232controlpass3,setconfig,False,False,False,1/1,$^ rs232controlpass3 {0},rs232.mode3={0}
+#systemsetting get rs232parity,getconfig,False,False,False,0/0,$^ rs232parity {0},$rs232.parity
+#systemsetting rs232parity,setconfig,False,False,False,1/1,$^ rs232parity {0},rs232.parity={0}
+#systemsetting get rs232parity1,getconfig,False,False,False,0/0,$^ rs232parity1 {0},$rs232.parity1
+#systemsetting rs232parity1,setconfig,False,False,False,1/1,$^ rs232parity1 {0},rs232.parity1={0}
+#systemsetting get rs232parity2,getconfig,False,False,False,0/0,$^ rs232parity2 {0},$rs232.parity2
+#systemsetting rs232parity2,setconfig,False,False,False,1/1,$^ rs232parity2 {0},rs232.parity2={0}
+#systemsetting get rs232parity3,getconfig,False,False,False,0/0,$^ rs232parity3 {0},$rs232.parity3
+#systemsetting rs232parity3,setconfig,False,False,False,1/1,$^ rs232parity3 {0},rs232.parity3={0}
+#systemsetting get serialnumberresetsys,getconfig,False,False,False,0/0,$^ serialnumberresetsys {0},$serialnumberresetsys
+#systemsetting serialnumberresetsys,setconfig,False,False,False,0/1,$^ serialnumberresetsys {0},serialnumberresetsys={0}
+#systemsetting get stereotablestyle,getconfig,False,False,False,0/0,$^ stereotablestyle {0},$stereotablestyle
+#systemsetting stereotablestyle,setconfig,False,False,False,1/1,$^ stereotablestyle {0},stereotablestyle={0}
+#systemsetting get systemname,getconfig,False,False,False,0/0,$^ systemname {0},$sys.systemname
+#systemsetting systemname,setconfig,False,False,False,0/1,$^ systemname {0},sys.systemname={0}
+#systemsetting get telepresence,getconfig,False,False,False,0/0,$^ telepresence {0},$telepresence
+#systemsetting telepresence,setconfig,False,False,False,1/1,$^ telepresence {0},telepresence={0}
+#systemsetting get telepresenceaudio,getconfig,False,False,False,0/0,$^ telepresenceaudio {0},$audio.telepresenceaudio
+#systemsetting telepresenceaudio,setconfig,False,False,False,1/1,$^ telepresenceaudio {0},audio.telepresenceaudio={0}
+#systemsetting get thirdpartyremotecsupported,getconfig,False,False,False,0/0,$^ thirdpartyremotecsupported {0},$thirdpartyremotecsupported
+#systemsetting thirdpartyremotecsupported,setconfig,False,False,False,1/1,$^ thirdpartyremotecsupported {0},thirdpartyremotecsupported={0}
+#systemsetting get timeelapsed,getconfig,False,False,False,0/0,$^ timeelapsed {0},$timeelapsed
+#systemsetting timeelapsed,setconfig,False,False,False,1/1,$^ timeelapsed {0},timeelapsed={0}
+#systemsetting get tpxcameraconfig,getconfig,False,False,False,0/0,$^ tpxcameraconfig {0},$tpxcameraconfig
+#systemsetting tpxcameraconfig,setconfig,False,False,False,1/1,$^ tpxcameraconfig {0},tpxcameraconfig={0}
+#systemsetting get treble,getconfig,False,False,False,0/0,$^ treble {0},$audio.qualityprocess.treble
+#systemsetting treble,setconfig,False,False,False,1/1,$^ treble {0},audio.qualityprocess.treble={0}
+#systemsetting get userdomain,getconfig,False,False,False,0/0,$^ userdomain {0},$provisioning.domain
+#systemsetting userdomain,setconfig,False,False,False,0/1,$^ userdomain {0},provisioning.domain={0}
+#systemsetting get whitebalancemode2,getconfig,False,False,False,0/0,$^ whitebalancemode2 {0},$sourceman.cameraproperty.whitebalancemode2
+#systemsetting whitebalancemode2,setconfig,False,False,False,1/1,$^ whitebalancemode2 {0},sourceman.cameraproperty.whitebalancemode2={0}
+#systemsetting get whitebalancemode3,getconfig,False,False,False,0/0,$^ whitebalancemode3 {0},$sourceman.cameraproperty.whitebalancemode3
+#systemsetting whitebalancemode3,setconfig,False,False,False,1/1,$^ whitebalancemode3 {0},sourceman.cameraproperty.whitebalancemode3={0}
+#systemsetting get whitebalancemode4,getconfig,False,False,False,0/0,$^ whitebalancemode4 {0},$sourceman.cameraproperty.whitebalancemode4
+#systemsetting whitebalancemode4,setconfig,False,False,False,1/1,$^ whitebalancemode4 {0},sourceman.cameraproperty.whitebalancemode4={0}
+#systemsetting provisionserveraddress,setconfig,False,False,False,1/1,$^ provisionserveraddress {0},provisionserveraddress={0}
+#systemsetting get vgaresolution,getconfig,False,False,False,0/0,$^ vgaresolution {0},$vgaresolution
+#systemsetting vgaresolution,setconfig,False,False,False,1/1,$^ vgaresolution {0},vgaresolution={0}
+#systemsetting get vgaresolution1,getconfig,False,False,False,0/0,$^ vgaresolution1 {0},$vgaresolution1
+#systemsetting vgaresolution1,setconfig,False,False,False,1/1,$^ vgaresolution1 {0},vgaresolution1={0}
+#systemsetting get vgaresolution3,getconfig,False,False,False,0/0,$^ vgaresolution3 {0},$vgaresolution3
+#systemsetting vgaresolution3,setconfig,False,False,False,1/1,$^ vgaresolution3 {0},vgaresolution3={0}
+#tcpports get,getconfig,False,False,False,0/0,$^ {0},$comm.firewall.fixedh323portstcp
+#tcpports set,setconfig,False,False,False,1/1,$^ {0},comm.firewall.fixedh323portstcp={0}
+#techsupport,setconfig,False,False,False,1/1,$^ will contact you at {0},supportinfo.techsupport={0}
+#teleareacode get,getconfig,False,True,True,0/0,$^ {0},$polycomconferencephoneac
+#teleareacode,setconfig,False,False,False,1/1,$^ {0},polycomconferencephoneac={0}
+#telecountrycode get,getconfig,False,True,True,0/0,$^ {0},$polycomconferencephonecc
+#telecountrycode,setconfig,False,False,False,1/1,$^ {0},polycomconferencephonecc={0}
+#telenumber get,getconfig,False,True,True,0/0,$^ {0},$polycomconferencephonedn
+#telenumber,setconfig,False,False,False,1/1,$^ {0},polycomconferencephonedn={0}
+#telnetmonitor get,getconfig,False,False,True,0/0,$^ {0},$telnetapimonitor
+#telnetmonitor get,getconfig,False,True,True,0/0,$^ {0},$telnetapimonitor
+#telnetmonitor,setconfig,False,True,True,1/1,$^ {0} succeeded,telnetapimonitor={0}
+#timediffgmt get,getconfig,False,False,True,0/0,$^ {0},$time.gmttimedifference
+#timediffgmt,setconfig,False,True,True,1/1,$^ {0} succeeded,time.gmttimedifference={0}
+#timeinlastcall,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.timeinlastcall
+#totalnumberofcalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.totalnumberofcalls
+#totalnumberofipcalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.totalnumberofipcalls
+#totalnumberofisdncalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.totalnumberofisdncalls
+#totaltimeincalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics..totaltimeincalls
+#totaltimeipcalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.totaltimeipcalls
+#totaltimeisdncalls,getconfig,False,False,False,0/0,$^ {0},$comm.statistics.totaltimeisdncalls
+#tpadvnetstats,tpcommands,False,False,False,0/1,nop,tpadvnetstats
+#tpanswer video,tpcommands,False,False,False,0/1,nop,nop
+#tpdial manual,tpcommands,False,False,False,3/6,nop,tpdialman
+#tpgendial,tpcommands,False,False,False,1/1,nop,nop
+#tphangup video,tpcommands,False,False,False,0/0,nop,video
+#tphangup all,tpcommands,False,False,False,0/0,nop,all
+#tpreadytodial,tpcommands,False,False,False,0/0,nop,nop
+#tppreset near go,tpcommands,False,False,False,1/1,$@,tppresetneargo
+#tpscreen,tpcommands,False,False,False,1/1,nop,tpscreen
+#tpapimode get,getconfig,False,False,True,0/0,$^ {0},$tpapimode
+#tpapimode,setconfig,False,True,True,1/1,$^ {0},tpapimode={0}
+#tpautopreset get,getconfig,False,False,True,0/0,$^ {0},$tpautopreset
+#tpautopreset,setconfig,False,True,True,1/1,$^ {0},tpautopreset={0}
+#tpdndtime get,getconfig,False,False,True,0/0,$^ {0},$tpdndtime
+#tpdndtime,setconfig,False,True,True,1/1,$^ {0},tpdndtime={0}
+#tpcodecaddress,tpcommands,False,False,True,2/3,nop,nop
+#tpcodecpassword,tpcommands,False,False,True,2/3,nop,nop
+#tpscreencontrol get,getconfig,False,False,True,0/0,$^ {0},$tpscreencontrol
+#tpscreencontrol,setconfig,False,True,True,1/1,$^ {0},tpscreencontrol={0}
+#tpxcamcommand get,tpxcommands,False,False,False,1/1,$^ {0},gettpxinfo
+#tpxcamcommand set,tpxcommands,False,False,False,1/2,$^ {0},settpxinfo
+#typeofservice get,getconfig,False,False,True,0/0,$^ {0},$comm.ip.qos.typeofservice
+#typeofservice,setconfig,False,True,True,1/1,$^ {0},comm.ip.qos.typeofservice={0}
+#udpports get,getconfig,False,False,False,0/0,$^ {0},$sys.ip.firewall.fixedh323ports
+#udpports set,setconfig,False,False,False,1/1,$^ {0},sys.ip.firewall.fixedh323ports={0}
+#usefixedports get,getconfig,False,False,True,0/0,$^ {0},$comm.firewall.fixedh323ports
+#usefixedports,setconfig,False,True,True,1/1,$^ {0},comm.firewall.fixedh323ports={0}
+#useroompassword get,getconfig,False,False,True,0/0,$^ {0},$security.useroompassword
+#useroompassword,setconfig,False,True,True,1/1,$^ {0},security.useroompassword={0}
+#v35broadcastmode get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[enableh331mode] else _echobadcfg $@
+#v35broadcastmode,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig enableh331mode {0} else _echobadcfg $^ $*
+#v35debug 0,apiforward,False,False,False,0/0,nop,_polyif %[hasv35] _echo $^ failed else _echobadcfg $@
+#v35debug 1,apiforward,False,False,False,0/0,nop,_polyif %[hasv35] _echo $^ failed else _echobadcfg $@
+#v35debug 2,apiforward,False,False,False,0/0,nop,_polyif %[hasv35] _echo $^ failed else _echobadcfg $@
+#v35debug 3,apiforward,False,False,False,0/0,nop,_polyif %[hasv35] _echo $^ failed else _echobadcfg $@
+#v35dialingprotocol get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[dialingprotocol] else _echobadcfg $@
+#v35dialingprotocol,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig dialingprotocol {0} else _echobadcfg $^ $*
+#v35num get 1b1,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ 1b1 $[directorynum0_0_0] else echobadcfg $@
+#v35num get 1b2,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ 1b2 $[directorynum0_0_1] else echobadcfg $@
+#v35num set 1b1,apiforward,False,False,False,1/1,$^ 1b1 {0},-_polyif %[hasv35] -systemsetting directorynum0_0_0 {0} else _echobadcfg $@
+#v35num set 1b2,apiforward,False,False,False,1/1,$^ 1b2 {0},-_polyif %[hasv35] -systemsetting directorynum0_0_1 {0} else _echobadcfg $@
+#v35portsused get,apiforward,False,False,False,0/0,nop,_polyif %[hasv35] _echo $^ $[v35ports] else _echobadcfg $@
+#v35portsused,apiforward,False,False,False,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig v35ports {0} else _echobadcfg $^ $*
+#v35prefix clear,apiforward,False,False,True,1/1,$^ $* cleared,-_polyif %[hasv35] -_internalsetconfig apiv35delprepost {0}, else _echobadcfg $@ $*
+#v35prefix get,apiforward,False,False,True,1/1,nop,-_polyif %[hasv35] _echo $^ {0} %[v35getprefix.{0}] else _echobadcfg $@ {0}
+#v35prefix set,apiforward,False,False,True,2/2,$^ $*,-_polyif %[hasv35] -_internalsetconfig apiv35addprepost {0},{1}, else _echobadcfg $@ $*
+#v35prefix,apiforward,False,False,True,1/1,$^ $* cleared,-_polyif %[hasv35] -_internalsetconfig apiv35delprepost {0}, else _echobadcfg $@ $*
+#v35prefix clear,apiforward,False,False,True,1/1,$^ $* cleared,-_polyif %[hasv35] -_internalsetconfig apiv35delprepost {0}
+#v35profile get,apiforward,False,False,True,0/0,nop,_polyif %[hasv35] _echo $^ $[profiles] else _echobadcfg $@
+#v35profile,apiforward,False,True,True,1/1,$^ {0},-_polyif %[hasv35] -_internalsetconfig profiles {0} else _echobadcfg $^ $*
+#v35suffix clear,apiforward,False,False,True,1/1,$^ $* cleared,-_polyif %[hasv35] -_internalsetconfig apiv35delprepost {0}
+#v35suffix get,apiforward,False,False,True,1/1,nop,-_polyif %[hasv35] _echo $^ {0} %[v35getsuffix.{0}] else _echobadcfg $@ {0}
+#v35suffix set,apiforward,False,False,True,2/2,$^ $*,-_polyif %[hasv35] -_internalsetconfig apiv35addprepost {0},,{1}
+#v35suffix,apiforward,False,False,True,1/1,$^ $* cleared,-_polyif %[hasv35] -_internalsetconfig apiv35delprepost {0}
+#validateacctnum get,getconfig,False,False,True,0/0,$^ {0},$validateaccountnumber
+#validateacctnum,setconfig,False,True,True,1/1,$^ {0},validateaccountnumber={0}
+#vcraudioinmode get,getconfig,False,False,True,0/0,$^ {0},$vcraudioinmode
+#vcraudioinmode,setconfig,False,True,False,1/1,$^ {0},vcraudioinmode={0}
+#vgaoffmode get,getconfig,False,False,True,0/0,$^ {0},$vgaoutputnographics
+#vgaoffmode,setconfig,False,True,True,1/1,$^ {0},vgaoutputnographics={0}
+#oicecallorder,callorder,False,False,False,0/2,$@,nop
+#webport get,getconfig,False,False,False,0/0,$^ {0},$web.httpport
+#webport set,setconfig,False,False,False,1/1,$^ {0},web.httpport={0}
+#widescreenvideo get,getconfig,False,False,True,0/0,$^ {0},$widescreenvideo
+#widescreenvideo,setconfig,False,True,True,1/1,$^ {0},widescreenvideo={0}
+#winsresolution get,getconfig,False,False,True,0/0,$^ {0},$winsresolution
+#winsresolution,setconfig,False,True,True,1/1,$^ {0},winsresolution={0}
+## Do not remove this command, xmlnetstats is used by SQA for automated testing
+#xmlnetstats,callstats,False,False,False,0/0,nop,xmlnetstats
+#xmppdirectory get,getconfig,False,False,True,0/0,$^ {0},$enablexmppdirectory
+#xmppdirectory,setconfig,False,True,True,1/1,$^ {0},enablexmppdirectory={0}
+#before this modified, the following have been annotated
+#_callencryption get,getconfig,False,False,True,0/0,$^ {0},$encryptionenable
+#_callencryption required,setconfig,False,False,False,0/0,$^ whenavailable,encryptionenable=True
+#_callencryption,setconfig,False,True,True,1/1,$^ {0},encryptionenable={0}
+#callencryption get,apiforward,False,False,True,0/0,$^ {0},-_polyif %[has-encryption] _$@ else _echobadcfg $@
+#callencryption required,apiforward,False,False,False,0/0,$^ whenavailable,-_polyif %[has-encryption] _$@ else _echobadcfg $@
+#callencryption,apiforward,False,True,True,1/1,$^ {0},-_polyif %[has-encryption] _$@ {0} else _echobadcfg $@ $*
+#directoryservice gdsmedirectoryservicemorytest,directoryservicetesthandler,False,False,False,1/1,nop,gdsmemorytest
+#directoryservice searchtest,directoryservicetesthandler,False,False,False,2/2,nop,searchtest
+#homerecentcalls yes,homescreenhandler,False,False,False,0,nop,yes
+#homerecentcalls no,homescreenhandler,False,False,False,0,nop,no
+#homerecentcalls get,homescreenhandler,False,False,False,0,nop,get
+#ocs,ocshandler,False,False,False,1/4,nop,nop
+#snmpsetcommunity get,getconfig,False,False,False,0/0,$^ {0},$snmpsetcommunity
+#snmpsetcommunity set,setconfig,False,False,False,1/1,$^ {0},snmpsetcommunity={0}
+#systemsetting get enablestereoautorotation1,getconfig,False,False,False,0/0,$^ enablestereoautorotation1 {0},$enablestereoautorotation1
+#systemsetting enablestereoautorotation1,setconfig,False,False,False,1/1,$^ enablestereoautorotation1 {0},enablestereoautorotation1={0}
+#systemsetting get enablestereoautorotation2,getconfig,False,False,False,0/0,$^ enablestereoautorotation2 {0},$enablestereoautorotation2
+#systemsetting enablestereoautorotation2,setconfig,False,False,False,1/1,$^ enablestereoautorotation2 {0},enablestereoautorotation2={0}
+#systemsetting get enablestereoautorotation3,getconfig,False,False,False,0/0,$^ enablestereoautorotation3 {0},$enablestereoautorotation3
+#systemsetting enablestereoautorotation3,setconfig,False,False,False,1/1,$^ enablestereoautorotation3 {0},enablestereoautorotation3={0}
+#systemsetting get enablestereoautorotation4,getconfig,False,False,False,0/0,$^ enablestereoautorotation4 {0},$enablestereoautorotation4
+#systemsetting enablestereoautorotation4,setconfig,False,False,False,1/1,$^ enablestereoautorotation4 {0},enablestereoautorotation4={0}
+#systemsetting get hdaccelerator,getconfig,False,False,False,0/0,$^ hdaccelerator {0},$hdaccelerator
+#systemsetting get speedstranslated,getconfig,False,False,False,0/0,$^ speedstranslated {0},$speedstranslated
+#systemsetting speedstranslated,setconfig,False,False,False,1/1,$^ speedstranslated {0},speedstranslated={0}
+#tpautoanswer,tpcommands,False,True,True,1/1,$^ {0},tpautoanswer={0}
+

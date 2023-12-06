@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+
+
+{% load bootstrap3 i18n %}
+
+{% block title %}{% if cospace %}Redigera {{ cospace.title }}{% else %}Skapa nytt mötesrum{% endif %}{% endblock %}
+
+{% block breadcrumb %}
+    <a href="{% url 'cospaces' %}?customer={{ customer.pk }}">{% trans "Mötesrum" %}</a> /
+    {% if cospace %}
+        <a href="{% url 'cospaces_details' cospace.cospace %}?customer={{ customer.pk }}">{{ cospace.title }}</a> /
+        <strong>{% trans "Redigera" %}</strong>
+    {% else %}
+        <strong>{% trans "Skapa nytt mötesrum" %}</strong>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if customer %}
+        {% include "blocks/page_notification.html" %}
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card card-shadow">
+                    <div class="card-body">
+                        <form method="post">
+                            <h2>{% trans "Redigera nummerserier" %}</h2>
+
+                            <p><i>{% trans "Ange senast upptagna numret" %}</i></p>
+
+
+                            <table class="table">
+                            {% for obj, prefixes in series %}
+                                {% for prefix in prefixes %}
+                                    <tr>
+                                        <td>{{ obj  }}</td>
+                                        <td><input class="form-control" name="provider-{{ obj.pk }}-{{ prefix.pk }}" value="{{ prefix.last_number }}"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            </table>
+
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+
+                            <input type="hidden" name="customer" value="{{ customer.pk }}"/>
+                            <input type="hidden" name="form_action" value="edit_cospace"/>
+                            {% csrf_token %}
+
+                            <button class="btn btn-primary">{% trans "Spara" %}</button>
+                            <a href="{% url 'cospaces' %}" class="btn btn-outline-primary btn-sm">{% trans "Avbryt" %}</a>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%  endif %}
+{% endblock %}

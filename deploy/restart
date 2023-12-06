@@ -1,0 +1,26 @@
+#!/bin/bash
+
+git submodule update --init --recursive # checkout/init submodules
+
+source ../bin/activate
+pip install -r requirements.txt
+python manage.py syncdb --noinput
+python manage.py migrate --noinput
+python manage.py collectstatic --noinput
+python manage.py sync_profiles
+
+#npm install
+#npm run react:compile
+#cp static/dist/bundle.js site_media/static/dist/
+
+killall -HUP gunicorn_django -u $USER
+killall -HUP gunicorn -u $USER
+killall -INT httpd -u $USER
+[ -e wsgi.py ] && touch wsgi.py
+
+if [ -e celery.pid ]
+then
+    kill -HUP `cat celery.pid`
+else
+    [ -e ~/sock/celery.pid ] && kill -HUP `cat ~/sock/celery.pid`
+fi

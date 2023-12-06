@@ -1,0 +1,15 @@
+[run]
+data_file = /tmp/coverage
+source = .
+omit =
+	*/migrations/*
+	*/management/commands/*
+parallel = True
+concurrency=multiprocessing
+
+
+[report]
+skip_empty = True
+omit =
+	*/migrations/*
+	*/management/commands/*
